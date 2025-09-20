@@ -20,34 +20,34 @@ a:active {
   outline: none;
 }
 
-nav,
-footer,
-header,
-aside {
-  display: block;
-}
-
 html,
-body {
-  height: 100%;
+body,
+#root,
+.wrapper {
   width: 100%;
-  font-size: 100%;
-  line-height: 1;
-  font-size: 14px;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 input,
-button,
-textarea {
+textarea,
+select,
+button {
   font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  border-radius: 0;
+}
+input,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-input::-ms-clear {
-  display: none;
-}
 button {
   cursor: pointer;
 }
