@@ -5,8 +5,8 @@ import mascot from "/images/mascot_advantages-section.png"
 const Advantages = () => {
   return (
     <section className="section">
-      <img src={mascot} alt="mascot" className="advantages-img" />
       <div className="container">
+        <img src={mascot} alt="mascot" className="advantages-img" />
         <div className="wrap">
           <h2 className="title">Зачем это и чем удобно?</h2>
           <ul className="wrap__list">

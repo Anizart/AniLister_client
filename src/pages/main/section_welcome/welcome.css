@@ -1,0 +1,26 @@
+.section-welcome {
+  margin-top: clamp(40px, 7vw, 80px);
+}
+
+.welcome-img {
+  position: absolute;
+  right: -135px;
+  top: -200px;
+  z-index: -1;
+}
+
+.offer {
+  max-width: 400px;
+
+  .offer__title {
+    padding-bottom: 8px;
+    font-size: clamp(24px, 4.8vw, 58px);
+    font-weight: 700;
+    line-height: 1.11;
+  }
+
+  .offer__text {
+    padding-bottom: clamp(13px, 1.2vw, 18px);
+    font-size: clamp(14px, 1.9vw, 20px);
+  }
+}

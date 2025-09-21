@@ -5,8 +5,8 @@ import mascot from "/images/mascot_entice-section.png"
 const Entice = () => {
   return (
     <section className="section">
-      <img src={mascot} alt="mascot" className="entice-img" />
       <div className="container">
+        <img src={mascot} alt="mascot" className="entice-img" />
         <div className="entice__wrapper">
           <div className="entice__description">
             <h2 className="title entice__title">Всё в одном месте.</h2>
