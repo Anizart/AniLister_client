@@ -3,10 +3,8 @@
 }
 
 .welcome-img {
-  position: absolute;
   right: -135px;
   top: -200px;
-  z-index: -1;
 }
 
 .offer {

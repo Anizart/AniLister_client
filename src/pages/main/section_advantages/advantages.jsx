@@ -1,29 +1,59 @@
 import "./advantages.css"
+import { useEffect, useRef } from "react"
 
 import mascot from "/images/mascot_advantages-section.png"
 
 const Advantages = () => {
+  const wrapRef = useRef(null)
+
+  useEffect(() => {
+    const element = wrapRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          element.classList.add("visible")
+          // Можно оставить, если не хочешь повторного срабатывания
+          // observer.unobserve(element);
+        }
+      },
+      {
+        threshold: 0.1, // Секция видна на 10% — запускаем анимацию
+        rootMargin: "0px 0px -100px 0px", // Запускать чуть раньше
+      }
+    )
+
+    observer.observe(element)
+
+    return () => {
+      observer.unobserve(element)
+    }
+  }, [])
+
   return (
     <section className="section">
       <div className="container">
-        <img src={mascot} alt="mascot" className="advantages-img" />
-        <div className="wrap">
+        <img src={mascot} alt="mascot" className="img advantages-img" />
+        {/*+ Добавляем ref и класс visible */}
+        <div ref={wrapRef} className="wrap">
           <h2 className="title">Зачем это и чем удобно?</h2>
           <ul className="wrap__list">
             <li className="text wrap__item">
-              Отчетный прогресс — сколько серий посмотрел, сколько глав
-              прочитал;
+              <strong>Отчетный прогресс</strong> — сколько серий посмотрел,
+              сколько глав прочитал;
             </li>
             <li className="text wrap__item">
-              Делай метки — ставь метки (любимое, просмотрано/прочитано, можно
-              пересмотреть/перечитать и так далее);
+              <strong>Делай метки</strong> — ставь метки (любимое,
+              просмотрано/прочитано, можно пересмотреть/перечитать и так далее);
             </li>
             <li className="text wrap__item">
-              Следи за количеством — сколько посмотрел, сколько прочёл;
+              <strong>Следи за количеством</strong> — сколько посмотрел, сколько
+              прочёл;
             </li>
             <li className="text wrap__item">
-              Фильтруй — удобно фильтровать по критериям произведения, чтобы
-              быстро найти необходимый тайтл;
+              <strong>Фильтруй</strong> — удобно фильтровать по критериям
+              произведения, чтобы быстро найти необходимый тайтл;
             </li>
           </ul>
         </div>

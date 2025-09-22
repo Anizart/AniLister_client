@@ -6,7 +6,7 @@ const Entice = () => {
   return (
     <section className="section">
       <div className="container">
-        <img src={mascot} alt="mascot" className="entice-img" />
+        <img src={mascot} alt="mascot" className="img entice-img" />
         <div className="entice__wrapper">
           <div className="entice__description">
             <h2 className="title entice__title">Всё в одном месте.</h2>

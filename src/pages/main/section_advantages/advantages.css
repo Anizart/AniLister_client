@@ -1,0 +1,44 @@
+.advantages-img {
+  top: -310px;
+  left: -121px;
+}
+
+.wrap {
+  max-width: 570px;
+  margin: 0 0 0 auto;
+
+  /*+ Начальное состояние: скрыт за пределами экрана */
+  opacity: 0;
+  transform: translateX(80px);
+  transition: opacity 1.5s ease, transform 1s ease;
+}
+/*+ Класс, который добавится при видимости */
+.wrap.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.wrap__list {
+}
+
+.wrap__item:first-child {
+  margin-top: 18px;
+}
+.wrap__item + .wrap__item {
+  margin-top: 18px;
+}
+.wrap__item {
+  position: relative;
+  margin-left: 34px;
+  &::before {
+    content: "";
+    display: inline-block;
+    height: 18px;
+    width: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='18' viewBox='0 0 24 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22.268 0L7.6701 14.5479L1.73196 8.63014L0 10.4178L7.6701 18L24 1.72603L22.268 0Z' fill='%234FD10C' /%3E%3C/svg%3E");
+    position: absolute;
+    top: 50%;
+    left: -34px;
+    transform: translateY(-50%);
+  }
+}

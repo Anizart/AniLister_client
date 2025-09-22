@@ -20,8 +20,8 @@
   --dark-secondary-emphasis-bg: #1e1e1e;
 
   /*+ Clamp */
-  --clamp-main-text: clamp(12px, 2.5vw, 16px);
-  --clamp-tytle-text: clamp(16px, 2.5vw, 40px);
+  --clamp-main-text: clamp(12px, 1.5vw, 16px);
+  --clamp-tytle-text: clamp(16px, 3.5vw, 40px);
   --clamp-btn-text: clamp(14px, 2vw, 25px);
 }
 
@@ -56,6 +56,12 @@ body {
   }
 }
 
+/*+ Изменение цвета выделения текста */
+::selection {
+  color: var(--light-main-text);
+  background-color: var(--accent-text);
+}
+
 .hidden {
   overflow: hidden;
 }
@@ -78,6 +84,11 @@ body {
   margin-top: clamp(60px, 9vw, 120px);
 }
 
+.img {
+  position: absolute;
+  z-index: -1;
+}
+
 .title {
   font-family: var(--distinguishing-font-family);
   font-weight: 700;
@@ -96,4 +107,8 @@ body {
     color: #fff;
     background: var(--light-main-text);
   }
+}
+
+strong {
+  line-height: inherit;
 }

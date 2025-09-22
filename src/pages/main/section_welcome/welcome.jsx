@@ -5,7 +5,7 @@ const Welcome = () => {
   return (
     <section className="section section-welcome">
       <div className="container">
-        <img src={mascot} alt="mascot" className="welcome-img" />
+        <img src={mascot} alt="mascot" className="img welcome-img" />
         <div className="offer">
           <h1 className="title offer__title">Список. Прогресс. Память.</h1>
           <div className="text offer__text">
