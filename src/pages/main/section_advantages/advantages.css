@@ -18,9 +18,6 @@
   transform: translateX(0);
 }
 
-.wrap__list {
-}
-
 .wrap__item:first-child {
   margin-top: 18px;
 }

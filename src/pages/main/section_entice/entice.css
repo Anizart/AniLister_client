@@ -1,8 +1,43 @@
+.entice-img {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .entice__wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 247px;
 }
 
+.entice__text,
 .entice__description {
+  margin: 0 0 0 auto;
 }
 
+.entice__question,
+.entice__description {
+  opacity: 0;
+  transform: translateX(80px);
+  transition: opacity 1.5s ease, transform 1s ease;
+}
 .entice__question {
+  transform: translateX(-80px);
+}
+
+.entice__title {
+  margin-bottom: 18px;
+}
+
+.entice__text {
+  max-width: fit-content;
+}
+
+.question__text {
+  margin-bottom: 18px;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateX(0);
 }

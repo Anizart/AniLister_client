@@ -1,5 +1,5 @@
-import "./advantages.css"
 import { useEffect, useRef } from "react"
+import "./advantages.css"
 
 import mascot from "/images/mascot_advantages-section.png"
 
@@ -8,14 +8,13 @@ const Advantages = () => {
 
   useEffect(() => {
     const element = wrapRef.current
+
     if (!element) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           element.classList.add("visible")
-          // Можно оставить, если не хочешь повторного срабатывания
-          // observer.unobserve(element);
         }
       },
       {
