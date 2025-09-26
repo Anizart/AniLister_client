@@ -6,9 +6,37 @@
   right: -135px;
   top: -200px;
 }
+@media (max-width: 1010px) {
+  .welcome-img {
+    max-width: 800px;
+    right: -80px;
+    top: -150px;
+  }
+}
+@media (max-width: 789px) {
+  .welcome-img {
+    max-width: 700px;
+    right: -100px;
+    top: -118px;
+  }
+}
+@media (max-width: 684px) {
+  .welcome-img {
+    max-width: 550px;
+    right: -80px;
+    top: -90px;
+  }
+}
+@media (max-width: 584px) {
+  .welcome-img {
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.75;
+  }
+}
 
 .offer {
-  max-width: 400px;
+  max-width: clamp(240px, 40vw, 400px);
 
   .offer__title {
     padding-bottom: 8px;
@@ -20,5 +48,14 @@
   .offer__text {
     padding-bottom: clamp(13px, 1.2vw, 18px);
     font-size: clamp(14px, 1.9vw, 20px);
+  }
+}
+@media (max-width: 584px) {
+  .offer {
+    max-width: 100%;
+
+    .offer__text {
+      margin: 0 0 0 auto;
+    }
   }
 }

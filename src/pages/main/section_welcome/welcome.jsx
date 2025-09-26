@@ -1,11 +1,16 @@
 import "./welcome.css"
+
 import mascot from "/images/mascot_welcome-section.png"
+import circles from "/images/circles_1.png"
 
 const Welcome = () => {
   return (
     <section className="section section-welcome">
       <div className="container">
-        <img src={mascot} alt="mascot" className="img welcome-img" />
+        <picture>
+          <source media="(max-width: 584px)" srcSet={circles} />
+          <img src={mascot} alt="mascot" className="img welcome-img" />
+        </picture>
         <div className="offer">
           <h1 className="title offer__title">Список. Прогресс. Память.</h1>
           <div className="text offer__text">

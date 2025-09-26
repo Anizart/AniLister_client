@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react"
+
 import "./entice.css"
 
 import mascot from "/images/mascot_entice-section.png"
+import circle from "/images/circle_3.png"
 
 const Entice = () => {
   const descriptionWrap = useRef(null)
