@@ -6,7 +6,6 @@
 
 ![Лого (1) 1](https://github.com/user-attachments/assets/a4302d0b-d5f8-469f-a450-470276367720)
 
-
 ---
 
 ## Описание
