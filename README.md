@@ -42,5 +42,5 @@
 1. Убедитесь, что установлен **[Node.js](https://nodejs.org)** (версия 20.19+ или 22.12+)
 2. Склонируй репозиторий:
    ```bash
-   git clone https://github.com/Anizart/AniLister.git
+   git clone https://github.com/Anizart/AniLister_client.git
    cd anilister-app
