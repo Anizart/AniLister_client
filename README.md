@@ -5,7 +5,7 @@
 > Создано для практики современных технологий фронтенда и бэкенда.
 
 <div align="center" style="margin: 24px 0; padding: 10px; background: #f0f0f0; border-radius: 8px; max-width: 200px; margin: 24px auto;">
-  <img src="public/images/svg/logo.svg" alt="AniLister Logo" width="139">
+  ![Лого (1) 1](https://github.com/user-attachments/assets/27e1bbaf-d58f-48c4-807d-ea8c95a88012)
 </div>
 
 ---
