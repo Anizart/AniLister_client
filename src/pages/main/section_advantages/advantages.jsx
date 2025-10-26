@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import "./advantages.css"
 
 import mascot from "/images/mascot_advantages-section.png"
-import circle from "/images/circle_2.png"
+// import circle from "/images/circle_2.png"
 
 const Advantages = () => {
   const wrapRef = useRef(null)
