@@ -4,16 +4,8 @@
 > Учебный проект. Ведение списков просмотренных аниме и прочитанных манга.  
 > Создано для практики современных технологий фронтенда и бэкенда.
 
-<div align="center" style="margin: 24px 0;">
-  <div style="
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  ">
-    <img src="public/images/svg/logo.svg" alt="AniLister Logo" width="139">
-  </div>
+<div align="center" style="margin: 24px 0; padding: 10px; background: #f0f0f0; border-radius: 8px; max-width: 200px; margin: 24px auto;">
+  <img src="public/images/svg/logo.svg" alt="AniLister Logo" width="139">
 </div>
 
 ---
