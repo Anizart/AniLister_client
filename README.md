@@ -4,9 +4,8 @@
 > Учебный проект. Ведение списков просмотренных аниме и прочитанных манга.  
 > Создано для практики современных технологий фронтенда и бэкенда.
 
-<div align="center" style="margin: 24px 0; padding: 10px; background: #f0f0f0; border-radius: 8px; max-width: 200px; margin: 24px auto;">
-  ![Лого (1) 1](https://github.com/user-attachments/assets/27e1bbaf-d58f-48c4-807d-ea8c95a88012)
-</div>
+![Лого (1) 1](https://github.com/user-attachments/assets/a4302d0b-d5f8-469f-a450-470276367720)
+
 
 ---
 
