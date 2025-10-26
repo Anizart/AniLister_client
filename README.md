@@ -13,7 +13,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     margin: 20px 0;
   ">
-    
+    <img src="public/images/svg/logo.svg" alt="" />
   </div>
 </p>
 
