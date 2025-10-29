@@ -1,12 +1,46 @@
-# React + Vite
+# AniLister
+*Твой список прочитанного/просмотренного — просто, удобно, без лишнего.*
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Учебный проект. Ведение списков.  
+> Создано для практики современных технологий фронтенда и бэкенда.
 
-Currently, two official plugins are available:
+![Лого (1) 1](https://github.com/user-attachments/assets/a4302d0b-d5f8-469f-a450-470276367720)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Описание
+**AniLister** — минималистичный сервис для тех, кто много смотрит или читает, но теряет счёт.  
+Здесь ты можешь:
+- Вести список просмотренного
+- Отмечать прогресс (серии, главы)
+- Делать пометки и фильтровать
+- Быть уверенным, что ничего не потеряется
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Это **учебный проект**, в котором я отрабатываю навыки разработки на стеке MERN-подобных технологий (но с SQL).
+
+---
+
+## Технологии 🛠
+
+### Фронтенд (в разработке):
+- **React** + **Vite** — интерфейс и сборка
+- **React Router** — навигация
+- **Redux Toolkit** — управление состоянием
+- **CSS Modules** — стилизация без конфликтов
+...
+
+### Бэкенд (в разработке):
+- **Node.js** — серверная среда
+- **Express** — маршрутизация и API
+- **Sequelize** — ORM для работы с базой
+- **SQLite** — лёгкая встраиваемая база данных
+
+---
+
+## Как запустить локально
+
+1. Убедитесь, что установлен **[Node.js](https://nodejs.org)** (версия 20.19+ или 22.12+)
+2. Склонируй репозиторий:
+   ```bash
+   git clone https://github.com/Anizart/AniLister_client.git
+   cd anilister-app
