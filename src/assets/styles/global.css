@@ -53,6 +53,10 @@ body {
         background: var(--accent-text);
       }
     }
+
+    .header__sign {
+      color: var(--dark-main-text);
+    }
   }
 }
 
@@ -107,6 +111,29 @@ body {
   &:hover {
     color: #fff;
     background: var(--light-main-text);
+  }
+}
+
+.header__sign {
+  font-weight: 400;
+  padding: 5px;
+  font-size: var(--clamp-main-text);
+  transition: 0.4s;
+
+  &:hover {
+    color: var(--accent-text) !important;
+  }
+  &::after {
+    content: "";
+    height: 1px;
+    width: 0;
+    display: block;
+    background-color: var(--accent-text);
+    transition: inherit;
+  }
+  &:hover::after {
+    content: "";
+    width: 100%;
   }
 }
 

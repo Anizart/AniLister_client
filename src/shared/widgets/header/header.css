@@ -12,12 +12,13 @@
     align-items: center;
   }
 
-  /*+ Переключатель: */
   .header__wrapper-elem {
     display: flex;
     align-items: center;
-    column-gap: clamp(20px, 3vw, 35px);
+    column-gap: clamp(20px, 4vw, 48px);
   }
+
+  /*+ Переключатель: */
   .header__toggle-container {
     height: 33px;
     width: 68px;
@@ -38,7 +39,7 @@
     transition: 0.5s;
   }
   .circle-transform {
-    transform: translateX(32px);
+    transform: translateX(33px);
     transition: 0.5s;
   }
   .toggle-container-bg {
@@ -46,4 +47,23 @@
     background-color: #000;
     border-color: #fff;
   }
+
+  @media (max-width: 435px) {
+    .header__toggle-container {
+      height: 20px;
+      width: 40px;
+    }
+    .header__circle {
+      height: 14px;
+      width: 14px;
+      background-color: var(--accent-text);
+      border-radius: 50%;
+      transition: 0.5s;
+    }
+    .circle-transform {
+      transform: translateX(16px);
+      transition: 0.5s;
+    }
+  }
+  /*+ /Переключатель: */
 }

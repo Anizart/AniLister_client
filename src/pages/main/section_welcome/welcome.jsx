@@ -22,7 +22,9 @@ const Welcome = () => {
             и вспомнить — в одном месте.
             <br /> AniLister — твой личный дневник.
           </div>
-          <button className="btn">Начать список</button>
+          <button type="button" className="btn">
+            Начать список
+          </button>
         </div>
       </div>
     </section>

@@ -59,7 +59,9 @@ const Entice = () => {
           <div ref={questionWrap} className="entice__question">
             <h2 className="title entice__title">Ну что?</h2>
             <div className="text question__text">Начнём?</div>
-            <button className="btn">Начать список</button>
+            <button type="button" className="btn">
+              Начать список
+            </button>
           </div>
         </div>
       </div>
