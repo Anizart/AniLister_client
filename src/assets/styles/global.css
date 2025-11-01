@@ -57,6 +57,9 @@ body {
     .header__sign {
       color: var(--dark-main-text);
     }
+    .link.active::after {
+      background: var(--dark-main-text);
+    }
   }
 }
 
@@ -114,6 +117,7 @@ body {
   }
 }
 
+.link,
 .header__sign {
   font-weight: 400;
   padding: 5px;
@@ -135,6 +139,13 @@ body {
     content: "";
     width: 100%;
   }
+}
+.link.active::after {
+  content: "";
+  height: 1px;
+  width: 100%;
+  display: block;
+  background: var(--light-main-text);
 }
 
 strong {
