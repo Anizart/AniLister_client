@@ -75,7 +75,7 @@ function App() {
             {/* <Route path="*" element={<NotFoundPage />} /> */}
           </Routes>
         </main>
-        <Footer />
+        <Footer mode={mode} />
       </div>
     </BrowserRouter>
   )

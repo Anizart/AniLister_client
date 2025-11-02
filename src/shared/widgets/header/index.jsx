@@ -1,17 +1,11 @@
 import { useState, useEffect } from "react"
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import "./header.css"
 
-import logo from "/images/svg/logo.svg"
-import logo_for_dark from "/images/svg/logo_for_dark.svg"
-import mobile_logo from "/images/svg/mobile_logo.svg"
-import mobile_logo_for_dark from "/images/svg/mobile_logo_for_dark.svg"
-
-import { useSeasonalTheme } from "../../lib/useSeasonalTheme" // для нового года
+import Logo from "../../ui/logo"
 // import { userProfile } from "@/shared/api/user" //- !
 
 const Header = ({ mode, onToggleMode }) => {
-  const { isXmas } = useSeasonalTheme() // для нового года
   const [user, setUser] = useState(null) // user
 
   //+ Получение пользователя:
@@ -34,24 +28,7 @@ const Header = ({ mode, onToggleMode }) => {
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
-          <Link to="/" className="header__link-logo">
-            <picture>
-              <source
-                media="(max-width: 558px)"
-                srcset={mode ? mobile_logo_for_dark : mobile_logo}
-              ></source>
-              <img src={mode ? logo_for_dark : logo} alt="logo" height="40" />
-            </picture>
-            {isXmas ? (
-              <img
-                src="/images/svg/christmas_tree.svg"
-                alt="Christmas tree"
-                className="header__christmas-img"
-              />
-            ) : (
-              ""
-            )}
-          </Link>
+          <Logo mode={mode} />
           <nav className="header__wrapper-elem">
             {/* Переключатель темы сайта */}
             <div

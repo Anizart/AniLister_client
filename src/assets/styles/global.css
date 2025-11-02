@@ -60,6 +60,10 @@ body {
     .link.active::after {
       background: var(--dark-main-text);
     }
+
+    .footer__elem + .footer__elem::before {
+      background-color: var(--dark-main-text);
+    }
   }
 }
 
