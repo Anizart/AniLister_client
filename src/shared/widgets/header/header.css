@@ -18,6 +18,21 @@
     column-gap: clamp(20px, 4vw, 48px);
   }
 
+  .header__logo-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .header__logo {
+    transition: opacity 0.3s ease-in-out;
+    /* Плавное появление/исчезновение */
+  }
+  .header__logo.dark {
+    opacity: 1;
+  }
+  .header__logo.light {
+    opacity: 1;
+  }
+
   /*+ Новый год: */
   .header__christmas-img {
     margin-left: 8px;

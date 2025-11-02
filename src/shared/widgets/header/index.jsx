@@ -3,7 +3,10 @@ import { Link, NavLink } from "react-router-dom"
 import "./header.css"
 
 import logo from "/images/svg/logo.svg"
+import logo_for_dark from "/images/svg/logo_for_dark.svg"
 import mobile_logo from "/images/svg/mobile_logo.svg"
+import mobile_logo_for_dark from "/images/svg/mobile_logo_for_dark.svg"
+
 import { useSeasonalTheme } from "../../lib/useSeasonalTheme" // для нового года
 // import { userProfile } from "@/shared/api/user" //- !
 
@@ -33,8 +36,11 @@ const Header = ({ mode, onToggleMode }) => {
         <div className="header__wrapper">
           <Link to="/" className="header__link-logo">
             <picture>
-              <source media="(max-width: 558px)" srcset={mobile_logo}></source>
-              <img src={logo} alt="logo" height="40" />
+              <source
+                media="(max-width: 558px)"
+                srcset={mode ? mobile_logo_for_dark : mobile_logo}
+              ></source>
+              <img src={mode ? logo_for_dark : logo} alt="logo" height="40" />
             </picture>
             {isXmas ? (
               <img
