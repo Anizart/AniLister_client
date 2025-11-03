@@ -2,9 +2,41 @@
   top: -310px;
   left: -121px;
 }
+@media (max-width: 1010px) {
+  .advantages-img {
+    max-width: 650px;
+    top: -260px;
+  }
+}
+@media (max-width: 848px) {
+  .advantages-img {
+    max-width: 630px;
+    top: -260px;
+    left: -160px;
+  }
+}
+@media (max-width: 721px) {
+  .advantages-img {
+    left: -180px;
+  }
+}
+@media (max-width: 684px) {
+  .advantages-img {
+    max-width: 450px;
+    top: -170px;
+    left: -110px;
+  }
+}
+@media (max-width: 584px) {
+  .advantages-img {
+    left: 50%;
+    transform: translate(-50%);
+    opacity: 0.75;
+  }
+}
 
 .wrap {
-  max-width: 570px;
+  max-width: clamp(340px, 55vw, 570px);
   margin: 0 0 0 auto;
 
   /*+ Начальное состояние: скрыт за пределами экрана */
@@ -16,6 +48,15 @@
 .wrap.visible {
   opacity: 1;
   transform: translateX(0);
+}
+@media (max-width: 584px) {
+  .wrap {
+    text-align: center;
+    margin: 0 auto;
+  }
+  .wrap__list {
+    text-align: left;
+  }
 }
 
 .wrap__item:first-child {

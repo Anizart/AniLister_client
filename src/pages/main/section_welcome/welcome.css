@@ -52,10 +52,8 @@
 }
 @media (max-width: 584px) {
   .offer {
-    max-width: 100%;
-
-    .offer__text {
-      margin: 0 0 0 auto;
-    }
+    text-align: center;
+    min-width: 75%;
+    margin: 0 auto;
   }
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import "./advantages.css"
 
 import mascot from "/images/mascot_advantages-section.png"
-// import circle from "/images/circle_2.png"
+import circle from "/images/circle_2.png"
 
 const Advantages = () => {
   const wrapRef = useRef(null)
@@ -34,7 +34,10 @@ const Advantages = () => {
   return (
     <section className="section">
       <div className="container">
-        <img src={mascot} alt="mascot" className="img advantages-img" />
+        <picture>
+          <source media="(max-width: 584px)" srcSet={circle} />
+          <img src={mascot} alt="mascot" className="img advantages-img" />
+        </picture>
         {/*+ Добавляем ref и класс visible */}
         <div ref={wrapRef} className="wrap">
           <h2 className="title">Зачем это и чем удобно?</h2>

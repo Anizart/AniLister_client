@@ -77,6 +77,10 @@ body {
   overflow: hidden;
 }
 
+.wrapper {
+  overflow: hidden;
+}
+
 .main {
   overflow: hidden;
 }
@@ -93,7 +97,7 @@ body {
   padding: clamp(50px, 7.8vw, 100px) 0;
 }
 .section + .section {
-  margin-top: clamp(60px, 9vw, 120px);
+  margin-top: clamp(50px, 9vw, 120px);
 }
 
 .img {
