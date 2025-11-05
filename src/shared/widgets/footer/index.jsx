@@ -76,12 +76,12 @@ const Footer = ({ mode }) => {
           </div>
         </div>
         <div className="footer__info">
-          <span>
+          <span className="info__wrapper">
             <Link to="#" className="info__link">
               Политика конфиденциальности
             </Link>
           </span>
-          <span>
+          <span className="info__wrapper">
             <Link to="#" className="info__link">
               Пользовательское соглашение
             </Link>
