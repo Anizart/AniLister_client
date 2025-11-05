@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react"
 import "./entice.css"
 
 import mascot from "/images/mascot_entice-section.png"
-// import circle from "/images/circle_3.png"
+import circle from "/images/circle_3.png"
 
 const Entice = () => {
   const descriptionWrap = useRef(null)
@@ -42,7 +42,10 @@ const Entice = () => {
   return (
     <section className="section">
       <div className="container">
-        <img src={mascot} alt="mascot" className="img entice-img" />
+        <picture>
+          <source media="(max-width: 485px)" srcSet={circle} />
+          <img src={mascot} alt="mascot" className="img entice-img" />
+        </picture>
         <div className="entice__wrapper">
           <div ref={descriptionWrap} className="entice__description">
             <h2 className="title entice__title">Всё в одном месте.</h2>

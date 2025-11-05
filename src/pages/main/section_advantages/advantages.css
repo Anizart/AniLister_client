@@ -29,6 +29,7 @@
 }
 @media (max-width: 584px) {
   .advantages-img {
+    top: -50%;
     left: 50%;
     transform: translate(-50%);
     opacity: 0.75;

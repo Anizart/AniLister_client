@@ -83,6 +83,7 @@ body {
 
 .main {
   overflow: hidden;
+  padding-bottom: clamp(50px, 8vw, 100px);
 }
 
 .container {
