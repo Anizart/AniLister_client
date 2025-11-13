@@ -78,16 +78,19 @@ body {
 }
 
 .wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .main {
-  overflow: hidden;
   padding-bottom: clamp(50px, 8vw, 100px);
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .container {
-  height: 100%;
   max-width: 1200px;
   padding: 0 15px;
   margin: 0 auto;

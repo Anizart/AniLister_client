@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Header from "./shared/widgets/header"
 import MainPage from "./pages/main"
 import Footer from "./shared/widgets/footer"
-// import { NotFoundPage } from "./pages/notfound-page-404"
+import NotfoundPage from "./pages/notfound-page-404"
 
 function App() {
   //+ Тема
@@ -72,7 +72,7 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" element={<MainPage />} />
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
+            <Route path="*" element={<NotfoundPage />} />
           </Routes>
         </main>
         <Footer mode={mode} />

@@ -38,7 +38,7 @@ const Advantages = () => {
           <source media="(max-width: 584px)" srcSet={circle} />
           <img src={mascot} alt="mascot" className="img advantages-img" />
         </picture>
-        {/*+ Добавляем ref и класс visible */}
+        {/*+ Добавляю ref и класс visible */}
         <div ref={wrapRef} className="wrap">
           <h2 className="title">Зачем это и чем удобно?</h2>
           <ul className="wrap__list">

@@ -1,0 +1,57 @@
+.notfound-page {
+  min-height: calc(
+    100vh - 157px - clamp(50px, 8vw, 100px)
+  ); /* Вычил высоту footer и отступ у main */
+  padding-top: 70px;
+  display: flex;
+  align-items: center;
+
+  .notfound-page__wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .notfound-page__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .notfound-page__title {
+    color: var(--accent-text);
+    font-size: clamp(58px, 15vw, 188px);
+    font-weight: 700;
+    line-height: clamp(58px, 18vw, 210px);
+  }
+  .notfound-page__text {
+    margin-top: 8px;
+  }
+  .notfound-page__btn {
+    width: max-content;
+    display: inline-block;
+    margin: clamp(16px, 3vw, 48px) auto 0 auto;
+  }
+
+  @media (max-width: 980px) {
+    .notfound-page__img {
+      max-height: 550px;
+    }
+  }
+  @media (max-width: 819px) {
+    .notfound-page__img {
+      max-height: 450px;
+    }
+  }
+  @media (max-width: 375px) {
+    .notfound-page__img {
+      max-height: 318px;
+    }
+  }
+  @media (max-width: 599px) {
+    .notfound-page__wrap {
+      justify-content: center;
+      flex-wrap: wrap-reverse;
+    }
+  }
+}
