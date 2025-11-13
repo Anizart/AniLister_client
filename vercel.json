@@ -1,6 +1,10 @@
 {
-  "routes": [
-    { "src": "/404", "dest": "/index.html", "status": 404 },
-    { "src": "/.*", "dest": "/index.html", "status": 200 }
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "redirects": [
+    {
+      "source": "/404",
+      "destination": "/",
+      "statusCode": 404
+    }
   ]
 }
