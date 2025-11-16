@@ -13,8 +13,30 @@
       border-radius: 50%;
       box-shadow: 0 0 150px 10px var(--accent-text);
     }
-    p + p {
-      margin-top: 18px;
+    .profile__details {
+      max-width: 250px;
+      white-space: nowrap;
+      overflow: hidden;
+
+      p + p {
+        margin-top: 18px;
+      }
+      .profile__email,
+      .profile__name {
+        overflow-x: auto;
+        /* Скрываю скроллбар в WebKit */
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        /* Для IE и Edge (старые версии) */
+        & {
+          -ms-overflow-style: none;
+        }
+        /* Для Firefox */
+        & {
+          scrollbar-width: none;
+        }
+      }
     }
   }
   .profile__btn {
