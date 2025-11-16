@@ -1,0 +1,31 @@
+.profile {
+  display: flex;
+  align-items: center;
+  margin-top: 118px;
+
+  .profile__info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    .profile__img {
+      height: 149px;
+      border: 1px solid var(--light-main-text);
+      border-radius: 50%;
+      box-shadow: 0 0 150px 10px var(--accent-text);
+    }
+    p + p {
+      margin-top: 18px;
+    }
+  }
+  .profile__btn {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    margin-left: 48px;
+
+    .profile__btn-red {
+      display: flex;
+      column-gap: 48px;
+    }
+  }
+}

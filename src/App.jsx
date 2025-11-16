@@ -5,6 +5,7 @@ import Header from "./shared/widgets/header"
 import MainPage from "./pages/main"
 import Footer from "./shared/widgets/footer"
 import NotfoundPage from "./pages/notfound-page-404"
+import Profile from "./pages/profile"
 
 function App() {
   //+ Тема
@@ -72,6 +73,7 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" element={<MainPage />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotfoundPage />} />
           </Routes>
         </main>

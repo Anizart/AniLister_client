@@ -53,6 +53,11 @@ body {
         background: var(--accent-text);
       }
     }
+    .btn-warning {
+      &:hover {
+        color: var(--light-main-text) !important;
+      }
+    }
 
     .header__sign {
       color: var(--dark-main-text);
@@ -126,6 +131,15 @@ body {
   &:hover {
     color: #fff;
     background: var(--light-main-text);
+  }
+}
+.btn-warning {
+  color: var(--warning-color) !important;
+  border-color: var(--warning-color) !important;
+
+  &:hover {
+    color: #fff !important;
+    background: var(--warning-color) !important;
   }
 }
 
