@@ -34,7 +34,11 @@ const Footer = ({ mode, onOpenModal }) => {
             <div className="footer__elem">
               <h3 className="title footer__title">Где меня найти</h3>
               <div className="footer__elem-wrapper">
-                <a href="#" className="footer__social-network">
+                <a
+                  href="https://vk.com/vladradrad"
+                  target="_blank"
+                  className="footer__social-network"
+                >
                   <svg
                     width="48"
                     height="48"
@@ -52,7 +56,11 @@ const Footer = ({ mode, onOpenModal }) => {
                     />
                   </svg>
                 </a>
-                <a href="#" className="footer__social-network">
+                <a
+                  href="https://github.com/Anizart"
+                  target="_blank"
+                  className="footer__social-network"
+                >
                   <svg
                     width="48"
                     height="48"
