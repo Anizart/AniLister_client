@@ -6,13 +6,14 @@ import MainPage from "./pages/main"
 import Footer from "./shared/widgets/footer"
 import NotfoundPage from "./pages/notfound-page-404"
 import Profile from "./pages/profile"
+import UnderConstructionModal from "./shared/ui/modals/under_construction_modal"
 
 function App() {
   //+ Тема
   const [mode, setMode] = useState(false)
   const [isManualToggle, setIsManualToggle] = useState(false) // флаг: if пользователь менял тему
 
-  // Функция установки темы (сохраняет в localStorage и обновляет состояние)
+  // Функция установки темы
   const setTheme = (newMode, manual = false) => {
     setMode(newMode)
     if (manual) {
@@ -64,20 +65,47 @@ function App() {
   const handleToggleMode = () => {
     setTheme(!mode, true)
   }
-  //+ Тема/
+  //+ /Тема
+
+  //+ Modals
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  //+ /Modals
 
   return (
     <BrowserRouter>
       <div className="wrapper">
-        <Header mode={mode} onToggleMode={handleToggleMode} />
+        <Header
+          mode={mode}
+          onToggleMode={handleToggleMode}
+          isModalOpen={isModalOpen}
+          onOpenModal={() => setIsModalOpen(true)}
+        />
         <main className="main">
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/"
+              element={
+                <MainPage
+                  isModalOpen={isModalOpen}
+                  onOpenModal={() => setIsModalOpen(true)}
+                />
+              }
+            />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotfoundPage />} />
           </Routes>
         </main>
-        <Footer mode={mode} />
+        <Footer
+          mode={mode}
+          isModalOpen={isModalOpen}
+          onOpenModal={() => setIsModalOpen(true)}
+        />
+        {/* Modals: */}
+        <UnderConstructionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          mode={mode}
+        />
       </div>
     </BrowserRouter>
   )

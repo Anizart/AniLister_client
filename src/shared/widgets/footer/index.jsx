@@ -3,7 +3,7 @@ import Logo from "../../ui/logo"
 
 import "./footer.css"
 
-const Footer = ({ mode }) => {
+const Footer = ({ mode, onOpenModal }) => {
   const currentYear = new Date().getFullYear() // Получение текущего года
 
   return (
@@ -11,7 +11,6 @@ const Footer = ({ mode }) => {
       <div className="container">
         <div className="footer__basic">
           <div className="footer__logo">
-            {/* ПРИ АДАПТИВИ ПОМНИ ПРО ЁЛКУ! */}
             <Logo mode={mode} />
             <span>© {currentYear}∙AniLister</span>
           </div>
@@ -76,12 +75,12 @@ const Footer = ({ mode }) => {
           </div>
         </div>
         <div className="footer__info">
-          <span className="info__wrapper">
+          <span className="info__wrapper" onClick={onOpenModal}>
             <Link to="#" className="info__link">
               Политика конфиденциальности
             </Link>
           </span>
-          <span className="info__wrapper">
+          <span className="info__wrapper" onClick={onOpenModal}>
             <Link to="#" className="info__link">
               Пользовательское соглашение
             </Link>

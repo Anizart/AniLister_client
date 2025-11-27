@@ -5,7 +5,7 @@ import "./entice.css"
 import mascot from "/images/mascot_entice-section.png"
 import circle from "/images/circle_3.png"
 
-const Entice = () => {
+const Entice = ({ onOpenModal }) => {
   const descriptionWrap = useRef(null)
   const questionWrap = useRef(null)
 
@@ -62,7 +62,7 @@ const Entice = () => {
           <div ref={questionWrap} className="entice__question">
             <h2 className="title entice__title">Ну что?</h2>
             <div className="text question__text">Начнём?</div>
-            <button type="button" className="btn">
+            <button type="button" className="btn" onClick={onOpenModal}>
               Начать список
             </button>
           </div>
