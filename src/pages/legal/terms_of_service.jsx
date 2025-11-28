@@ -1,6 +1,13 @@
+import { useEffect } from "react"
+
 import "./styles.css"
 
 export default function TermsOfService() {
+  //+ скролл вверх при переходе на страницу
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className="container container-wrap">
       <h1 className="title title-privacy">Пользовательское соглашение</h1>

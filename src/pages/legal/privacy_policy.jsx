@@ -1,6 +1,13 @@
+import { useEffect } from "react"
+
 import "./styles.css"
 
 export default function PrivacyPolicy() {
+  //+ скролл вверх при переходе на страницу
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className="container container-wrap">
       <h1 className="title title-privacy">Политика конфиденциальности</h1>
