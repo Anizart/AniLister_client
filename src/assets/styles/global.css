@@ -216,6 +216,7 @@ strong {
     position: absolute;
     top: clamp(15px, 3.5vw, 24px);
     right: clamp(15px, 3.5vw, 24px);
+    z-index: 10;
 
     & svg path {
       transition: 0.4s;
