@@ -19,10 +19,26 @@
   font-size: clamp(14px, 2vw, 18px);
   padding-bottom: 180px;
 }
+@media (max-width: 345px) {
+  .modal__text {
+    padding-right: 45px;
+  }
+}
 
 .modal__img {
   position: absolute;
   right: -16px;
   bottom: 0;
   z-index: 1;
+}
+@media (max-width: 525px) {
+  .modal__img {
+    max-width: 240px;
+  }
+}
+@media (max-width: 399px) {
+  .modal__img {
+    max-width: 210px;
+    right: -40px;
+  }
 }

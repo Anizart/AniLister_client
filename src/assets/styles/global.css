@@ -216,5 +216,19 @@ strong {
     position: absolute;
     top: clamp(15px, 3.5vw, 24px);
     right: clamp(15px, 3.5vw, 24px);
+
+    & svg path {
+      transition: 0.4s;
+    }
+    &:hover svg path {
+      fill: var(--accent-text) !important;
+    }
+  }
+  @media (max-width: 380px) {
+    .modal__btn-close,
+    svg {
+      max-height: 28px;
+      max-width: 28px;
+    }
   }
 }
