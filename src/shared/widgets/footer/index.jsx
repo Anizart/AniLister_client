@@ -3,7 +3,7 @@ import Logo from "../../ui/logo"
 
 import "./footer.css"
 
-const Footer = ({ mode, onOpenModal }) => {
+const Footer = ({ mode }) => {
   const currentYear = new Date().getFullYear() // Получение текущего года
 
   return (
@@ -83,13 +83,13 @@ const Footer = ({ mode, onOpenModal }) => {
           </div>
         </div>
         <div className="footer__info">
-          <span className="info__wrapper" onClick={onOpenModal}>
-            <Link to="#" className="info__link">
+          <span className="info__wrapper">
+            <Link to="/privacy-policy" className="info__link">
               Политика конфиденциальности
             </Link>
           </span>
-          <span className="info__wrapper" onClick={onOpenModal}>
-            <Link to="#" className="info__link">
+          <span className="info__wrapper">
+            <Link to="/terms-of-service" className="info__link">
               Пользовательское соглашение
             </Link>
           </span>

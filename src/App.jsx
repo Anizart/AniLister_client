@@ -7,6 +7,8 @@ import Footer from "./shared/widgets/footer"
 import NotfoundPage from "./pages/notfound-page-404"
 import Profile from "./pages/profile"
 import UnderConstructionModal from "./shared/ui/modals/under_construction_modal"
+import PrivacyPolicy from "./pages/legal/privacy_policy"
+import TermsOfService from "./pages/legal/terms_of_service"
 
 function App() {
   //+ Тема
@@ -93,13 +95,11 @@ function App() {
             />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotfoundPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
           </Routes>
         </main>
-        <Footer
-          mode={mode}
-          isModalOpen={isModalOpen}
-          onOpenModal={() => setIsModalOpen(true)}
-        />
+        <Footer mode={mode} />
         {/* Modals: */}
         <UnderConstructionModal
           isOpen={isModalOpen}
