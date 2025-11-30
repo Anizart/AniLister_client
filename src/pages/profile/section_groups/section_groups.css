@@ -5,7 +5,12 @@
   }
   .groups__wrapper {
     display: flex;
-    gap: 48px;
+    flex-wrap: wrap;
+    column-gap: 40px; /*- НА clamp ПЕРЕДЕЛАТЬ */
+    row-gap: 80px; /*- НА clamp ПЕРЕДЕЛАТЬ */
+  }
+  .add-group {
+    min-width: clamp(140px, 22vw, 200px);
   }
   .groups__item {
     display: flex;
@@ -19,8 +24,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 200px; /*- ПЕРЕДЕЛАЙ НА clamp */
-    padding: 40px 0;
+    width: clamp(140px, 22vw, 200px);
+    padding: clamp(25px, 5vw, 40px) 0;
     border: 1px solid var(--light-main-text);
     background: var(--light-secondary-emphasis-bg);
     border-radius: 25px;
