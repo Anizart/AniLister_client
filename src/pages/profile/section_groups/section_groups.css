@@ -1,0 +1,67 @@
+.groups {
+  .groups__title {
+    font-size: var(--clamp-btn-text);
+    margin-bottom: 28px;
+  }
+  .groups__wrapper {
+    display: flex;
+    gap: 48px;
+  }
+  .groups__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .groups__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px; /*- ПЕРЕДЕЛАЙ НА clamp */
+    padding: 40px 0;
+    border: 1px solid var(--light-main-text);
+    background: var(--light-secondary-emphasis-bg);
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: var(--clamp-btn-text);
+    transition: 0.3s;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+  .groups__plate {
+    display: flex;
+    justify-content: center;
+    padding: 55px 0 6px;
+    gap: 48px;
+    border: 1px solid var(--light-main-text);
+    border-radius: 25px;
+    background: var(--light-secondary-emphasis-bg);
+    transition: 0.3s;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .groups__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+    width: 36px;
+    border-radius: 5px;
+    transition: inherit;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+  .groups__item:hover .groups__plate {
+    bottom: -48px;
+  }
+}

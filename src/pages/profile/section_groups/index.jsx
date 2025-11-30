@@ -1,0 +1,82 @@
+import { Link } from "react-router-dom"
+
+import "./section_groups.css"
+
+const Groups = ({ mode }) => {
+  return (
+    <div className="container">
+      <section className="groups">
+        <h1 className="groups__title title">Ваши группы:</h1>
+        <div className="groups__wrapper">
+          <div className="groups__group add-group">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                y1="23.5"
+                x2="48"
+                y2="23.5"
+                stroke={
+                  mode ? "var(--dark-main-text)" : "var(--light-main-text)"
+                }
+              />
+              <line
+                x1="24.5"
+                y1="2.18557e-08"
+                x2="24.5"
+                y2="48"
+                stroke={
+                  mode ? "var(--dark-main-text)" : "var(--light-main-text)"
+                }
+              />
+            </svg>
+          </div>
+          <div className="groups__item">
+            <Link to="#" className="groups__group">
+              <h2 className="groups__name">Манга</h2>
+              <div className="groups__counter">[18]</div>
+            </Link>
+            <div className="groups__plate">
+              <button type="button" className="groups__btn">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26.5707 0C25.1928 0 23.8149 0.534704 22.7455 1.60411L1.93316 22.4165L1.8509 22.8278L0.411311 30.0668L0 32L1.93316 31.5887L9.17224 30.1491L9.58355 30.0668L30.3959 9.2545C32.5347 7.11568 32.5347 3.74293 30.3959 1.60411C29.3265 0.534704 27.9486 0 26.5707 0ZM26.5707 2.509C27.2339 2.509 27.9023 2.81234 28.545 3.45501C29.8252 4.73522 29.8252 6.12339 28.545 7.4036L27.599 8.30848L23.6915 4.40103L24.5964 3.45501C25.2391 2.81234 25.9075 2.509 26.5707 2.509ZM21.8406 6.25193L25.7481 10.1594L9.83033 26.0771C8.96658 24.3907 7.60925 23.0334 5.92288 22.1697L21.8406 6.25193ZM4.2365 24.3085C5.81491 24.946 7.05398 26.1851 7.69152 27.7635L3.37275 28.6272L4.2365 24.3085Z"
+                    fill={
+                      mode ? "var(--dark-main-text)" : "var(--light-main-text)"
+                    }
+                  />
+                </svg>
+              </button>
+              <button type="button" className="groups__btn">
+                <svg
+                  width="27"
+                  height="32"
+                  viewBox="0 0 27 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.8 0C10.0934 0 9.3709 0.244792 8.85938 0.75C8.34785 1.25521 8.1 1.96875 8.1 2.66667V4H0V6.66667H1.35V28C1.35 30.1927 3.17988 32 5.4 32H21.6C23.8201 32 25.65 30.1927 25.65 28V6.66667H27V4H18.9V2.66667C18.9 1.96875 18.6521 1.25521 18.1406 0.75C17.6291 0.244792 16.9066 0 16.2 0H10.8ZM10.8 2.66667H16.2V4H10.8V2.66667ZM4.05 6.66667H22.95V28C22.95 28.7396 22.3488 29.3333 21.6 29.3333H5.4C4.65117 29.3333 4.05 28.7396 4.05 28V6.66667ZM6.75 10.6667V25.3333H9.45V10.6667H6.75ZM12.15 10.6667V25.3333H14.85V10.6667H12.15ZM17.55 10.6667V25.3333H20.25V10.6667H17.55Z"
+                    fill="var(--warning-color)"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default Groups

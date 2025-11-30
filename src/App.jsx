@@ -93,7 +93,12 @@ function App() {
                 />
               }
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile mode={mode} onOpenModal={() => setIsModalOpen(true)} />
+              }
+            />
             <Route path="*" element={<NotfoundPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />

@@ -71,8 +71,29 @@ body {
     }
 
     /*+ Modals */
-    .modal .modal__content {
-      background-color: var(--dark-main-bg);
+    .modal {
+      background: rgba(82, 82, 82, 0.5);
+
+      .modal__content {
+        background-color: var(--dark-main-bg);
+      }
+    }
+
+    /* + Карточки прупп */
+    .groups__group {
+      border: 1px solid var(--dark-main-text);
+      background: var(--dark-secondary-emphasis-bg);
+
+      &:hover {
+        background: #2f2f2f;
+      }
+    }
+    .groups__plate {
+      border: 1px solid var(--dark-main-text);
+      background: var(--dark-secondary-emphasis-bg);
+    }
+    .groups__btn:hover {
+      background: #2f2f2f;
     }
   }
 }
