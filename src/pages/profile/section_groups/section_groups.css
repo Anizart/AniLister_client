@@ -6,8 +6,28 @@
   .groups__wrapper {
     display: flex;
     flex-wrap: wrap;
-    column-gap: 40px; /*- НА clamp ПЕРЕДЕЛАТЬ */
-    row-gap: 80px; /*- НА clamp ПЕРЕДЕЛАТЬ */
+    column-gap: 40px;
+    row-gap: 80px;
+  }
+  @media (max-width: 1189px) {
+    .groups__wrapper {
+      column-gap: 78px;
+    }
+  }
+  @media (max-width: 1078px) {
+    .groups__wrapper {
+      column-gap: 50px;
+    }
+  }
+  @media (max-width: 1055px) {
+    .groups__wrapper {
+      column-gap: 20px;
+    }
+  }
+  @media (max-width: 955px) {
+    .groups__wrapper {
+      padding-bottom: 50px;
+    }
   }
   .add-group {
     min-width: clamp(140px, 22vw, 200px);
@@ -19,12 +39,17 @@
     position: relative;
     z-index: 1;
   }
+  @media (max-width: 544px) {
+    .groups__item {
+      width: 100%;
+    }
+  }
   .groups__group {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: clamp(140px, 22vw, 200px);
+    width: 200px;
     padding: clamp(25px, 5vw, 40px) 0;
     border: 1px solid var(--light-main-text);
     background: var(--light-secondary-emphasis-bg);
@@ -35,6 +60,24 @@
 
     &:hover {
       background: #f0f0f0;
+    }
+  }
+  @media (max-width: 1055px) {
+    .groups__group {
+      padding: clamp(40px, 6vw, 60px) 0;
+      width: clamp(200px, 29vw, 300px);
+    }
+  }
+  @media (max-width: 684px) {
+    .groups__group {
+      padding: clamp(55px, 9vw, 60px) 0;
+      width: clamp(240px, 44vw, 300px);
+    }
+  }
+  @media (max-width: 544px) {
+    .groups__group {
+      padding: clamp(50px, 12vw, 60px) 0;
+      width: 100%;
     }
   }
   .groups__plate {
@@ -53,6 +96,19 @@
     bottom: 0;
     z-index: -1;
   }
+  @media (max-width: 1055px) {
+    .groups__plate {
+      gap: clamp(75px, 9vw, 88px);
+    }
+  }
+  @media (hover: none), (max-width: 789px) {
+    .groups__plate {
+      border: none !important;
+      background: transparent !important;
+
+      bottom: -48px;
+    }
+  }
   .groups__btn {
     display: flex;
     justify-content: center;
@@ -66,7 +122,10 @@
       background: #f0f0f0;
     }
   }
-  .groups__item:hover .groups__plate {
-    bottom: -48px;
+  /*+ Только для устройств с курсором */
+  @media (hover: hover) {
+    .groups__item:hover .groups__plate {
+      bottom: -48px;
+    }
   }
 }

@@ -71,6 +71,23 @@ function App() {
 
   //+ Modals
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  //+ Выход из модалки по нажатию на Escape
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsModalOpen(false)
+      }
+    }
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isModalOpen])
   //+ /Modals
 
   return (
