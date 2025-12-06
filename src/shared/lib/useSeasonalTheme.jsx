@@ -7,16 +7,11 @@ export const useSeasonalTheme = () => {
     const now = new Date()
     const year = now.getFullYear()
 
-    // Период: 20 декабря — 10 января
-    const start = new Date(year, 11, 20) // 20 декабря
-    let end = new Date(year, 0, 10) // 10 января
+    // Период: 15 декабря - 10 января
+    const start = new Date(year, 11, 15) // 15 декабря
+    const end = new Date(year + 1, 0, 10) // 10 января следующего года
 
-    // Если сейчас январь, беру предыдущий год
-    if (now.getMonth() === 0) {
-      end = new Date(year, 0, 10)
-    }
-
-    // Проверяю, входит ли сегодняшний день в диапазон
+    // Принадлежит ли текущая дата диапазону
     if (now >= start || now <= end) {
       setIsXmas(true)
     }
