@@ -92,10 +92,6 @@
   .info__wrapper + .info__wrapper {
     margin-left: 18px;
   }
-  .info__link {
-    text-decoration: underline;
-    text-underline-offset: 5px;
-  }
   @media (max-width: 1029px) {
     .footer__info {
       text-align: center;

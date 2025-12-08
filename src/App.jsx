@@ -10,7 +10,7 @@ import PrivacyPolicy from "./pages/legal/privacy_policy"
 import TermsOfService from "./pages/legal/terms_of_service"
 //+ Modals:
 import UnderConstructionModal from "./shared/ui/modals/under_construction_modal"
-import ModalSignUp from "./shared/ui/modals/modal_sign_up"
+import ModalSignUp from "./shared/ui/modals/auth_modals/modal_sign_up"
 
 function App() {
   //+ Тема
@@ -139,6 +139,7 @@ function App() {
         <ModalSignUp
           isOpen={isSignUpOpen}
           onClose={() => setIsSignUpOpen(false)}
+          onOpenUnderConstruction={() => setIsUnderConstructionOpen(true)} //- ВРЕМЕННО
           mode={mode}
         />
       </div>

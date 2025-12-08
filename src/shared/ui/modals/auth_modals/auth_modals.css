@@ -1,0 +1,60 @@
+.content-auth-modals {
+  width: clamp(350px, 51vw, 560px);
+  text-align: center;
+
+  .modal__wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+  }
+  .modal__wrapper-input {
+    width: 100%;
+    position: relative;
+  }
+  .modal__label {
+    background-color: var(--light-main-bg);
+    padding: 0 7px;
+    border: 1px solid var(--light-main-text);
+    border-radius: 25px;
+    position: absolute;
+    top: clamp(-11px, -1vw, -9px);
+    left: 20px;
+  }
+  .modal__input {
+    width: 100%;
+    padding: clamp(10px, 2.5vw, 21px) clamp(8px, 2vw, 15px);
+    border: 1px solid var(--light-main-text);
+    border-radius: 25px;
+    &:focus {
+      background: #f0f0f0;
+    }
+    &:user-valid {
+      border-color: var(--accent-text);
+    }
+    &:user-invalid {
+      border-color: var(--warning-color);
+    }
+  }
+
+  a.link-underline {
+    display: block;
+  }
+
+  .modal__btn {
+    max-width: fit-content;
+    margin: 0 auto;
+  }
+
+  /* Стили ошибок */
+  .modal__error {
+    display: block;
+    color: var(--warning-color);
+    margin-top: 4px;
+    min-height: 16px;
+  }
+
+  .modal__input--error {
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color);
+  }
+}

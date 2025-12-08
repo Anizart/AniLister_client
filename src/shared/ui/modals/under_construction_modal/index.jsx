@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom"
 import { useEffect } from "react"
 
+import "../modals.css"
 import "./under_construction_modal.css"
 import { useScrollLock } from "@/shared/lib/useScrollLock"
 import mascot from "/images/mascot_sorry.png"
