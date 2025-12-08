@@ -4,7 +4,7 @@ import Welcome from "./section_welcome/welcome"
 import Advantages from "./section_advantages/advantages"
 import Entice from "./section_entice/entice"
 
-const MainPage = ({ isModalOpen, onOpenModal }) => {
+const MainPage = ({ onOpenUnderConstruction }) => {
   //+ скролл вверх при переходе на страницу
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -12,9 +12,9 @@ const MainPage = ({ isModalOpen, onOpenModal }) => {
 
   return (
     <>
-      <Welcome isModalOpen={isModalOpen} onOpenModal={onOpenModal} />
+      <Welcome onOpenUnderConstruction={onOpenUnderConstruction} />
       <Advantages />
-      <Entice isModalOpen={isModalOpen} onOpenModal={onOpenModal} />
+      <Entice onOpenUnderConstruction={onOpenUnderConstruction} />
     </>
   )
 }

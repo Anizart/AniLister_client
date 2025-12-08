@@ -5,7 +5,12 @@ import "./header.css"
 import Logo from "../../ui/logo"
 // import { userProfile } from "@/shared/api/user" //- !
 
-const Header = ({ mode, onToggleMode, onOpenModal }) => {
+const Header = ({
+  mode,
+  onToggleMode,
+  onOpenUnderConstruction,
+  onOpenSignUp,
+}) => {
   const [user, setUser] = useState(null) // user
 
   //+ Получение пользователя:
@@ -70,7 +75,7 @@ const Header = ({ mode, onToggleMode, onOpenModal }) => {
                   type="button"
                   className="header__sign"
                   // onClick={() => setIsSignInOpen(!isSignInOpen)} //- !
-                  onClick={onOpenModal} // - ВРЕМЕННО
+                  onClick={onOpenUnderConstruction} // - ВРЕМЕННО
                 >
                   Войти
                 </button>
@@ -78,7 +83,7 @@ const Header = ({ mode, onToggleMode, onOpenModal }) => {
                   type="button"
                   className="header__sign"
                   // onClick={() => setIsSignUpOpen(!isSignUpOpen)} //- !
-                  onClick={onOpenModal} // - ВРЕМЕННО
+                  onClick={onOpenSignUp}
                 >
                   Регистрация
                 </button>

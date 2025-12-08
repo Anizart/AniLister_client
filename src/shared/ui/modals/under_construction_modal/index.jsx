@@ -22,7 +22,10 @@ const UnderConstructionModal = ({ mode, isOpen, onClose }) => {
 
   return createPortal(
     <div className="modal" onClick={onClose}>
-      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal__content content-under-constructio"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button className="modal__btn-close" onClick={onClose}>
           <svg
             width="38"

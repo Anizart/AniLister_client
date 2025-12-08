@@ -6,7 +6,7 @@ import circles from "/images/circles_1.png"
 import { useSeasonalTheme } from "/src/shared/lib/useSeasonalTheme" // для нового года
 
 // - в разработке (ЗАМЕНИТЬ)
-const Welcome = ({ onOpenModal }) => {
+const Welcome = ({ onOpenUnderConstruction }) => {
   const { isXmas } = useSeasonalTheme() // для нового года
 
   return (
@@ -31,7 +31,11 @@ const Welcome = ({ onOpenModal }) => {
             и вспомнить — в одном месте.
             <br /> AniLister — твой личный дневник.
           </div>
-          <button type="button" className="btn" onClick={onOpenModal}>
+          <button
+            type="button"
+            className="btn"
+            onClick={onOpenUnderConstruction}
+          >
             Начать список
           </button>
         </div>

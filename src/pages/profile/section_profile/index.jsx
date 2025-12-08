@@ -2,7 +2,7 @@ import "./profile.css"
 
 import default_image from "/images/svg/default_image.svg"
 
-const UserProfile = ({ onOpenModal }) => {
+const UserProfile = ({ onOpenUnderConstruction }) => {
   return (
     <div className="container">
       <section className="profile">
@@ -16,21 +16,25 @@ const UserProfile = ({ onOpenModal }) => {
           </div>
         </div>
         <div className="profile__btn">
-          <button type="button" className="btn" onClick={onOpenModal}>
+          <button
+            type="button"
+            className="btn"
+            onClick={onOpenUnderConstruction}
+          >
             Изменить
           </button>
           <div className="profile__btn-red">
             <button
               type="button"
               className="btn btn-warning"
-              onClick={onOpenModal}
+              onClick={onOpenUnderConstruction}
             >
               Выйти
             </button>
             <button
               type="button"
               className="btn btn-warning"
-              onClick={onOpenModal}
+              onClick={onOpenUnderConstruction}
             >
               Удалить
             </button>
