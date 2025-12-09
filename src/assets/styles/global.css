@@ -65,6 +65,9 @@ body {
     .link.active::after {
       background: var(--dark-main-text);
     }
+    .link-underline {
+      color: var(--dark-main-text);
+    }
 
     .footer__elem + .footer__elem::before {
       background-color: var(--dark-main-text);
@@ -217,7 +220,7 @@ body {
   transition: 0.3s;
 
   &:hover {
-    color: var(--accent-text);
+    color: var(--accent-text) !important;
   }
 }
 

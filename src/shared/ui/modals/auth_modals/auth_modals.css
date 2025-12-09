@@ -1,3 +1,22 @@
+/*+ Убираю фон автозаполнения браузера */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px var(--light-main-bg) inset !important;
+  -webkit-text-fill-color: var(--dark-main-text) !important;
+}
+
+/* Для тёмной темы */
+body.dark input:-webkit-autofill,
+body.dark input:-webkit-autofill:hover,
+body.dark input:-webkit-autofill:focus,
+body.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px var(--dark-main-bg) inset !important;
+  -webkit-text-fill-color: var(--dark-main-text) !important;
+}
+/* /Убираю фон автозаполнения браузера */
+
 .content-auth-modals {
   width: clamp(350px, 51vw, 560px);
   text-align: center;
@@ -19,6 +38,7 @@
     position: absolute;
     top: clamp(-11px, -1vw, -9px);
     left: 20px;
+    z-index: 10;
   }
   .modal__input {
     width: 100%;

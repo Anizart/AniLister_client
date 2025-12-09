@@ -5,12 +5,7 @@ import "./header.css"
 import Logo from "../../ui/logo"
 // import { userProfile } from "@/shared/api/user" //- !
 
-const Header = ({
-  mode,
-  onToggleMode,
-  onOpenUnderConstruction,
-  onOpenSignUp,
-}) => {
+const Header = ({ mode, onToggleMode, onOpenSignUp, onOpenAuthentication }) => {
   const [user, setUser] = useState(null) // user
 
   //+ Получение пользователя:
@@ -74,15 +69,13 @@ const Header = ({
                 <button
                   type="button"
                   className="header__sign"
-                  // onClick={() => setIsSignInOpen(!isSignInOpen)} //- !
-                  onClick={onOpenUnderConstruction} // - ВРЕМЕННО
+                  onClick={onOpenAuthentication}
                 >
                   Войти
                 </button>
                 <button
                   type="button"
                   className="header__sign"
-                  // onClick={() => setIsSignUpOpen(!isSignUpOpen)} //- !
                   onClick={onOpenSignUp}
                 >
                   Регистрация

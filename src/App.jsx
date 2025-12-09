@@ -11,6 +11,7 @@ import TermsOfService from "./pages/legal/terms_of_service"
 //+ Modals:
 import UnderConstructionModal from "./shared/ui/modals/under_construction_modal"
 import ModalSignUp from "./shared/ui/modals/auth_modals/modal_sign_up"
+import ModalAuthentication from "./shared/ui/modals/auth_modals/modal_authentication"
 
 function App() {
   //+ Тема
@@ -74,6 +75,7 @@ function App() {
   //+ Modals
   const [isUnderConstructionOpen, setIsUnderConstructionOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
+  const [isAuthenticationOpen, setIsAuthenticationOpen] = useState(false)
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -81,15 +83,16 @@ function App() {
       if (e.key === "Escape") {
         setIsUnderConstructionOpen(false)
         setIsSignUpOpen(false)
+        setIsAuthenticationOpen(false)
         //- СЮДА ДРУГИЕ МОДАЛКИ
       }
     }
 
-    if (isUnderConstructionOpen || isSignUpOpen) {
+    if (isUnderConstructionOpen || isSignUpOpen || isAuthenticationOpen) {
       document.addEventListener("keydown", handleKeyDown)
       return () => document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [isUnderConstructionOpen, isSignUpOpen])
+  }, [isUnderConstructionOpen, isSignUpOpen, isAuthenticationOpen])
   //+ /Modals
 
   return (
@@ -98,8 +101,8 @@ function App() {
         <Header
           mode={mode}
           onToggleMode={handleToggleMode}
-          onOpenUnderConstruction={() => setIsUnderConstructionOpen(true)}
           onOpenSignUp={() => setIsSignUpOpen(true)}
+          onOpenAuthentication={() => setIsAuthenticationOpen(true)}
         />
         <main className="main">
           <Routes>
@@ -139,6 +142,14 @@ function App() {
         <ModalSignUp
           isOpen={isSignUpOpen}
           onClose={() => setIsSignUpOpen(false)}
+          onOpenAuthentication={() => setIsAuthenticationOpen(true)}
+          onOpenUnderConstruction={() => setIsUnderConstructionOpen(true)} //- ВРЕМЕННО
+          mode={mode}
+        />
+        <ModalAuthentication
+          isOpen={isAuthenticationOpen}
+          onClose={() => setIsAuthenticationOpen(false)}
+          onOpenSignUp={() => setIsSignUpOpen(true)}
           onOpenUnderConstruction={() => setIsUnderConstructionOpen(true)} //- ВРЕМЕННО
           mode={mode}
         />

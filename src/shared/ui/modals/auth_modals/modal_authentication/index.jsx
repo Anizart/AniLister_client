@@ -8,23 +8,21 @@ import { Link } from "react-router-dom"
 
 import PasswordInput from "@/shared/ui/modals/password_input"
 
-const ModalSignUp = ({
+const ModalAuthentication = ({
   mode,
   isOpen,
   onClose,
-  onOpenAuthentication,
+  onOpenSignUp,
   onOpenUnderConstruction,
 }) => {
   useScrollLock(isOpen)
 
   // Состояния полей
-  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   // Состояния ошибок
   const [errors, setErrors] = useState({
-    name: "",
     email: "",
     password: "",
   })
@@ -35,10 +33,9 @@ const ModalSignUp = ({
   // Сброс формы при закрытии
   useEffect(() => {
     if (!isOpen) {
-      setName("")
       setEmail("")
       setPassword("")
-      setErrors({ name: "", email: "", password: "" })
+      setErrors({ email: "", password: "" })
       setIsSubmitted(false)
     }
   }, [isOpen])
@@ -56,15 +53,6 @@ const ModalSignUp = ({
   if (!isOpen) return null
 
   // Валидаторы
-  const validateName = (value) => {
-    if (!value.trim()) return "Имя не может быть пустым"
-    if (value.length > 15) return "Имя не должно превышать 15 символов"
-    if (!/^[a-zA-Zа-яА-Я0-9_-]+$/.test(value)) {
-      return "Разрешены только буквы, цифры, _ и -"
-    }
-    return ""
-  }
-
   const validateEmail = (value) => {
     if (!value.trim()) return "Email обязателен"
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -84,14 +72,6 @@ const ModalSignUp = ({
   // /Валидаторы
 
   // Проверка при изменении поля
-  const handleNameChange = (e) => {
-    const value = e.target.value
-    setName(value)
-    if (isSubmitted) {
-      setErrors((prev) => ({ ...prev, name: validateName(value) }))
-    }
-  }
-
   const handleEmailChange = (e) => {
     const value = e.target.value
     setEmail(value)
@@ -112,13 +92,12 @@ const ModalSignUp = ({
     e.preventDefault()
     setIsSubmitted(true)
 
-    const nameError = validateName(name)
     const emailError = validateEmail(email)
     const passwordError = validatePassword(password)
 
-    setErrors({ name: nameError, email: emailError, password: passwordError })
+    setErrors({ email: emailError, password: passwordError })
 
-    const isValid = !nameError && !emailError && !passwordError
+    const isValid = !emailError && !passwordError
     if (isValid) {
       // ✅ Валидация прошла — временно открываю under construction
       onClose()
@@ -151,78 +130,59 @@ const ModalSignUp = ({
           autoComplete="on"
           onSubmit={handleSubmit}
         >
-          <h2 className="title">Регистрация</h2>
+          <h2 className="title">Вход</h2>
           <div className="modal__wrapper-input">
-            <label htmlFor="signup-name" className="modal__label">
-              Имя/Ник
-            </label>
-            <input
-              type="text"
-              name="signup-name"
-              autoComplete="username"
-              id="signup-name"
-              className={`modal__input ${
-                errors.name ? "modal__input--error" : ""
-              }`}
-              value={name}
-              onChange={handleNameChange}
-              placeholder="(до 15 символов)"
-              tabIndex={1}
-            />
-            {errors.name && <span className="modal__error">{errors.name}</span>}
-          </div>
-          <div className="modal__wrapper-input">
-            <label htmlFor="signup-email" className="modal__label">
+            <label htmlFor="signin-email" className="modal__label">
               E-mail
             </label>
             <input
               type="email"
-              name="signup-email"
+              name="signin-email"
               autoComplete="email"
-              id="signup-email"
+              id="signin-email"
               className={`modal__input ${
                 errors.email ? "modal__input--error" : ""
               }`}
               value={email}
               onChange={handleEmailChange}
               placeholder="email@gmail.com"
-              tabIndex={2}
+              tabIndex={1}
             />
             {errors.email && (
               <span className="modal__error">{errors.email}</span>
             )}
           </div>
           <div className="modal__wrapper-input">
-            <label htmlFor="signup-password" className="modal__label">
+            <label htmlFor="signin-password" className="modal__label">
               Пароль
             </label>
             <PasswordInput
               mode={mode}
-              id="signup-password"
-              name="signup-password"
+              id="signin-password"
+              name="signin-password"
               value={password}
               onChange={handlePasswordChange}
               placeholder="Как можно надёжнее"
               error={errors.password}
-              tabIndex={3}
-              autoComplete="new-password"
+              tabIndex={2}
+              autoComplete="current-password"
             />
             {errors.password && (
               <span className="modal__error">{errors.password}</span>
             )}
           </div>
           <p>
-            Уже есть аккаунт?{" "}
+            Нет учетной записи?{" "}
             <button
               type="button"
               className="link-underline"
               onClick={() => {
                 onClose()
-                onOpenAuthentication()
+                onOpenSignUp()
               }}
-              tabIndex={4}
+              tabIndex={3}
             >
-              Войти
+              Зарегистрироваться
             </button>
           </p>
           <span>
@@ -231,7 +191,7 @@ const ModalSignUp = ({
               to="/privacy-policy"
               target="_blank"
               className="link-underline"
-              tabIndex={5}
+              tabIndex={4}
             >
               Политику конфиденциальности
             </Link>
@@ -240,12 +200,12 @@ const ModalSignUp = ({
               to="/terms-of-service"
               target="_blank"
               className="link-underline"
-              tabIndex={6}
+              tabIndex={5}
             >
               Пользовательское соглашение
             </Link>
           </span>
-          <button type="submit" className="btn modal__btn" tabIndex={7}>
+          <button type="submit" className="btn modal__btn" tabIndex={6}>
             Готово
           </button>
         </form>
@@ -255,4 +215,4 @@ const ModalSignUp = ({
   )
 }
 
-export default ModalSignUp
+export default ModalAuthentication
