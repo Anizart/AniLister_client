@@ -12,6 +12,7 @@ import TermsOfService from "./pages/legal/terms_of_service"
 import UnderConstructionModal from "./shared/ui/modals/under_construction_modal"
 import ModalSignUp from "./shared/ui/modals/auth_modals/modal_sign_up"
 import ModalAuthentication from "./shared/ui/modals/auth_modals/modal_authentication"
+import List from "./pages/list"
 
 function App() {
   //+ Тема
@@ -127,9 +128,21 @@ function App() {
                 />
               }
             />
-            <Route path="*" element={<NotfoundPage />} />
+            <Route
+              path="list"
+              //- list/:groupId так когда появится бэк
+              element={
+                <List
+                  mode={mode}
+                  onOpenUnderConstruction={() =>
+                    setIsUnderConstructionOpen(true)
+                  }
+                />
+              }
+            />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="*" element={<NotfoundPage />} />
           </Routes>
         </main>
         <Footer mode={mode} />
