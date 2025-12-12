@@ -54,37 +54,33 @@ const BackSearchHeader = ({ mode, onOpenUnderConstruction }) => {
           {/* Поиск */}
           {/* <form onSubmit={handleSubmit} className="search-form"> */}
           <form className="back-searh-header__search-form">
-            <div className="back-search-header__search">
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Введите название ..."
-                className="back-search-header__input"
-                aria-label={`Поиск в разделе `} // потом добавишь: ${title} - манга
-                onClick={onOpenUnderConstruction} //- ВРЕМЕННО
-              />
-              <button
-                type="button"
-                className="back-search-header__clear-btn"
-                onClick={handleClear}
-                aria-label="Очистить поиск"
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Введите название ..."
+              className="back-search-header__input"
+              aria-label={`Поиск в разделе `} // потом добавишь: ${title} - манга
+              onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            />
+            <button
+              type="button"
+              className="btn back-search-header__clear-btn"
+              onClick={handleClear}
+              aria-label="Очистить поиск"
+            >
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke={mode ? "var(--accent-text)" : "var(--light-main-text)"}
               >
-                <svg
-                  width="21"
-                  height="21"
-                  viewBox="0 0 21 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  stroke={
-                    mode ? "var(--accent-text)" : "var(--light-main-text)"
-                  }
-                >
-                  <path d="M0.353516 0.353577L19.8682 19.8682" />
-                  <path d="M19.8682 0.760132L0.353516 20.2748" />
-                </svg>
-              </button>
-            </div>
+                <path d="M0.353516 0.353577L19.8682 19.8682" />
+                <path d="M19.8682 0.760132L0.353516 20.2748" />
+              </svg>
+            </button>
           </form>
         </div>
       </div>

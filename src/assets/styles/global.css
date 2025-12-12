@@ -7,11 +7,10 @@
     sans-serif;
   /*+ Color text */
   --accent-text: #4fd10c;
+  --light-main-text: #1a1a1a;
+  --dark-main-text: #e0e0e0;
   --warning-color: #d71062;
 
-  --light-main-text: #1a1a1a;
-
-  --dark-main-text: #e0e0e0;
   /*+ Color bg */
   --light-main-bg: #f8f9fa;
   --light-secondary-emphasis-bg: #e9e9e9;
@@ -108,6 +107,25 @@ body {
     }
     .groups__btn:hover {
       background: #2f2f2f;
+    }
+
+    /*+ Компанент: List */
+    .back-searh-header__link:hover svg path {
+      fill: var(--light-main-text) !important;
+    }
+    .back-searh-header__name-list:hover {
+      color: var(--accent-text) !important;
+    }
+
+    .back-search-header__input {
+      color: var(--dark-main-text);
+      border-color: var(--accent-text) !important;
+      &:focus {
+        background: var(--dark-secondary-emphasis-bg) !important;
+      }
+    }
+    .back-search-header__clear-btn:hover svg path {
+      stroke: var(--light-main-text) !important;
     }
   }
 }
