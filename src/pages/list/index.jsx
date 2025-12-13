@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 import BackSearchHeader from "./back_searh_header"
+import SavedContent from "./saved_content"
 
 const List = ({ mode, onOpenUnderConstruction }) => {
   //+ скролл вверх при переходе на страницу
@@ -11,6 +12,10 @@ const List = ({ mode, onOpenUnderConstruction }) => {
   return (
     <>
       <BackSearchHeader
+        mode={mode}
+        onOpenUnderConstruction={onOpenUnderConstruction}
+      />
+      <SavedContent
         mode={mode}
         onOpenUnderConstruction={onOpenUnderConstruction}
       />
