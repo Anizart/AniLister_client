@@ -1,3 +1,9 @@
 .section-list-content {
   margin-top: clamp(28px, 4vw, 48px);
+
+  /*! можно вырезать и сделать глобальным */
+  .filter {
+    .filter__wrapper {
+    }
+  }
 }
