@@ -8,20 +8,21 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
     <section className="section-list-content">
       <div className="container">
         <div className="filter">
-          <div className="filter__wrapper">
-            <button type="button" class="filter__tag" data-filter="all">
-              Всего прочитано: 3
-            </button>
-            <button type="button" class="filter__tag" data-filter="liked">
-              Понравилось: 1
-            </button>
-            <button type="button" class="filter__tag" data-filter="favorites">
-              Любимые: 1
-            </button>
-            <button type="button" class="filter__tag" data-filter="to-read">
-              Стоит перечитать: 1
-            </button>
-          </div>
+          <button type="button" class="filter__tag" data-filter="all">
+            Всего прочитано: 3
+          </button>
+          <button type="button" class="filter__tag" data-filter="liked">
+            Понравилось: 1
+          </button>
+          <button type="button" class="filter__tag" data-filter="favorites">
+            Любимые: 1
+          </button>
+          <button type="button" class="filter__tag" data-filter="to-read">
+            Стоит перечитать: 1
+          </button>
+          <button type="button" class="filter__tag" data-filter="to-read">
+            Брошено: 0
+          </button>
         </div>
         <button
           className="btn section-list-content__btn-add"
@@ -42,8 +43,8 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
           </svg>
           Карточку
         </button>
-        {/* Для демонстрации и структуры: */}
         <div class="section-list-content__cards">
+          {/* Для демонстрации и структуры: */}
           <div
             class="section-list-content__card"
             data-tags="all favorites to-read"

@@ -127,6 +127,26 @@ body {
     .back-search-header__clear-btn:hover svg path {
       stroke: var(--light-main-text) !important;
     }
+
+    .filter {
+      border: 1px solid var(--accent-text);
+
+      .filter__tag {
+        color: var(--accent-text);
+
+        &:hover {
+          color: #000;
+          background: var(--accent-text);
+        }
+
+        &::after {
+          background-color: var(--accent-text);
+        }
+      }
+    }
+    .section-list-content__btn-add:hover svg {
+      stroke: #000;
+    }
   }
 }
 

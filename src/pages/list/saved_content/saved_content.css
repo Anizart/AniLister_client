@@ -3,7 +3,136 @@
 
   /*! можно вырезать и сделать глобальным */
   .filter {
-    .filter__wrapper {
+    display: flex;
+    justify-content: center;
+    border: 1px solid var(--light-main-text);
+    border-radius: 25px;
+    overflow: hidden;
+
+    .filter__tag {
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: fit-content;
+      padding: 38px 18px;
+      font-family: var(--distinguishing-font-family);
+      transition: 0.3s;
+      position: relative;
+
+      &:hover {
+        color: #fff;
+        background: var(--light-main-text);
+      }
+
+      &:first-child,
+      &:last-child {
+        max-width: 100%;
+        text-align: right;
+      }
+      &:last-child {
+        width: 85%;
+        text-align: left;
+      }
+      &::after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 1px;
+        background-color: var(--light-main-text);
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      &:last-child::after {
+        display: none;
+      }
+    }
+  }
+
+  .section-list-content__btn-add {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    column-gap: 18px;
+    margin-top: 18px;
+
+    svg {
+      transition: 0.3s;
+    }
+    &:hover svg {
+      stroke: #fff;
+    }
+  }
+
+  .section-list-content__cards {
+    margin-top: 18px;
+
+    .section-list-content__card {
+      padding: 18px;
+      background-color: var(--light-secondary-emphasis-bg);
+      border: 1px solid var(--light-main-text);
+      border-radius: 25px;
+      overflow: hidden;
+
+      & + .section-list-content__card {
+        margin-top: 18px;
+      }
+
+      .section-list-content__info {
+        display: flex;
+        gap: 18px;
+      }
+      .section-list-content__details {
+        display: flex;
+        gap: inherit;
+      }
+      .section-list-content__img {
+        height: 164px;
+        width: 128px;
+        border: 1px solid var(--light-main-text);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .section-list-content__info-wrap {
+        display: flex;
+        max-width: 440px;
+        flex-direction: column;
+        row-gap: 120px;
+      }
+      .section-list-content__name {
+        max-height: 48px;
+        font-size: clamp(14px, 2vw, 16px);
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        /* Для IE и Edge (старые версии) */
+        & {
+          -ms-overflow-style: none;
+        }
+        /* Для Firefox */
+        & {
+          scrollbar-width: none;
+        }
+      }
+      .section-list-content__specialty {
+        display: flex;
+        gap: 18px;
+        font-size: clamp(12px, 1.5vw, 14px);
+      }
+
+      .section-list-content__marks {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .section-list-content__btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 18px;
+      }
     }
   }
 }
