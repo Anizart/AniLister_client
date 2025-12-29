@@ -2,13 +2,17 @@ import { Link } from "react-router-dom"
 
 import "./section_groups.css"
 
-const Groups = ({ mode }) => {
+const Groups = ({ mode, onOpenUnderConstruction }) => {
   return (
     <div className="container">
       <section className="groups">
         <h1 className="groups__title title">Ваши группы:</h1>
         <div className="groups__wrapper">
-          <div className="groups__group add-group">
+          <button
+            type="button"
+            className="groups__group add-group"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             <svg
               width="48"
               height="48"
@@ -34,9 +38,9 @@ const Groups = ({ mode }) => {
                 }
               />
             </svg>
-          </div>
+          </button>
           <div className="groups__item">
-            <Link to="#" className="groups__group">
+            <Link to="/list" className="groups__group">
               <h2 className="groups__name">Манга</h2>
               <div className="groups__counter">[18]</div>
             </Link>

@@ -84,10 +84,6 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
                 <div className="section-list-content__info-wrap">
                   <p className="section-list-content__name">
                     Я распродал свою жизнь. По десять тысяч иен за год.
-                    лварывлоар лварывлоар лварывлоар лварывлоар v лварывлоар
-                    лварывлоар лварывлоарлварывлоар vлварывлоар лварывлоар
-                    лварывлоар лварывлоар лварывлоар лварывлоар лварывлоар
-                    лварывлоар лварывлоар лварывлоар vлварывлоар v лварывлоар
                   </p>
                   <div className="section-list-content__specialty">
                     <p className="section-list-content__specialty-elem">

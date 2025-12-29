@@ -12,7 +12,7 @@ const Profile = ({ mode, onOpenUnderConstruction }) => {
   return (
     <>
       <UserProfile onOpenUnderConstruction={onOpenUnderConstruction} />
-      <Groups mode={mode} />
+      <Groups mode={mode} onOpenUnderConstruction={onOpenUnderConstruction} />
     </>
   )
 }
