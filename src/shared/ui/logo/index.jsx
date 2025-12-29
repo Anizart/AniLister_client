@@ -4,6 +4,7 @@ import logo_for_dark from "/images/svg/logo_for_dark.svg"
 import mobile_logo from "/images/svg/mobile_logo.svg"
 import mobile_logo_for_dark from "/images/svg/mobile_logo_for_dark.svg"
 
+import "./logo.css"
 import { useSeasonalTheme } from "../../lib/useSeasonalTheme" // для нового года
 
 const Logo = ({ mode }) => {

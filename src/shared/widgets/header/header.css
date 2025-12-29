@@ -18,12 +18,6 @@
     column-gap: clamp(20px, 4vw, 48px);
   }
 
-  /*+ Новый год: */
-  .header__christmas-img {
-    margin-left: 8px;
-  }
-  /*+ /Новый год: */
-
   /*+ Переключатель: */
   .header__toggle-container {
     height: 33px;
@@ -73,7 +67,7 @@
   }
   /*+ /Переключатель: */
 }
-@media (max-width: 407px) {
+@media (max-width: 434px) {
   .header {
     padding: 5px 0;
 
