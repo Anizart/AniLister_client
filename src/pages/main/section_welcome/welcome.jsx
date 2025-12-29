@@ -1,4 +1,5 @@
 import "./welcome.css"
+import { Link } from "react-router-dom"
 
 import mascot from "/images/mascot_welcome-section.png"
 import mascotChristmas from "/images/mascot_welcome-section-christmas.png"
@@ -6,7 +7,7 @@ import circles from "/images/circles_1.png"
 import { useSeasonalTheme } from "/src/shared/lib/useSeasonalTheme" // для нового года
 
 // - в разработке (ЗАМЕНИТЬ)
-const Welcome = ({ onOpenUnderConstruction }) => {
+const Welcome = () => {
   const { isXmas } = useSeasonalTheme() // для нового года
 
   return (
@@ -31,13 +32,9 @@ const Welcome = ({ onOpenUnderConstruction }) => {
             и вспомнить — в одном месте.
             <br /> AniLister — твой личный дневник.
           </div>
-          <button
-            type="button"
-            className="btn"
-            onClick={onOpenUnderConstruction}
-          >
+          <Link to="/profile" className="btn">
             Начать список
-          </button>
+          </Link>
         </div>
       </div>
     </section>

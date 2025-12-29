@@ -205,6 +205,7 @@ body {
 }
 
 .btn {
+  display: inline-block;
   padding: clamp(10px, 1vw, 15px) clamp(13px, 1.2vw, 18px);
   font-size: var(--clamp-btn-text);
   background: var(--light-main-bg);

@@ -45,7 +45,11 @@ const Groups = ({ mode, onOpenUnderConstruction }) => {
               <div className="groups__counter">[18]</div>
             </Link>
             <div className="groups__plate">
-              <button type="button" className="groups__btn">
+              <button
+                type="button"
+                className="groups__btn"
+                onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+              >
                 <svg
                   width="32"
                   height="32"
@@ -61,7 +65,11 @@ const Groups = ({ mode, onOpenUnderConstruction }) => {
                   />
                 </svg>
               </button>
-              <button type="button" className="groups__btn">
+              <button
+                type="button"
+                className="groups__btn"
+                onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+              >
                 <svg
                   width="27"
                   height="32"

@@ -107,16 +107,7 @@ function App() {
         />
         <main className="main">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <MainPage
-                  onOpenUnderConstruction={() =>
-                    setIsUnderConstructionOpen(true)
-                  }
-                />
-              }
-            />
+            <Route path="/" element={<MainPage />} />
             <Route
               path="/profile"
               element={

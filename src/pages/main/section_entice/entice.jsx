@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
 
 import "./entice.css"
 
 import mascot from "/images/mascot_entice-section.png"
 import circle from "/images/circle_3.png"
 
-const Entice = ({ onOpenUnderConstruction }) => {
+const Entice = () => {
   const descriptionWrap = useRef(null)
   const questionWrap = useRef(null)
 
@@ -62,13 +63,9 @@ const Entice = ({ onOpenUnderConstruction }) => {
           <div ref={questionWrap} className="entice__question">
             <h2 className="title entice__title">Ну что?</h2>
             <div className="text question__text">Начнём?</div>
-            <button
-              type="button"
-              className="btn"
-              onClick={onOpenUnderConstruction}
-            >
+            <Link to="/profile" type="button" className="btn">
               Начать список
-            </button>
+            </Link>
           </div>
         </div>
       </div>
