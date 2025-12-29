@@ -31,7 +31,7 @@
     width: 1px;
     background-color: var(--light-main-text);
   }
-  @media (max-width: 1029px) {
+  @media (max-width: 1108px) {
     .footer__logo {
       margin: 0 auto;
       text-align: center;
@@ -92,7 +92,7 @@
   .info__wrapper + .info__wrapper {
     margin-left: 18px;
   }
-  @media (max-width: 1029px) {
+  @media (max-width: 1108px) {
     .footer__info {
       text-align: center;
     }

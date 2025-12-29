@@ -147,6 +147,12 @@ body {
     .section-list-content__btn-add:hover svg {
       stroke: #000;
     }
+
+    /* Карточки */
+    .section-list-content__card {
+      background-color: var(--dark-secondary-emphasis-bg) !important;
+      border: 1px solid var(--dark-main-text) !important;
+    }
   }
 }
 

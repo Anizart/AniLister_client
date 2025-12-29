@@ -8,19 +8,44 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
     <section className="section-list-content">
       <div className="container">
         <div className="filter">
-          <button type="button" class="filter__tag" data-filter="all">
+          <button
+            type="button"
+            class="filter__tag"
+            data-filter="all"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             Всего прочитано: 3
           </button>
-          <button type="button" class="filter__tag" data-filter="liked">
+          <button
+            type="button"
+            class="filter__tag"
+            data-filter="liked"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             Понравилось: 1
           </button>
-          <button type="button" class="filter__tag" data-filter="favorites">
+          <button
+            type="button"
+            class="filter__tag"
+            data-filter="favorites"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             Любимые: 1
           </button>
-          <button type="button" class="filter__tag" data-filter="to-read">
+          <button
+            type="button"
+            class="filter__tag"
+            data-filter="to-read"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             Стоит перечитать: 1
           </button>
-          <button type="button" class="filter__tag" data-filter="to-read">
+          <button
+            type="button"
+            class="filter__tag"
+            data-filter="to-read"
+            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          >
             Брошено: 0
           </button>
         </div>
@@ -59,6 +84,10 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
                 <div className="section-list-content__info-wrap">
                   <p className="section-list-content__name">
                     Я распродал свою жизнь. По десять тысяч иен за год.
+                    лварывлоар лварывлоар лварывлоар лварывлоар v лварывлоар
+                    лварывлоар лварывлоарлварывлоар vлварывлоар лварывлоар
+                    лварывлоар лварывлоар лварывлоар лварывлоар лварывлоар
+                    лварывлоар лварывлоар лварывлоар vлварывлоар v лварывлоар
                   </p>
                   <div className="section-list-content__specialty">
                     <p className="section-list-content__specialty-elem">
@@ -236,9 +265,7 @@ const SavedContent = ({ mode, onOpenUnderConstruction }) => {
                   className="section-list-content__img"
                 />
                 <div className="section-list-content__info-wrap">
-                  <p className="section-list-content__name">
-                    Я распродал свою жизнь. По десять тысяч иен за год.
-                  </p>
+                  <p className="section-list-content__name">Что-то</p>
                   <div className="section-list-content__specialty">
                     <p className="section-list-content__specialty-elem">
                       Том: 3-й
