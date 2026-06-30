@@ -1,10 +1,12 @@
-@import "./reset.css";
+@import './reset.css';
 
 :root {
   /*+ Font Family */
-  --distinguishing-font-family: "Comfortaa", "Comic Sans MS", cursive;
-  --main-font-family: "Nunito", "Helvetica Neue", Helvetica, Arial, "Segoe UI",
-    sans-serif;
+  --distinguishing-font-family:
+    'Comfortaa', 'Comic Sans MS', cursive;
+  --main-font-family:
+    'Nunito', 'Helvetica Neue', Helvetica, Arial,
+    'Segoe UI', sans-serif;
   /*+ Color text */
   --accent-text: #4fd10c;
   --light-main-text: #1a1a1a;
@@ -35,12 +37,16 @@ body {
   font-weight: 400;
   line-height: 1.36;
   background: var(--light-main-bg);
-  transition: background 0.3s, color 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s;
 
   &.dark {
     color: var(--dark-main-text);
     background: var(--dark-main-bg);
-    transition: background 0.3s, color 0.3s;
+    transition:
+      background 0.3s,
+      color 0.3s;
 
     .btn {
       color: var(--accent-text);
@@ -121,7 +127,9 @@ body {
       color: var(--dark-main-text);
       border-color: var(--accent-text) !important;
       &:focus {
-        background: var(--dark-secondary-emphasis-bg) !important;
+        background: var(
+          --dark-secondary-emphasis-bg
+        ) !important;
       }
     }
     .back-search-header__clear-btn:hover svg path {
@@ -150,8 +158,16 @@ body {
 
     /* Карточки */
     .section-list-content__card {
-      background-color: var(--dark-secondary-emphasis-bg) !important;
+      background-color: var(
+        --dark-secondary-emphasis-bg
+      ) !important;
       border: 1px solid var(--dark-main-text) !important;
+    }
+
+    /*+ Компанент: Toast */
+    .toast {
+      background-color: var(--light-main-bg);
+      color: var(--light-main-text);
     }
   }
 }
@@ -239,7 +255,7 @@ body {
     color: var(--accent-text) !important;
   }
   &::after {
-    content: "";
+    content: '';
     height: 1px;
     width: 0;
     display: block;
@@ -247,12 +263,12 @@ body {
     transition: inherit;
   }
   &:hover::after {
-    content: "";
+    content: '';
     width: 100%;
   }
 }
 .link.active::after {
-  content: "";
+  content: '';
   height: 1px;
   width: 100%;
   display: block;

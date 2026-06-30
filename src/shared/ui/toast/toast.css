@@ -1,0 +1,32 @@
+.toast {
+  max-height: 110px;
+  min-height: 55px;
+  max-width: clamp(280px, 18vw, 320px);
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  padding-right: 48px;
+  color: var(--dark-main-text);
+  background-color: var(--dark-main-bg);
+  transition: background-color 0.5s;
+
+  position: fixed;
+  z-index: 5001;
+  right: clamp(30px, 2.5vw, 48px);
+  bottom: clamp(50px, 4.5vw, 100px);
+
+  .toast__btn-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+@media (max-width: 400px) {
+  .toast {
+    max-width: 100%;
+    width: auto;
+
+    left: 15px;
+    right: 15px;
+  }
+}
