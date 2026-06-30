@@ -64,6 +64,9 @@ body {
       }
     }
 
+    .header {
+      background: rgba(18, 18, 18, 0.18);
+    }
     .header__sign {
       color: var(--dark-main-text);
     }
