@@ -1,0 +1,95 @@
+.modal__wrapper-input-title {
+  padding-top: 18px;
+
+  position: relative;
+
+  .modal__input-title {
+    width: 100%;
+    display: block;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid var(--light-main-text);
+  }
+
+  .modal__label-title {
+    display: block;
+    pointer-events: none;
+
+    position: absolute;
+    left: 8px;
+    top: 18px;
+    transition: 0.3s;
+  }
+  .modal__input-title:focus + .modal__label-title,
+  .modal__input-title:not(
+      :placeholder-shown
+    ).modal__input-title:not(:focus)
+    + .modal__label-title {
+    top: -2px;
+    left: 0px;
+  }
+}
+
+.modal__group-options {
+  margin: 18px 0;
+
+  .modal__options-title {
+    margin-bottom: 18px;
+    text-align: left;
+    font-size: var(--clamp-main-text);
+  }
+
+  .modal__checkbox-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+
+    .modal__checkbox-label {
+      display: flex;
+      align-items: center;
+      font-size: clamp(12px, 1.5vw, 14px);
+
+      .modal__checkbox {
+        /* Скрываю стандартный чекбокс */
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .modal__checkbox-custom {
+        width: 26px;
+        height: 26px;
+        border: 1px solid var(--light-main-text);
+        border-radius: 4px;
+        margin-right: 8px;
+        padding: 4px;
+        display: inline-block;
+        position: relative;
+      }
+
+      .modal__checkbox:checked
+        + .modal__checkbox-custom::after {
+        content: '';
+        position: absolute;
+        left: 40%;
+        top: 1px;
+        width: 6px;
+        height: 18px;
+        border: solid var(--light-main-text);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+  @media (max-width: 1095px) {
+    .modal__checkbox-group {
+      flex-direction: column;
+    }
+  }
+}
+
+.modal__wrap-btn {
+  display: flex;
+  justify-content: space-between;
+}

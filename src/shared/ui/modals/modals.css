@@ -1,3 +1,21 @@
+/*+ Убираю фон автозаполнения браузера */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px var(--light-main-bg) inset !important;
+  -webkit-text-fill-color: var(--dark-main-text) !important;
+}
+/* Для тёмной темы */
+body.dark input:-webkit-autofill,
+body.dark input:-webkit-autofill:hover,
+body.dark input:-webkit-autofill:focus,
+body.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px var(--dark-main-bg) inset !important;
+  -webkit-text-fill-color: var(--dark-main-text) !important;
+}
+/* /Убираю фон автозаполнения браузера */
+
 .modal {
   height: 100vh;
   width: 100%;

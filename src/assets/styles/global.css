@@ -100,6 +100,15 @@ body {
         background: var(--dark-secondary-emphasis-bg);
       }
     }
+    .modal__input-title {
+      color: var(--dark-main-text);
+      border-color: var(--dark-main-text);
+    }
+    .modal__checkbox-custom,
+    .modal__checkbox:checked
+      + .modal__checkbox-custom::after {
+      border-color: var(--dark-main-text) !important;
+    }
 
     /* + Карточки прупп */
     .groups__group {

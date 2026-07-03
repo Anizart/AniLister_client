@@ -1,12 +1,12 @@
-import { createPortal } from "react-dom"
-import { useState, useEffect } from "react"
+import { createPortal } from 'react-dom'
+import { useState, useEffect } from 'react'
 
-import "../../modals.css"
-import "../auth_modals.css"
-import { useScrollLock } from "@/shared/lib/useScrollLock"
-import { Link } from "react-router-dom"
+import '../../modals.css'
+import '../auth_modals.css'
+import { useScrollLock } from '@/shared/lib/useScrollLock'
+import { Link } from 'react-router-dom'
 
-import PasswordInput from "@/shared/ui/modals/password_input"
+import PasswordInput from '@/shared/ui/modals/password_input'
 
 const ModalAuthentication = ({
   mode,
@@ -18,13 +18,13 @@ const ModalAuthentication = ({
   useScrollLock(isOpen)
 
   // Состояния полей
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   // Состояния ошибок
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   })
 
   // Флаг: пробовали ли отправить (для показа ошибок)
@@ -33,9 +33,9 @@ const ModalAuthentication = ({
   // Сброс формы при закрытии
   useEffect(() => {
     if (!isOpen) {
-      setEmail("")
-      setPassword("")
-      setErrors({ email: "", password: "" })
+      setEmail('')
+      setPassword('')
+      setErrors({ email: '', password: '' })
       setIsSubmitted(false)
     }
   }, [isOpen])
@@ -43,10 +43,10 @@ const ModalAuthentication = ({
   // Запрещаю скролл при открытой модалке
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = 'hidden'
     }
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.overflow = ''
     }
   }, [isOpen])
 
@@ -54,20 +54,22 @@ const ModalAuthentication = ({
 
   // Валидаторы
   const validateEmail = (value) => {
-    if (!value.trim()) return "Email обязателен"
+    if (!value.trim()) return 'Email обязателен'
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      return "Неверный формат email"
+      return 'Неверный формат email'
     }
-    return ""
+    return ''
   }
 
   const validatePassword = (value) => {
-    if (!value) return "Пароль обязателен"
-    if (value.length < 6) return "Пароль должен быть не менее 6 символов"
+    if (!value) return 'Пароль обязателен'
+    if (value.length < 6)
+      return 'Пароль должен быть не менее 6 символов'
     if (!/[A-Z]/.test(value))
-      return "Пароль должен содержать англ-ю заглавную букву (A-Z)"
-    if (!/[0-9]/.test(value)) return "Пароль должен содержать цифру"
-    return ""
+      return 'Пароль должен содержать англ-ю заглавную букву (A-Z)'
+    if (!/[0-9]/.test(value))
+      return 'Пароль должен содержать цифру'
+    return ''
   }
   // /Валидаторы
 
@@ -76,7 +78,10 @@ const ModalAuthentication = ({
     const value = e.target.value
     setEmail(value)
     if (isSubmitted) {
-      setErrors((prev) => ({ ...prev, email: validateEmail(value) }))
+      setErrors((prev) => ({
+        ...prev,
+        email: validateEmail(value),
+      }))
     }
   }
 
@@ -84,7 +89,10 @@ const ModalAuthentication = ({
     const value = e.target.value
     setPassword(value)
     if (isSubmitted) {
-      setErrors((prev) => ({ ...prev, password: validatePassword(value) }))
+      setErrors((prev) => ({
+        ...prev,
+        password: validatePassword(value),
+      }))
     }
   }
 
@@ -95,87 +103,110 @@ const ModalAuthentication = ({
     const emailError = validateEmail(email)
     const passwordError = validatePassword(password)
 
-    setErrors({ email: emailError, password: passwordError })
+    setErrors({
+      email: emailError,
+      password: passwordError,
+    })
 
     const isValid = !emailError && !passwordError
     if (isValid) {
-      // ✅ Валидация прошла — временно открываю under construction
-      onClose()
+      // Валидация прошла — временно открываю under construction
       onOpenUnderConstruction()
+      onClose()
     }
   }
 
   return createPortal(
-    <div className="modal" onClick={onClose}>
+    <div
+      className='modal'
+      onClick={onClose}
+    >
       <div
-        className="modal__content content-auth-modals"
+        className='modal__content content-auth-modals'
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal__btn-close" onClick={onClose}>
+        <button
+          className='modal__btn-close'
+          onClick={onClose}
+        >
           <svg
-            width="38"
-            height="38"
-            viewBox="0 0 38 38"
-            xmlns="http://www.w3.org/2000/svg"
+            width='38'
+            height='38'
+            viewBox='0 0 38 38'
+            xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              d="M2.67278 0L0 2.67278L16.3272 19L0 35.3272L2.67278 38L19 21.6728L35.3272 38L38 35.3272L21.6728 19L38 2.67278L35.3272 0L19 16.3272L2.67278 0Z"
-              fill={mode ? "var(--dark-main-text)" : "var(--light-main-text)"}
+              d='M2.67278 0L0 2.67278L16.3272 19L0 35.3272L2.67278 38L19 21.6728L35.3272 38L38 35.3272L21.6728 19L38 2.67278L35.3272 0L19 16.3272L2.67278 0Z'
+              fill={
+                mode
+                  ? 'var(--dark-main-text)'
+                  : 'var(--light-main-text)'
+              }
             />
           </svg>
         </button>
         <form
           onClick={(e) => e.stopPropagation()}
-          className="modal__wrapper"
-          autoComplete="on"
+          className='modal__wrapper'
+          autoComplete='on'
           onSubmit={handleSubmit}
         >
-          <h2 className="title">Вход</h2>
-          <div className="modal__wrapper-input">
-            <label htmlFor="signin-email" className="modal__label">
+          <h2 className='title'>Вход</h2>
+          <div className='modal__wrapper-input'>
+            <label
+              htmlFor='signin-email'
+              className='modal__label'
+            >
               E-mail
             </label>
             <input
-              type="email"
-              name="signin-email"
-              autoComplete="email"
-              id="signin-email"
+              type='email'
+              name='signin-email'
+              autoComplete='email'
+              id='signin-email'
               className={`modal__input ${
-                errors.email ? "modal__input--error" : ""
+                errors.email ? 'modal__input--error' : ''
               }`}
               value={email}
               onChange={handleEmailChange}
-              placeholder="email@gmail.com"
+              placeholder='email@gmail.com'
               tabIndex={1}
             />
             {errors.email && (
-              <span className="modal__error">{errors.email}</span>
+              <span className='modal__error'>
+                {errors.email}
+              </span>
             )}
           </div>
-          <div className="modal__wrapper-input">
-            <label htmlFor="signin-password" className="modal__label">
+          <div className='modal__wrapper-input'>
+            <label
+              htmlFor='signin-password'
+              className='modal__label'
+            >
               Пароль
             </label>
             <PasswordInput
               mode={mode}
-              id="signin-password"
-              name="signin-password"
+              id='signin-password'
+              name='signin-password'
               value={password}
               onChange={handlePasswordChange}
-              placeholder="Как можно надёжнее"
+              placeholder='Как можно надёжнее'
               error={errors.password}
               tabIndex={2}
-              autoComplete="current-password"
+              autoComplete='current-password'
             />
             {errors.password && (
-              <span className="modal__error">{errors.password}</span>
+              <span className='modal__error'>
+                {errors.password}
+              </span>
             )}
           </div>
           <p>
-            Нет учетной записи?{" "}
+            Нет учетной записи?{' '}
             <button
-              type="button"
-              className="link-underline"
+              type='button'
+              className='link-underline'
               onClick={() => {
                 onClose()
                 onOpenSignUp()
@@ -188,30 +219,34 @@ const ModalAuthentication = ({
           <span>
             Нажимая «Готово», вы принимаете: <br />
             <Link
-              to="/privacy-policy"
-              target="_blank"
-              className="link-underline"
+              to='/privacy-policy'
+              target='_blank'
+              className='link-underline'
               tabIndex={4}
             >
               Политику конфиденциальности
             </Link>
             и
             <Link
-              to="/terms-of-service"
-              target="_blank"
-              className="link-underline"
+              to='/terms-of-service'
+              target='_blank'
+              className='link-underline'
               tabIndex={5}
             >
               Пользовательское соглашение
             </Link>
           </span>
-          <button type="submit" className="btn modal__btn" tabIndex={6}>
+          <button
+            type='submit'
+            className='btn modal__btn'
+            tabIndex={6}
+          >
             Готово
           </button>
         </form>
       </div>
     </div>,
-    document.body // рендерю в body, чтобы не мешали родительские стили
+    document.body, // рендерю в body, чтобы не мешали родительские стили
   )
 }
 

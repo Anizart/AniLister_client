@@ -17,6 +17,7 @@ import UnderConstructionModal from './shared/ui/modals/under_construction_modal'
 import ModalSignUp from './shared/ui/modals/auth_modals/modal_sign_up'
 import ModalAuthentication from './shared/ui/modals/auth_modals/modal_authentication'
 import List from './pages/list'
+import ModalCreatingGroup from './shared/ui/modals/creating_group'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -94,6 +95,8 @@ function App() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
   const [isAuthenticationOpen, setIsAuthenticationOpen] =
     useState(false)
+  const [isCreatingGroupOpen, setIsCreatingGroupOpen] =
+    useState(false)
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -102,6 +105,7 @@ function App() {
         setIsUnderConstructionOpen(false)
         setIsSignUpOpen(false)
         setIsAuthenticationOpen(false)
+        setIsCreatingGroupOpen(false)
         //- СЮДА ДРУГИЕ МОДАЛКИ
       }
     }
@@ -154,6 +158,9 @@ function App() {
                   onOpenUnderConstruction={() =>
                     setIsUnderConstructionOpen(true)
                   }
+                  onOpenCreatingGroup={() =>
+                    setIsCreatingGroupOpen(true)
+                  }
                 />
               }
             />
@@ -205,6 +212,14 @@ function App() {
           isOpen={isAuthenticationOpen}
           onClose={() => setIsAuthenticationOpen(false)}
           onOpenSignUp={() => setIsSignUpOpen(true)}
+          onOpenUnderConstruction={() =>
+            setIsUnderConstructionOpen(true)
+          } //- ВРЕМЕННО
+          mode={mode}
+        />
+        <ModalCreatingGroup
+          isOpen={isCreatingGroupOpen}
+          onClose={() => setIsCreatingGroupOpen(false)}
           onOpenUnderConstruction={() =>
             setIsUnderConstructionOpen(true)
           } //- ВРЕМЕННО

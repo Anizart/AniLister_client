@@ -1,9 +1,13 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
-import UserProfile from "./section_profile"
-import Groups from "./section_groups"
+import UserProfile from './section_profile'
+import Groups from './section_groups'
 
-const Profile = ({ mode, onOpenUnderConstruction }) => {
+const Profile = ({
+  mode,
+  onOpenUnderConstruction,
+  onOpenCreatingGroup,
+}) => {
   //+ скролл вверх при переходе на страницу
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -11,8 +15,14 @@ const Profile = ({ mode, onOpenUnderConstruction }) => {
 
   return (
     <>
-      <UserProfile onOpenUnderConstruction={onOpenUnderConstruction} />
-      <Groups mode={mode} onOpenUnderConstruction={onOpenUnderConstruction} />
+      <UserProfile
+        onOpenUnderConstruction={onOpenUnderConstruction}
+      />
+      <Groups
+        mode={mode}
+        onOpenUnderConstruction={onOpenUnderConstruction}
+        onOpenCreatingGroup={onOpenCreatingGroup}
+      />
     </>
   )
 }
