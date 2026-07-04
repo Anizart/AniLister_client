@@ -97,6 +97,8 @@ function App() {
     useState(false)
   const [isCreatingGroupOpen, setIsCreatingGroupOpen] =
     useState(false)
+  // Состояние для данных группы
+  const [editingGroup, setEditingGroup] = useState(null)
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -113,7 +115,9 @@ function App() {
     if (
       isUnderConstructionOpen ||
       isSignUpOpen ||
-      isAuthenticationOpen
+      isAuthenticationOpen ||
+      isCreatingGroupOpen
+      //- СЮДА ДРУГИЕ МОДАЛКИ
     ) {
       document.addEventListener('keydown', handleKeyDown)
       return () =>
@@ -126,7 +130,27 @@ function App() {
     isUnderConstructionOpen,
     isSignUpOpen,
     isAuthenticationOpen,
+    isCreatingGroupOpen,
   ])
+
+  //+ Group
+  // Функция открытия в режиме создания
+  const handleOpenCreate = () => {
+    setEditingGroup(null)
+    setIsCreatingGroupOpen(true)
+  }
+  // Функция открытия в режиме редактирования
+  const handleOpenEdit = (group) => {
+    setEditingGroup(group)
+    setIsCreatingGroupOpen(true)
+  }
+  // При закрытии очистка данных
+  const handleCloseGroupModal = () => {
+    setIsCreatingGroupOpen(false)
+    setEditingGroup(null)
+  }
+  //+ /Group
+
   //+ /Modals
 
   //+ Toast:
@@ -158,9 +182,8 @@ function App() {
                   onOpenUnderConstruction={() =>
                     setIsUnderConstructionOpen(true)
                   }
-                  onOpenCreatingGroup={() =>
-                    setIsCreatingGroupOpen(true)
-                  }
+                  onOpenCreatingGroup={handleOpenCreate}
+                  onOpenEditingGroup={handleOpenEdit}
                 />
               }
             />
@@ -219,12 +242,21 @@ function App() {
         />
         <ModalCreatingGroup
           isOpen={isCreatingGroupOpen}
-          onClose={() => setIsCreatingGroupOpen(false)}
+          onClose={handleCloseGroupModal}
           onOpenUnderConstruction={() =>
             setIsUnderConstructionOpen(true)
           } //- ВРЕМЕННО
           mode={mode}
+          groupData={editingGroup} // Передаем данные или null
         />
+        {/* <ModalCreatingGroup
+          isOpen={isCreatingGroupOpen}
+          onClose={() => setIsCreatingGroupOpen(false)}
+          onOpenUnderConstruction={() =>
+            setIsUnderConstructionOpen(true)
+          } 
+          mode={mode}
+        /> */}
         {/* Toast: */}
         {/* <Toast mode={mode} /> */}
       </div>

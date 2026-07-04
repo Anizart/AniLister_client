@@ -7,6 +7,7 @@ const Profile = ({
   mode,
   onOpenUnderConstruction,
   onOpenCreatingGroup,
+  onOpenEditingGroup,
 }) => {
   //+ скролл вверх при переходе на страницу
   useEffect(() => {
@@ -20,8 +21,9 @@ const Profile = ({
       />
       <Groups
         mode={mode}
-        onOpenUnderConstruction={onOpenUnderConstruction}
+        onOpenUnderConstruction={onOpenUnderConstruction} //- ВРЕМЕННО
         onOpenCreatingGroup={onOpenCreatingGroup}
+        onOpenEditingGroup={onOpenEditingGroup}
       />
     </>
   )

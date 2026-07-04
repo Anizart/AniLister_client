@@ -6,6 +6,7 @@ const Groups = ({
   mode,
   onOpenUnderConstruction,
   onOpenCreatingGroup,
+  onOpenEditingGroup,
 }) => {
   return (
     <div className='container'>
@@ -61,7 +62,7 @@ const Groups = ({
               <button
                 type='button'
                 className='groups__btn'
-                onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+                onClick={onOpenEditingGroup}
               >
                 <svg
                   width='32'

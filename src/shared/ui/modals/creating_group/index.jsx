@@ -5,38 +5,40 @@ import '../modals.css'
 import './creating_group.css'
 import { useScrollLock } from '@/shared/lib/useScrollLock'
 
-import PasswordInput from '@/shared/ui/modals/password_input'
-
 const ModalCreatingGroup = ({
   mode,
   isOpen,
   onClose,
   onOpenUnderConstruction,
+  groupData = null, // Новые данные для редактирования
 }) => {
   useScrollLock(isOpen)
 
   // Состояния полей
   const [title, setTitle] = useState('')
   const [topic, setTopic] = useState('')
-
   // Состояния ошибок
   const [errors, setErrors] = useState({
     title: '',
     topic: '',
   })
-
   // Флаг: пробовали ли отправить (для показа ошибок)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  // Сброс формы при закрытии
+  // Инициализация формы: сброс или заполнение
   useEffect(() => {
-    if (!isOpen) {
-      setTitle('')
-      setTopic('')
+    if (isOpen) {
+      if (groupData) {
+        setTitle(groupData.title || '')
+        setTopic(groupData.topic || '')
+      } else {
+        setTitle('')
+        setTopic('')
+      }
       setErrors({ title: '', topic: '' })
       setIsSubmitted(false)
     }
-  }, [isOpen])
+  }, [isOpen, groupData])
 
   // Запрещаю скролл при открытой модалке
   useEffect(() => {
@@ -50,7 +52,9 @@ const ModalCreatingGroup = ({
 
   if (!isOpen) return null
 
-  // Валидатор
+  const isEditing = !!groupData
+
+  // Валидаторы
   const validateTitle = (value) => {
     if (!value) return 'Назовите группу'
     if (value.length > 10)
@@ -62,7 +66,7 @@ const ModalCreatingGroup = ({
     if (!value) return 'Выберите тему группы'
     return ''
   }
-  // /Валидатор
+  // /Валидаторы
 
   // Проверка при изменении поля
   const handleTitleChange = (e) => {
@@ -82,16 +86,18 @@ const ModalCreatingGroup = ({
 
     const titleError = validateTitle(title)
     const topicError = validateTopic(topic)
-
     setErrors({
       title: titleError,
       topic: topicError,
     })
 
-    const isValid = !titleError && !topicError
+    if (!titleError && !topicError) {
+      //! Здесь будет логика: createGroup или updateGroup
+      console.log(
+        isEditing ? 'Редактирование:' : 'Создание:',
+        { title, topic },
+      )
 
-    if (isValid) {
-      // Валидация прошла — временно открываю under construction
       onClose()
       onOpenUnderConstruction()
     }
@@ -132,7 +138,11 @@ const ModalCreatingGroup = ({
           autoComplete='on'
           onSubmit={handleSubmit}
         >
-          <h2 className='title'>Создание группы</h2>
+          <h2 className='title'>
+            {isEditing
+              ? 'Изменение группы'
+              : 'Создание группы'}
+          </h2>
           <div className='modal__wrapper-input-title'>
             <input
               type='text'
@@ -160,42 +170,68 @@ const ModalCreatingGroup = ({
             )}
           </div>
           <div className='modal__group-options'>
-            <h3 className='modal__options-title'>
-              Выбери, о чём будет группа:
-            </h3>
-            <div className='modal__checkbox-group'>
-              <label className='modal__checkbox-label'>
-                <input
-                  type='radio'
-                  name='topic'
-                  value='watch'
-                  checked={topic === 'watch'}
-                  onChange={(e) => setTopic(e.target.value)}
-                  className='modal__checkbox'
-                />
-                <span className='modal__checkbox-custom'></span>
-                {/* Если нужен кастомный чекбокс */}
-                Смотрю (фильмы, аниме и т.д.)
-              </label>
+            {isEditing ? (
+              //+ Режим редактирования: показываем текущий тип текстом
+              <div className='modal__current-type'>
+                <h3 className='modal__options-title'>
+                  Тип группы:
+                </h3>
+                <p className='modal__type-text'>
+                  {topic === 'watch'
+                    ? 'Смотрю (фильмы, аниме и т.д.)'
+                    : 'Читаю (книги, манга и т.д.)'}
+                </p>
+                <small
+                  style={{ color: 'var(--warning-color)' }}
+                >
+                  Тип группы нельзя изменить после создания.
+                </small>
+              </div>
+            ) : (
+              //+ Режим создания: показываем радио-кнопки
+              <>
+                <h3 className='modal__options-title'>
+                  Выбери, о чём будет группа:
+                </h3>
+                <div className='modal__checkbox-group'>
+                  <label className='modal__checkbox-label'>
+                    <input
+                      type='radio'
+                      name='topic'
+                      value='watch'
+                      checked={topic === 'watch'}
+                      onChange={(e) =>
+                        setTopic(e.target.value)
+                      }
+                      className='modal__checkbox'
+                    />
+                    <span className='modal__checkbox-custom'></span>
+                    {/* Если нужен кастомный чекбокс */}
+                    Смотрю (фильмы, аниме и т.д.)
+                  </label>
 
-              <label className='modal__checkbox-label'>
-                <input
-                  type='radio'
-                  name='topic'
-                  value='read'
-                  checked={topic === 'read'}
-                  onChange={(e) => setTopic(e.target.value)}
-                  className='modal__checkbox'
-                />
-                <span className='modal__checkbox-custom'></span>
-                Читаю (книги, манга и т.д.)
-              </label>
-            </div>
-            {/* Ошибка выбора темы */}
-            {errors.topic && (
-              <span className='modal__error modal__error--topic'>
-                {errors.topic}
-              </span>
+                  <label className='modal__checkbox-label'>
+                    <input
+                      type='radio'
+                      name='topic'
+                      value='read'
+                      checked={topic === 'read'}
+                      onChange={(e) =>
+                        setTopic(e.target.value)
+                      }
+                      className='modal__checkbox'
+                    />
+                    <span className='modal__checkbox-custom'></span>
+                    Читаю (книги, манга и т.д.)
+                  </label>
+                </div>
+                {/* Ошибка выбора темы */}
+                {errors.topic && (
+                  <span className='modal__error modal__error--topic'>
+                    {errors.topic}
+                  </span>
+                )}
+              </>
             )}
           </div>
           <div className='modal__wrap-btn'>
@@ -212,7 +248,7 @@ const ModalCreatingGroup = ({
               className='btn'
               tabIndex={3}
             >
-              Готово
+              {isEditing ? 'Сохранить' : 'Готово'}
             </button>
           </div>
         </form>
