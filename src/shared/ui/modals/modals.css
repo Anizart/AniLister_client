@@ -48,6 +48,12 @@ body.dark input:-webkit-autofill:active {
     margin: 0 15px;
   }
 
+  .modal__wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+  }
+
   .modal__btn-close {
     position: absolute;
     top: clamp(15px, 3.5vw, 24px);
@@ -67,5 +73,10 @@ body.dark input:-webkit-autofill:active {
       max-height: 28px;
       max-width: 28px;
     }
+  }
+
+  .modal__wrap-btn {
+    display: flex;
+    justify-content: space-between;
   }
 }

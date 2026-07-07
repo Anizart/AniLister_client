@@ -8,6 +8,9 @@ const Profile = ({
   onOpenUnderConstruction,
   onOpenCreatingGroup,
   onOpenEditingGroup,
+  onDeleteProfile,
+  onDeleteGroup,
+  onLogout,
 }) => {
   //+ скролл вверх при переходе на страницу
   useEffect(() => {
@@ -17,13 +20,15 @@ const Profile = ({
   return (
     <>
       <UserProfile
-        onOpenUnderConstruction={onOpenUnderConstruction}
+        onOpenUnderConstruction={onOpenUnderConstruction} //- ВРЕМЕННО
+        onDeleteProfile={onDeleteProfile}
+        onLogout={onLogout}
       />
       <Groups
         mode={mode}
-        onOpenUnderConstruction={onOpenUnderConstruction} //- ВРЕМЕННО
         onOpenCreatingGroup={onOpenCreatingGroup}
         onOpenEditingGroup={onOpenEditingGroup}
+        onDeleteGroup={onDeleteGroup}
       />
     </>
   )

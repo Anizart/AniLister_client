@@ -2,11 +2,6 @@
   width: clamp(350px, 51vw, 560px);
   text-align: center;
 
-  .modal__wrapper {
-    display: flex;
-    flex-direction: column;
-    row-gap: 18px;
-  }
   .modal__wrapper-input {
     width: 100%;
     position: relative;

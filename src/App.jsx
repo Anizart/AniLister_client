@@ -18,6 +18,7 @@ import ModalSignUp from './shared/ui/modals/auth_modals/modal_sign_up'
 import ModalAuthentication from './shared/ui/modals/auth_modals/modal_authentication'
 import List from './pages/list'
 import ModalCreatingGroup from './shared/ui/modals/creating_group'
+import ConfirmModal from './shared/ui/modals/confirm_modal'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -99,6 +100,15 @@ function App() {
     useState(false)
   // Состояние для данных группы
   const [editingGroup, setEditingGroup] = useState(null)
+  // Модалки удаления и выхода
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    warningText: '',
+    onConfirm: () => {},
+    dangerMode: true,
+  })
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -108,6 +118,10 @@ function App() {
         setIsSignUpOpen(false)
         setIsAuthenticationOpen(false)
         setIsCreatingGroupOpen(false)
+        setConfirmModal((prev) => ({
+          ...prev,
+          isOpen: false,
+        }))
         //- СЮДА ДРУГИЕ МОДАЛКИ
       }
     }
@@ -116,7 +130,8 @@ function App() {
       isUnderConstructionOpen ||
       isSignUpOpen ||
       isAuthenticationOpen ||
-      isCreatingGroupOpen
+      isCreatingGroupOpen ||
+      confirmModal
       //- СЮДА ДРУГИЕ МОДАЛКИ
     ) {
       document.addEventListener('keydown', handleKeyDown)
@@ -131,6 +146,7 @@ function App() {
     isSignUpOpen,
     isAuthenticationOpen,
     isCreatingGroupOpen,
+    confirmModal,
   ])
 
   //+ Group
@@ -150,6 +166,58 @@ function App() {
     setEditingGroup(null)
   }
   //+ /Group
+
+  //+ confirmModal
+  const openConfirm = (config) => {
+    setConfirmModal({ ...config, isOpen: true })
+  }
+
+  const closeConfirm = () => {
+    setConfirmModal((prev) => ({ ...prev, isOpen: false }))
+  }
+
+  // Сценарии использования:
+  // Удаление группы:
+  const handleDeleteGroup = (groupId) => {
+    openConfirm({
+      title: 'Удаление',
+      warningText: 'Внимание это действие не обратимо!',
+      message:
+        'Удаляя группу, Вы удаляете всё содержимое. Вы действительно хотите удалить?',
+      onConfirm: () =>
+        console.log('Группа удалена:', groupId),
+    })
+  }
+  //! Удаление карточки:
+  const handleDeleteCard = (cardId) => {
+    openConfirm({
+      title: 'Удаление',
+      warningText: 'Внимание это действие не обратимо!',
+      message: 'Вы действительно хотите удалить?',
+      onConfirm: () =>
+        console.log('Карточка удалена:', cardId),
+    })
+  }
+
+  // Выход из аккаунта:
+  const handleLogout = () => {
+    openConfirm({
+      title: 'Выход',
+      message: 'Вы действительно хотите выйти с аккаунта?',
+      onConfirm: () => console.log('Логаут...'),
+    })
+  }
+
+  // Удаление профиля:
+  const handleDeleteProfile = () => {
+    openConfirm({
+      title: 'Удаление профиля',
+      message:
+        'Вы действительно хотите удалить свой аккаунт? После удаления аккаунт не подлежит восстановлению!',
+      onConfirm: () => console.log('Профиль удален'),
+    })
+  }
+  //+ /confirmModal
 
   //+ /Modals
 
@@ -181,9 +249,12 @@ function App() {
                   mode={mode}
                   onOpenUnderConstruction={() =>
                     setIsUnderConstructionOpen(true)
-                  }
+                  } //- ВРЕМЕННО
                   onOpenCreatingGroup={handleOpenCreate}
                   onOpenEditingGroup={handleOpenEdit}
+                  onLogout={handleLogout}
+                  onDeleteGroup={handleDeleteGroup}
+                  onDeleteProfile={handleDeleteProfile}
                 />
               }
             />
@@ -247,16 +318,21 @@ function App() {
             setIsUnderConstructionOpen(true)
           } //- ВРЕМЕННО
           mode={mode}
-          groupData={editingGroup} // Передаем данные или null
+          groupData={editingGroup} // Передаю данные или null
         />
-        {/* <ModalCreatingGroup
-          isOpen={isCreatingGroupOpen}
-          onClose={() => setIsCreatingGroupOpen(false)}
+        <ConfirmModal
+          mode={mode}
+          isOpen={confirmModal.isOpen}
+          onClose={closeConfirm}
+          title={confirmModal.title}
+          message={confirmModal.message}
+          warningText={confirmModal.warningText}
+          dangerMode={confirmModal.dangerMode}
+          onConfirm={confirmModal.onConfirm}
           onOpenUnderConstruction={() =>
             setIsUnderConstructionOpen(true)
-          } 
-          mode={mode}
-        /> */}
+          } //- ВРЕМЕННО
+        />
         {/* Toast: */}
         {/* <Toast mode={mode} /> */}
       </div>
