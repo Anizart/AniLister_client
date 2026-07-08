@@ -6,8 +6,7 @@
 
   .edit-profile__avatar {
     height: clamp(100px, 15vw, 149px);
-    width: auto;
-    object-fit: cover;
+    width: clamp(100px, 15vw, 149px);
 
     .edit-profile__avatar-wrapper {
       height: 100%;
@@ -22,6 +21,7 @@
       .edit-profile__avatar-photo {
         height: 100%;
         width: inherit;
+        object-fit: cover;
       }
 
       .edit-profile__overlay {
