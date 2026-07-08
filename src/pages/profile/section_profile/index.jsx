@@ -3,7 +3,7 @@ import './profile.css'
 import default_image from '/images/svg/default_image.svg'
 
 const UserProfile = ({
-  onOpenUnderConstruction,
+  onOpenEditProfile,
   onDeleteProfile,
   onLogout,
 }) => {
@@ -27,7 +27,7 @@ const UserProfile = ({
           <button
             type='button'
             className='btn'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            onClick={onOpenEditProfile}
           >
             Изменить
           </button>

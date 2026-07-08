@@ -19,6 +19,7 @@ import ModalAuthentication from './shared/ui/modals/auth_modals/modal_authentica
 import List from './pages/list'
 import ModalCreatingGroup from './shared/ui/modals/creating_group'
 import ConfirmModal from './shared/ui/modals/confirm_modal'
+import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -109,6 +110,15 @@ function App() {
     onConfirm: () => {},
     dangerMode: true,
   })
+  // Модалка изменения профиля
+  //- Временные данные для тестирования модалки: modal_edit_profile
+  const MOCK_USER_DATA = {
+    id: 'user-1',
+    name: 'test',
+    avatarUrl: '/images/svg/default_image.svg',
+  }
+  const [editProfileData, setEditProfileData] =
+    useState(null)
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -122,6 +132,7 @@ function App() {
           ...prev,
           isOpen: false,
         }))
+        setEditProfileData(null)
         //- СЮДА ДРУГИЕ МОДАЛКИ
       }
     }
@@ -131,7 +142,8 @@ function App() {
       isSignUpOpen ||
       isAuthenticationOpen ||
       isCreatingGroupOpen ||
-      confirmModal
+      confirmModal ||
+      editProfileData
       //- СЮДА ДРУГИЕ МОДАЛКИ
     ) {
       document.addEventListener('keydown', handleKeyDown)
@@ -147,6 +159,7 @@ function App() {
     isAuthenticationOpen,
     isCreatingGroupOpen,
     confirmModal,
+    editProfileData,
   ])
 
   //+ Group
@@ -219,6 +232,13 @@ function App() {
   }
   //+ /confirmModal
 
+  //+ modal_edit_profile
+  const openEditProfile = () =>
+    setEditProfileData(MOCK_USER_DATA)
+
+  const closeEditProfile = () => setEditProfileData(null)
+  //+ /modal_edit_profile
+
   //+ /Modals
 
   //+ Toast:
@@ -247,9 +267,7 @@ function App() {
               element={
                 <Profile
                   mode={mode}
-                  onOpenUnderConstruction={() =>
-                    setIsUnderConstructionOpen(true)
-                  } //- ВРЕМЕННО
+                  onOpenEditProfile={openEditProfile} //- Временные данные для теста модалки: modal_edit_profile
                   onOpenCreatingGroup={handleOpenCreate}
                   onOpenEditingGroup={handleOpenEdit}
                   onLogout={handleLogout}
@@ -329,6 +347,15 @@ function App() {
           warningText={confirmModal.warningText}
           dangerMode={confirmModal.dangerMode}
           onConfirm={confirmModal.onConfirm}
+          onOpenUnderConstruction={() =>
+            setIsUnderConstructionOpen(true)
+          } //- ВРЕМЕННО
+        />
+        <ModalEditProfile
+          mode={mode}
+          isOpen={!!editProfileData}
+          onClose={closeEditProfile}
+          initialData={editProfileData}
           onOpenUnderConstruction={() =>
             setIsUnderConstructionOpen(true)
           } //- ВРЕМЕННО

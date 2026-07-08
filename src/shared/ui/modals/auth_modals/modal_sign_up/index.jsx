@@ -13,7 +13,7 @@ const ModalSignUp = ({
   isOpen,
   onClose,
   onOpenAuthentication,
-  onOpenUnderConstruction,
+  onOpenUnderConstruction, //- ВРЕМЕННО
 }) => {
   useScrollLock(isOpen)
 

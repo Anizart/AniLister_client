@@ -102,12 +102,19 @@ body {
     }
     .modal__input-title {
       color: var(--dark-main-text);
-      border-color: var(--dark-main-text);
+      border-color: var(--dark-main-text) !important;
     }
     .modal__checkbox-custom,
     .modal__checkbox:checked
       + .modal__checkbox-custom::after {
       border-color: var(--dark-main-text) !important;
+    }
+
+    .edit-profile__avatar-wrapper {
+      border-color: var(--dark-main-text) !important;
+    }
+    .edit-profile__overlay {
+      background: rgba(18, 18, 18, 0.8) !important;
     }
 
     /* + Карточки прупп */

@@ -54,6 +54,39 @@ body.dark input:-webkit-autofill:active {
     row-gap: 18px;
   }
 
+  .modal__wrapper-input-title {
+    width: 100%;
+    padding-top: 18px;
+
+    position: relative;
+
+    .modal__input-title {
+      width: 100%;
+      display: block;
+      padding: 8px;
+      border: none;
+      border-bottom: 1px solid var(--light-main-text);
+    }
+
+    .modal__label-title {
+      display: block;
+      pointer-events: none;
+
+      position: absolute;
+      left: 8px;
+      top: 18px;
+      transition: 0.3s;
+    }
+    .modal__input-title:focus + .modal__label-title,
+    .modal__input-title:not(
+        :placeholder-shown
+      ).modal__input-title:not(:focus)
+      + .modal__label-title {
+      top: -2px;
+      left: 0px;
+    }
+  }
+
   .modal__btn-close {
     position: absolute;
     top: clamp(15px, 3.5vw, 24px);
@@ -78,5 +111,18 @@ body.dark input:-webkit-autofill:active {
   .modal__wrap-btn {
     display: flex;
     justify-content: space-between;
+  }
+
+  /* Стили ошибок */
+  .modal__error {
+    display: block;
+    color: var(--warning-color);
+    margin-top: 4px;
+    min-height: 16px;
+  }
+
+  .modal__input--error {
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color);
   }
 }

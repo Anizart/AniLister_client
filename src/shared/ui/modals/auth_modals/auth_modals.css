@@ -40,17 +40,4 @@
     max-width: fit-content;
     margin: 0 auto;
   }
-
-  /* Стили ошибок */
-  .modal__error {
-    display: block;
-    color: var(--warning-color);
-    margin-top: 4px;
-    min-height: 16px;
-  }
-
-  .modal__input--error {
-    border-color: var(--warning-color) !important;
-    color: var(--warning-color);
-  }
 }

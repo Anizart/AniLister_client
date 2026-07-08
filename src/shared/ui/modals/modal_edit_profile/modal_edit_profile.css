@@ -1,0 +1,57 @@
+.edit-profile__body {
+  display: flex;
+  width: clamp(247px, 55vw, 475px);
+  align-items: center;
+  column-gap: 18px;
+
+  .edit-profile__avatar {
+    height: clamp(100px, 15vw, 149px);
+    width: auto;
+    object-fit: cover;
+
+    .edit-profile__avatar-wrapper {
+      height: 100%;
+      width: inherit;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--light-main-text);
+      cursor: pointer;
+
+      position: relative;
+
+      .edit-profile__avatar-photo {
+        height: 100%;
+        width: inherit;
+      }
+
+      .edit-profile__overlay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(248, 249, 250, 0.8);
+        opacity: 0;
+        transition: opacity 0.3s;
+        padding: 15px;
+        text-align: center;
+        font-size: 12px;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      &:hover .edit-profile__overlay {
+        opacity: 1;
+      }
+    }
+    /*+ Только для устройств с курсором */
+    @media not all and (hover: hover) {
+      .edit-profile__avatar-wrapper .edit-profile__overlay {
+        opacity: 1;
+      }
+    }
+  }
+}
