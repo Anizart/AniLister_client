@@ -119,6 +119,59 @@ function App() {
   }
   const [editProfileData, setEditProfileData] =
     useState(null)
+  //- Временные данные для тестирования модалки: modal_edit_profile
+  const MOCK_CARDS = [
+    {
+      id: 'card-1',
+      title:
+        'Я распродал свою жизнь. По десять тысяч иен за год.',
+      volume: '3-й',
+      chapter: '16.5-я',
+      page: '48-я',
+      startDate: '08.08.24г.',
+      endDate: '28.08.24г.',
+      image: '/images/delete.jpg',
+      tags: ['all', 'favorites', 'to-read'],
+      // Данные для маркировки
+      marks: {
+        hasNote: true, // Иконка заметки/свитка
+        hasLike: true, // Иконка сердца
+        hasEye: true, // Иконка глаза (просмотрено/внимание)
+      },
+    },
+    {
+      id: 'card-2',
+      title: 'Название второй карточки',
+      volume: '1-й',
+      chapter: '5-я',
+      page: '12-я',
+      startDate: '01.09.24г.',
+      endDate: '-',
+      image: '/images/default.jpg',
+      tags: ['all'],
+      marks: {
+        hasNote: true,
+        hasLike: false,
+        hasEye: false,
+      },
+    },
+    {
+      id: 'card-3',
+      title: 'Что-то',
+      volume: '3-й',
+      chapter: '16.5-я',
+      page: '48-я',
+      startDate: '08.08.24г.',
+      endDate: '28.08.24г.',
+      image: '/images/default.jpg',
+      tags: ['all', 'liked'],
+      marks: {
+        hasNote: true,
+        hasLike: true,
+        hasEye: false,
+      },
+    },
+  ]
 
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
@@ -278,13 +331,15 @@ function App() {
             />
             <Route
               path='list'
-              //- list/:groupId так когда появится бэк
+              //- list/:groupId - так когда появится бэк
               element={
                 <List
                   mode={mode}
                   onOpenUnderConstruction={() =>
                     setIsUnderConstructionOpen(true)
                   }
+                  cardsData={MOCK_CARDS}
+                  onDeleteCard={handleDeleteCard}
                 />
               }
             />
