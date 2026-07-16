@@ -1,11 +1,12 @@
 export const config = {
-  api: {
-    bodyParser: false, // Отключаем парсер тела для бинарных данных
-  },
+  api: { bodyParser: false },
 }
 
 export default async function handler(req, res) {
-  // Разрешаем только GET-запросы
+  // Разрешаем CORS для картинок
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET')
+
   if (req.method !== 'GET') {
     return res
       .status(405)
@@ -20,13 +21,10 @@ export default async function handler(req, res) {
       .json({ error: 'Не указан URL изображения' })
   }
 
-  // Безопасность: разрешаем только shikimori.io
   if (!url.startsWith('https://shikimori.io')) {
-    return res
-      .status(403)
-      .json({
-        error: 'Доступ разрешён только к shikimori.io',
-      })
+    return res.status(403).json({
+      error: 'Доступ разрешён только к shikimori.io',
+    })
   }
 
   try {
