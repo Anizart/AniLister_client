@@ -163,16 +163,32 @@ const AddingCard = ({
       )
   }, [])
 
-  const handleSelectSearchResult = (item) => {
+  const fetchImageProxy = async (shikimoriUrl) => {
+    try {
+      const res = await fetch(
+        `/api/image-proxy?url=${encodeURIComponent(shikimoriUrl)}`,
+      )
+      if (!res.ok) throw new Error('Ошибка прокси')
+      const data = await res.json()
+      return data.imageUrl // Возвращаю data:image/...;base64,...
+    } catch (e) {
+      console.error('Не удалось загрузить обложку:', e)
+      return DEFAULT_COVER // Фолбэк на дефолтную картинку
+    }
+  }
+
+  const handleSelectSearchResult = async (item) => {
     const title = item.russian || item.name
-    const imageUrl = `/api/image-proxy?url=${encodeURIComponent(`https://shikimori.io${item.image?.x96}`)}`
     const topic =
       item.contentType === 'manga' ? 'read' : 'watch'
 
-    // Синхронизируем оба состояния
+    // Сначала получаю Base64-картинку
+    const imageUrl = await fetchImageProxy(
+      `https://shikimori.io${item.image?.x96}`,
+    )
+
     setFormData((prev) => ({ ...prev, title }))
     setSearchQuery(title)
-
     setCoverImage(imageUrl)
     setTopic(topic)
     setSearchResults([])
@@ -447,7 +463,7 @@ const AddingCard = ({
                       }
                     >
                       <img
-                        src={`/api/image-proxy?url=${encodeURIComponent(`https://shikimori.io${item.image?.x96}`)}`}
+                        src={`https://shikimori.io${item.image?.x96}`}
                         alt={item.russian || item.name}
                         className='search-item__img'
                         loading='lazy'

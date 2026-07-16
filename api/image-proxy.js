@@ -6,57 +6,47 @@ export const config = {
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET')
 
   if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Метод не разрешён' })
-    return
+    return res
+      .status(405)
+      .json({ error: 'Метод не разрешён' })
   }
 
   const { url } = req.query
 
   if (!url || typeof url !== 'string') {
-    res
-      .status(400)
-      .json({ error: 'Не указан URL изображения' })
-    return
+    return res.status(400).json({ error: 'Не указан URL' })
   }
 
   if (!url.startsWith('https://shikimori.io')) {
-    res
+    return res
       .status(403)
-      .json({
-        error: 'Доступ разрешён только к shikimori.io',
-      })
-    return
+      .json({ error: 'Доступ только к shikimori.io' })
   }
 
   try {
     const imageRes = await fetch(url)
 
     if (!imageRes.ok) {
-      res.status(imageRes.status).end()
-      return
+      return res.status(imageRes.status).end()
     }
 
     const contentType =
       imageRes.headers.get('content-type') || 'image/jpeg'
-
-    // Конвертация теперь точно будет работать и в IDE, и на сервере
     const arrayBuffer = await imageRes.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    res.writeHead(200, {
-      'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=86400',
-      'Content-Length': buffer.length,
-    })
+    // Конвертируем в Base64
+    const base64 = buffer.toString('base64')
+    const dataUrl = `data:${contentType};base64,${base64}`
 
-    res.end(buffer)
+    // Отдаём как JSON
+    return res.status(200).json({ imageUrl: dataUrl })
   } catch (error) {
-    console.error('Ошибка прокси картинки:', error)
-    res
+    console.error('Ошибка прокси:', error)
+    return res
       .status(500)
-      .json({ error: 'Не удалось загрузить изображение' })
+      .json({ error: 'Ошибка загрузки' })
   }
 }
