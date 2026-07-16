@@ -7,6 +7,8 @@ const SavedContent = ({
   mode,
   cardsData = [], // Массив карточек из App
   onDeleteCard,
+  onOpenAddCard,
+  onOpenEditCard,
   onOpenUnderConstruction,
 }) => {
   return (
@@ -56,7 +58,7 @@ const SavedContent = ({
         </div>
         <button
           className='btn section-list-content__btn-add'
-          onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+          onClick={onOpenAddCard}
         >
           Добавить
           <svg
@@ -97,13 +99,13 @@ const SavedContent = ({
                     </p>
                     <div className='section-list-content__specialty'>
                       <p className='section-list-content__specialty-elem'>
-                        Том: {card.volume}
+                        Том: {card.volume}-й
                       </p>
                       <p className='section-list-content__specialty-elem'>
-                        Глава: {card.chapter}
+                        Глава: {card.chapter}-я
                       </p>
                       <p className='section-list-content__specialty-elem'>
-                        Стр. в Дневнике: {card.page}
+                        Стр. в Дневнике: {card.page}-я
                       </p>
                     </div>
                   </div>
@@ -181,10 +183,10 @@ const SavedContent = ({
 
                   <div className='section-list-content__date'>
                     <p className='section-list-content__date-elem'>
-                      Дата начала: {card.startDate}
+                      Дата начала: {card.startDate}г.
                     </p>
                     <p className='section-list-content__date-elem'>
-                      Дата окончания: {card.endDate}
+                      Дата окончания: {card.endDate}г.
                     </p>
                   </div>
                 </div>
@@ -193,7 +195,7 @@ const SavedContent = ({
               <div className='section-list-content__btns'>
                 <button
                   className='btn'
-                  onClick={onOpenUnderConstruction}
+                  onClick={() => onOpenEditCard(card)}
                 >
                   Изменить
                 </button>

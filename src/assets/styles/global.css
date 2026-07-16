@@ -175,12 +175,34 @@ body {
       stroke: #000;
     }
 
-    /* Карточки */
+    /*+ Карточки */
     .section-list-content__card {
       background-color: var(
         --dark-secondary-emphasis-bg
       ) !important;
-      border: 1px solid var(--dark-main-text) !important;
+      border-color: var(--dark-main-text) !important;
+    }
+
+    /*+ Добавление карточек */
+    .adding-card__img {
+      border-color: var(--dark-main-text);
+    }
+    .adding-card__input {
+      color: var(--dark-main-text);
+      border-color: var(--dark-main-text) !important;
+    }
+    input[type='date']::-webkit-calendar-picker-indicator {
+      /* Инвертирую цвета: чёрный станет белым */
+      filter: invert(1);
+      opacity: 0.7;
+      cursor: pointer;
+    }
+    .search-dropdown {
+      background-color: var(--dark-main-bg);
+      border-color: var(--light-main-bg);
+    }
+    .search-item + .search-item::before {
+      background-color: var(--light-main-bg) !important;
     }
 
     /*+ Компанент: Toast */

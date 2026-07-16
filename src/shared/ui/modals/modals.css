@@ -74,7 +74,7 @@ body.dark input:-webkit-autofill:active {
 
       position: absolute;
       left: 8px;
-      top: 18px;
+      top: 28px;
       transition: 0.3s;
     }
     .modal__input-title:focus + .modal__label-title,
@@ -113,7 +113,53 @@ body.dark input:-webkit-autofill:active {
     justify-content: space-between;
   }
 
-  /* Стили ошибок */
+  /*+ Чекбоксы: */
+  .modal__checkbox-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+
+    .modal__checkbox-label {
+      display: flex;
+      align-items: center;
+      font-size: clamp(12px, 1.5vw, 14px);
+
+      .modal__checkbox {
+        /* Скрываю стандартный чекбокс */
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .modal__checkbox-custom {
+        width: 26px;
+        height: 26px;
+        border: 1px solid var(--light-main-text);
+        border-radius: 4px;
+        margin-right: 8px;
+        padding: 4px;
+        display: inline-block;
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .modal__checkbox:checked
+        + .modal__checkbox-custom::after {
+        content: '';
+        position: absolute;
+        left: 40%;
+        top: 1px;
+        width: 6px;
+        height: 18px;
+        border: solid var(--light-main-text);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  /*+ Стили ошибок */
   .modal__error {
     display: block;
     color: var(--warning-color);

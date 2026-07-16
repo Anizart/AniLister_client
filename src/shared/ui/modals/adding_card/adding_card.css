@@ -1,0 +1,198 @@
+/* Блок 1 */
+.adding-card__footing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+
+  .adding-card__img {
+    height: clamp(110px, 15vw, 164px);
+    width: clamp(78px, 11.5vw, 128px);
+    object-fit: cover;
+    border: 1px solid var(--light-main-text);
+    border-radius: 20px;
+  }
+
+  /* Выпадающий список результатов */
+  .search-dropdown {
+    height: clamp(310px, 30vw, 350px);
+    width: clamp(250px, 27.5vw, 318px);
+    overflow-y: scroll;
+    background-color: var(--light-main-bg);
+    border: 1px solid var(--dark-main-bg);
+    text-align: left;
+
+    position: absolute;
+    right: 0;
+    top: 66px;
+    z-index: 1;
+
+    .search-item__img {
+      height: clamp(125px, 17vw, 180px);
+      width: auto;
+    }
+
+    .search-item__sub {
+      margin-left: 5px;
+    }
+
+    .search-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      position: relative;
+
+      & + .search-item {
+        margin: 17px 0;
+      }
+      & + .search-item::before {
+        content: '';
+        position: absolute;
+        top: -9px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: var(--dark-main-bg);
+      }
+    }
+  }
+}
+
+/* Блок 2 */
+.adding-card__wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  text-align: left;
+
+  .adding-card__field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .adding-card__input {
+      height: 26px;
+      width: 26px;
+      border: 1px solid var(--light-main-text);
+      border-radius: 5px;
+
+      text-align: center;
+    }
+    .adding-card__input-data {
+      width: 110px;
+    }
+  }
+  .custom-number-input {
+    display: flex;
+    align-items: center;
+
+    .custom-number-input__spinners {
+      display: flex;
+      flex-direction: column;
+
+      .custom-number-input__btn {
+        height: fit-content;
+        padding: 4px;
+        border-radius: 2px;
+
+        svg {
+          display: block;
+        }
+
+        &:hover {
+          background: var(--light-secondary-emphasis-bg);
+        }
+      }
+    }
+  }
+}
+
+/* Блок 3 */
+.adding-card__marks-section {
+  text-align: left;
+
+  .adding-card__marks-header {
+    .adding-card__marks-wrap {
+      width: fit-content;
+      position: relative;
+
+      .adding-card__marks-info {
+        font-size: 13px;
+        position: absolute;
+        right: -18px;
+        bottom: 10px;
+        cursor: pointer;
+
+        &:hover + .marks-tooltip-wrapper {
+          opacity: 1;
+          pointer-events: auto;
+          transition: 0.3s;
+        }
+      }
+
+      .marks-tooltip-wrapper {
+        display: flex;
+        height: auto;
+        width: 253px;
+        padding: 10px;
+        background-color: var(--light-main-bg);
+        border: 1px solid var(--light-main-text);
+        border-radius: 15px;
+        font-size: clamp(12px, 1.5vw, 14px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+
+        position: absolute;
+        left: 85px;
+        bottom: 20px;
+
+        .marks-tooltip {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .tooltip-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .tooltip-icon {
+              height: 26px;
+              width: 26px;
+
+              svg {
+                height: inherit;
+                width: inherit;
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: 799px) {
+        .marks-tooltip-wrapper {
+          width: 200px;
+          left: 50px;
+          bottom: 30px;
+        }
+      }
+    }
+  }
+
+  .adding-card__checkbox-wrap {
+    justify-content: start;
+    flex-wrap: wrap;
+
+    svg {
+      height: clamp(40px, 5vw, 60px);
+      width: auto;
+    }
+    @media (max-width: 380px) {
+      svg {
+        max-height: inherit;
+        max-width: inherit;
+      }
+    }
+  }
+}

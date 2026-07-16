@@ -20,6 +20,7 @@ import List from './pages/list'
 import ModalCreatingGroup from './shared/ui/modals/creating_group'
 import ConfirmModal from './shared/ui/modals/confirm_modal'
 import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
+import AddingCard from './shared/ui/modals/adding_card'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -99,6 +100,10 @@ function App() {
     useState(false)
   const [isCreatingGroupOpen, setIsCreatingGroupOpen] =
     useState(false)
+  // Состояние для карточки
+  const [isAddingCardOpen, setIsAddingCardOpen] =
+    useState(false)
+  const [editingCard, setEditingCard] = useState(null)
   // Состояние для данных группы
   const [editingGroup, setEditingGroup] = useState(null)
   // Модалки удаления и выхода
@@ -125,11 +130,11 @@ function App() {
       id: 'card-1',
       title:
         'Я распродал свою жизнь. По десять тысяч иен за год.',
-      volume: '3-й',
-      chapter: '16.5-я',
-      page: '48-я',
-      startDate: '08.08.24г.',
-      endDate: '28.08.24г.',
+      volume: '3',
+      chapter: '16.5',
+      page: '48',
+      startDate: '08.08.2024',
+      endDate: '28.08.2024',
       image: '/images/delete.jpg',
       tags: ['all', 'favorites', 'to-read'],
       // Данные для маркировки
@@ -142,10 +147,10 @@ function App() {
     {
       id: 'card-2',
       title: 'Название второй карточки',
-      volume: '1-й',
-      chapter: '5-я',
-      page: '12-я',
-      startDate: '01.09.24г.',
+      volume: '1',
+      chapter: '5',
+      page: '12',
+      startDate: '01.09.24',
       endDate: '-',
       image: '/images/default.jpg',
       tags: ['all'],
@@ -158,11 +163,11 @@ function App() {
     {
       id: 'card-3',
       title: 'Что-то',
-      volume: '3-й',
-      chapter: '16.5-я',
-      page: '48-я',
-      startDate: '08.08.24г.',
-      endDate: '28.08.24г.',
+      volume: '3',
+      chapter: '16.5',
+      page: '48',
+      startDate: '08.08.24',
+      endDate: '28.08.24',
       image: '/images/default.jpg',
       tags: ['all', 'liked'],
       marks: {
@@ -186,6 +191,7 @@ function App() {
           isOpen: false,
         }))
         setEditProfileData(null)
+        setIsAddingCardOpen(false)
         //- СЮДА ДРУГИЕ МОДАЛКИ
       }
     }
@@ -196,7 +202,8 @@ function App() {
       isAuthenticationOpen ||
       isCreatingGroupOpen ||
       confirmModal ||
-      editProfileData
+      editProfileData ||
+      isAddingCardOpen
       //- СЮДА ДРУГИЕ МОДАЛКИ
     ) {
       document.addEventListener('keydown', handleKeyDown)
@@ -213,6 +220,7 @@ function App() {
     isCreatingGroupOpen,
     confirmModal,
     editProfileData,
+    isAddingCardOpen,
   ])
 
   //+ Group
@@ -292,6 +300,26 @@ function App() {
   const closeEditProfile = () => setEditProfileData(null)
   //+ /modal_edit_profile
 
+  //+ editingCard
+  // 2. Функция открытия на создание
+  const handleOpenAddCard = () => {
+    setEditingCard(null) // Сбрасываем данные редактирования
+    setIsAddingCardOpen(true) // Открываем модалку
+  }
+
+  // 3. Функция открытия на редактирование
+  const handleOpenEditCard = (card) => {
+    setEditingCard(card) // Заполняем данными
+    setIsAddingCardOpen(true) // Открываем модалку
+  }
+
+  // 4. Функция закрытия (универсальная)
+  const handleCloseAddingCard = () => {
+    setIsAddingCardOpen(false)
+    setEditingCard(null) // Очищаем данные при закрытии
+  }
+  //+ /editingCard
+
   //+ /Modals
 
   //+ Toast:
@@ -340,6 +368,8 @@ function App() {
                   }
                   cardsData={MOCK_CARDS}
                   onDeleteCard={handleDeleteCard}
+                  onOpenAddCard={handleOpenAddCard}
+                  onOpenEditCard={handleOpenEditCard}
                 />
               }
             />
@@ -414,6 +444,15 @@ function App() {
           onOpenUnderConstruction={() =>
             setIsUnderConstructionOpen(true)
           } //- ВРЕМЕННО
+        />
+        <AddingCard
+          mode={mode}
+          isOpen={isAddingCardOpen}
+          onClose={handleCloseAddingCard}
+          onOpenUnderConstruction={() =>
+            setIsUnderConstructionOpen(true)
+          } //- ВРЕМЕННО
+          cardData={editingCard} // Передаю null или объект карточки
         />
         {/* Toast: */}
         {/* <Toast mode={mode} /> */}

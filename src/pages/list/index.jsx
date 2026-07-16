@@ -7,6 +7,8 @@ const List = ({
   mode,
   cardsData,
   onDeleteCard,
+  onOpenAddCard,
+  onOpenEditCard,
   onOpenUnderConstruction,
 }) => {
   //+ скролл вверх при переходе на страницу
@@ -24,6 +26,8 @@ const List = ({
         mode={mode}
         cardsData={cardsData}
         onDeleteCard={onDeleteCard}
+        onOpenAddCard={onOpenAddCard}
+        onOpenEditCard={onOpenEditCard}
         onOpenUnderConstruction={onOpenUnderConstruction}
       />
     </>
