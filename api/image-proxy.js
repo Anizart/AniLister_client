@@ -1,4 +1,17 @@
+export const config = {
+  api: {
+    bodyParser: false, // Отключаем парсер тела для бинарных данных
+  },
+}
+
 export default async function handler(req, res) {
+  // Разрешаем только GET-запросы
+  if (req.method !== 'GET') {
+    return res
+      .status(405)
+      .json({ error: 'Метод не разрешён' })
+  }
+
   const { url } = req.query
 
   if (!url || typeof url !== 'string') {
@@ -7,11 +20,13 @@ export default async function handler(req, res) {
       .json({ error: 'Не указан URL изображения' })
   }
 
-  // Разрешаю только домен shikimori.io для безопасности
+  // Безопасность: разрешаем только shikimori.io
   if (!url.startsWith('https://shikimori.io')) {
-    return res.status(403).json({
-      error: 'Доступ разрешён только к shikimori.io',
-    })
+    return res
+      .status(403)
+      .json({
+        error: 'Доступ разрешён только к shikimori.io',
+      })
   }
 
   try {
@@ -21,18 +36,13 @@ export default async function handler(req, res) {
       return res.status(imageRes.status).end()
     }
 
-    // Получаем тип контента
     const contentType =
       imageRes.headers.get('content-type') || 'image/jpeg'
-
-    // Использую .arrayBuffer() вместо Buffer.from()
     const buffer = await imageRes.arrayBuffer()
 
-    // Устанавливаю заголовки для браузера
     res.setHeader('Content-Type', contentType)
-    res.setHeader('Cache-Control', 'public, max-age=86400') // Кеш на 24 часа
+    res.setHeader('Cache-Control', 'public, max-age=86400')
 
-    // Отправляю ArrayBuffer напрямую
     return res.send(buffer)
   } catch (error) {
     console.error('Ошибка прокси картинки:', error)
