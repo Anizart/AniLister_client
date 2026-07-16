@@ -114,14 +114,22 @@ const AddingCard = ({
     const timer = setTimeout(async () => {
       setIsSearching(true)
       try {
-        // Запрос к ТВОЕМУ serverless-роуту
+        // Запрос к ТВОЕМУ API-роуту (работает и локально, и на Vercel)
         const res = await fetch(
           `/api/search-shikimori?query=${encodeURIComponent(searchQuery)}`,
         )
 
-        if (!res.ok) throw new Error('Ошибка сервера')
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`)
+        }
 
         const data = await res.json()
+
+        // Дополнительная проверка: точно ли это массив
+        if (!Array.isArray(data)) {
+          throw new Error('Некорректный ответ сервера')
+        }
+
         setSearchResults(data)
       } catch (e) {
         console.error('Ошибка поиска:', e)
@@ -156,24 +164,17 @@ const AddingCard = ({
   }, [])
 
   const handleSelectSearchResult = (item) => {
-    // Беру русское название, если есть, иначе английское/японское
     const title = item.russian || item.name
-
-    // Формируею полный URL обложки (используем x96 для баланса качества/скорости)
     const imageUrl = `https://shikimori.io${item.image?.x96}`
-
-    // Определяю тип контента для формы
     const topic =
       item.contentType === 'manga' ? 'read' : 'watch'
 
-    setFormData((prev) => ({
-      ...prev,
-      title,
-    }))
-
+    // Синхронизируем оба состояния
+    setFormData((prev) => ({ ...prev, title }))
     setSearchQuery(title)
+
     setCoverImage(imageUrl)
-    setTopic(topic) // Автоматически переключаю Том/Глава / Сезон/Серия
+    setTopic(topic)
     setSearchResults([])
   }
 

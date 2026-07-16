@@ -1,16 +1,20 @@
 export default async function handler(req, res) {
+  // Разрешаем CORS только для твоего домена
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET')
+
   const { query } = req.query
 
   if (!query || query.length < 2) {
-    return res.status(400).json({
-      error: 'Запрос должен быть минимум 2 символа',
-    })
+    return res
+      .status(400)
+      .json({ error: 'Минимум 2 символа' })
   }
 
   try {
     const encodedQuery = encodeURIComponent(query)
 
-    // Запрашиваем аниме и мангу параллельно
+    // Параллельный запрос к аниме и манге
     const [animeRes, mangaRes] = await Promise.all([
       fetch(
         `https://shikimori.io/api/animes?search=${encodedQuery}&limit=3`,
@@ -20,10 +24,15 @@ export default async function handler(req, res) {
       ),
     ])
 
+    // Проверяем, что ответы успешные
+    if (!animeRes.ok || !mangaRes.ok) {
+      throw new Error('Ошибка ответа от Shikimori')
+    }
+
     const animeData = await animeRes.json()
     const mangaData = await mangaRes.json()
 
-    // Объединяем, добавляем тип и сортируем по рейтингу
+    // Объединяем результаты
     const combined = [
       ...animeData.map((item) => ({
         ...item,
@@ -37,6 +46,7 @@ export default async function handler(req, res) {
       })),
     ]
 
+    // Сортируем по рейтингу и берём топ-5
     const sorted = combined
       .filter((item) => item.score !== null)
       .sort(
@@ -46,7 +56,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json(sorted)
   } catch (error) {
-    console.error('Ошибка прокси Shikimori:', error)
+    console.error('Shikimori API Error:', error)
     return res.status(500).json({ error: 'Ошибка поиска' })
   }
 }
