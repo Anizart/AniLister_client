@@ -3,7 +3,6 @@ export const config = {
 }
 
 export default async function handler(req, res) {
-  // Разрешаем CORS для картинок
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET')
 
@@ -36,12 +35,16 @@ export default async function handler(req, res) {
 
     const contentType =
       imageRes.headers.get('content-type') || 'image/jpeg'
+
+    // Конвертируем ArrayBuffer в Uint8Array для корректной отправки
     const buffer = await imageRes.arrayBuffer()
+    const uint8Array = new Uint8Array(buffer)
 
     res.setHeader('Content-Type', contentType)
     res.setHeader('Cache-Control', 'public, max-age=86400')
 
-    return res.send(buffer)
+    // Отправляем Uint8Array вместо сырого buffer
+    return res.status(200).send(uint8Array)
   } catch (error) {
     console.error('Ошибка прокси картинки:', error)
     return res
