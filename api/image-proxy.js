@@ -20,6 +20,7 @@ export default async function handler(req, res) {
       .json({ error: 'Не указан URL изображения' })
   }
 
+  // Использую .io, так как именно этот домен возвращает API поиска
   if (!url.startsWith('https://shikimori.io')) {
     return res.status(403).json({
       error: 'Доступ разрешён только к shikimori.io',
@@ -36,15 +37,24 @@ export default async function handler(req, res) {
     const contentType =
       imageRes.headers.get('content-type') || 'image/jpeg'
 
-    // Конвертируем ArrayBuffer в Uint8Array для корректной отправки
-    const buffer = await imageRes.arrayBuffer()
-    const uint8Array = new Uint8Array(buffer)
-
+    // Устанавливаем заголовки ответа
     res.setHeader('Content-Type', contentType)
     res.setHeader('Cache-Control', 'public, max-age=86400')
 
-    // Отправляем Uint8Array вместо сырого buffer
-    return res.status(200).send(uint8Array)
+    // Потоковая передача: перенаправляем body напрямую
+    // imageRes.body — это ReadableStream, который идеально работает с Vercel
+    if (imageRes.body) {
+      return new Response(imageRes.body, {
+        headers: {
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=86400',
+        },
+      })
+    } else {
+      // Фолбэк для старых сред, если body недоступен
+      const buffer = await imageRes.arrayBuffer()
+      return res.status(200).send(Buffer.from(buffer))
+    }
   } catch (error) {
     console.error('Ошибка прокси картинки:', error)
     return res
