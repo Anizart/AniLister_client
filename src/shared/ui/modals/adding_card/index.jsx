@@ -165,7 +165,7 @@ const AddingCard = ({
 
   const handleSelectSearchResult = (item) => {
     const title = item.russian || item.name
-    const imageUrl = `https://shikimori.io${item.image?.x96}`
+    const imageUrl = `/api/image-proxy?url=${encodeURIComponent(`https://shikimori.io${item.image?.x96}`)}`
     const topic =
       item.contentType === 'manga' ? 'read' : 'watch'
 
@@ -447,7 +447,7 @@ const AddingCard = ({
                       }
                     >
                       <img
-                        src={`https://shikimori.io${item.image?.x96}`}
+                        src={`/api/image-proxy?url=${encodeURIComponent(`https://shikimori.one${item.image?.x96}`)}`}
                         alt={item.russian || item.name}
                         className='search-item__img'
                         loading='lazy'
