@@ -114,49 +114,17 @@ const AddingCard = ({
     const timer = setTimeout(async () => {
       setIsSearching(true)
       try {
-        // Используем corsproxy.io для обхода блокировок браузера
-        const proxy = 'https://corsproxy.io/?'
-        const query = encodeURIComponent(searchQuery)
+        // Запрос к ТВОЕМУ serverless-роуту
+        const res = await fetch(
+          `/api/search-shikimori?query=${encodeURIComponent(searchQuery)}`,
+        )
 
-        // Запрашиваем аниме и мангу параллельно
-        const [animeRes, mangaRes] = await Promise.all([
-          fetch(
-            `${proxy}https://shikimori.one/api/animes?search=${query}&limit=3`,
-          ),
-          fetch(
-            `${proxy}https://shikimori.one/api/mangas?search=${query}&limit=3`,
-          ),
-        ])
+        if (!res.ok) throw new Error('Ошибка сервера')
 
-        const animeData = await animeRes.json()
-        const mangaData = await mangaRes.json()
-
-        // Объединяем и добавляем тип контента
-        const combined = [
-          ...animeData.map((item) => ({
-            ...item,
-            kind: item.kind || 'tv',
-            contentType: 'anime',
-          })),
-          ...mangaData.map((item) => ({
-            ...item,
-            kind: item.kind || 'manga',
-            contentType: 'manga',
-          })),
-        ]
-
-        // Сортируем по рейтингу (score), убираем null
-        const sorted = combined
-          .filter((item) => item.score !== null)
-          .sort(
-            (a, b) =>
-              parseFloat(b.score) - parseFloat(a.score),
-          )
-          .slice(0, 5) // Оставляем топ-5
-
-        setSearchResults(sorted)
+        const data = await res.json()
+        setSearchResults(data)
       } catch (e) {
-        console.error('Ошибка поиска Shikimori:', e)
+        console.error('Ошибка поиска:', e)
         setSearchResults([])
       } finally {
         setIsSearching(false)
