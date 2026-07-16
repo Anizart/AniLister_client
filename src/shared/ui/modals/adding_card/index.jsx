@@ -182,10 +182,7 @@ const AddingCard = ({
     const topic =
       item.contentType === 'manga' ? 'read' : 'watch'
 
-    // Сначала получаю Base64-картинку
-    const imageUrl = await fetchImageProxy(
-      `https://shikimori.io${item.image?.x96}`,
-    )
+    const imageUrl = `https://shikimori.io${item.image?.x96}`
 
     setFormData((prev) => ({ ...prev, title }))
     setSearchQuery(title)
@@ -464,6 +461,7 @@ const AddingCard = ({
                     >
                       <img
                         src={`https://shikimori.io${item.image?.x96}`}
+                        referrerPolicy='no-referrer'
                         alt={item.russian || item.name}
                         className='search-item__img'
                         loading='lazy'
