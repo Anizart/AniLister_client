@@ -447,7 +447,7 @@ const AddingCard = ({
                       }
                     >
                       <img
-                        src={`/api/image-proxy?url=${encodeURIComponent(`https://shikimori.one${item.image?.x96}`)}`}
+                        src={`/api/image-proxy?url=${encodeURIComponent(`https://shikimori.io${item.image?.x96}`)}`}
                         alt={item.russian || item.name}
                         className='search-item__img'
                         loading='lazy'
