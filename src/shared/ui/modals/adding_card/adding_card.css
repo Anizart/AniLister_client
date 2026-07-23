@@ -40,6 +40,7 @@
     .search-item__img {
       height: clamp(110px, 15vw, 164px);
       min-width: clamp(78px, 11.5vw, 128px);
+      object-fit: cover;
     }
 
     .search-item__sub {
