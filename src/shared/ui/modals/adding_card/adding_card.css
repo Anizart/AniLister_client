@@ -206,30 +206,7 @@
 
 .cover-loader {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-secondary, #f5f5f5);
   z-index: 2;
-  border-radius: inherit; /* Наследуем скругление от родителя */
-}
-
-.spinner-img {
-  width: 32px;
-  height: 32px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.opacity-0 {
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 /* Спиннер для поля поиска */
@@ -237,11 +214,6 @@
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(-50%);
   pointer-events: none;
   z-index: 5;
-}
-
-.search-loader-indicator img {
-  animation: spin 1s linear infinite;
 }
