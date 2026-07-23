@@ -463,7 +463,7 @@ const AddingCard = ({
                       }
                     >
                       <img
-                        className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
+                        className='search-item__img'
                         src={`https://shikimori.io${item.image?.x96}`}
                         alt='Обложка'
                         referrerPolicy='no-referrer'
