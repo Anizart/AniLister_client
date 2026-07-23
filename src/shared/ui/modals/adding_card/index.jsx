@@ -445,8 +445,8 @@ const AddingCard = ({
                   <img
                     src={spinner}
                     alt='Поиск...'
-                    width='16'
-                    height='16'
+                    width='58'
+                    height='58'
                   />
                 </div>
               )}
@@ -481,9 +481,8 @@ const AddingCard = ({
                           onLoad={() =>
                             setIsLoadingCover(false)
                           }
-                          onError={(e) => {
+                          onError={() => {
                             setIsLoadingCover(false)
-                            e.target.src = DEFAULT_COVER
                           }}
                         />
                       </div>
