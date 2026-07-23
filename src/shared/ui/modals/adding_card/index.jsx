@@ -5,6 +5,7 @@ import '../modals.css'
 import './adding_card.css'
 import { useScrollLock } from '@/shared/lib/useScrollLock'
 
+const spinner = '/images/svg/Infinity.svg'
 // Дефолтная обложка
 const DEFAULT_COVER = '/images/default.jpg'
 
@@ -50,6 +51,8 @@ const AddingCard = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [isSearching, setIsSearching] = useState(false)
+  const [isLoadingCover, setIsLoadingCover] =
+    useState(false) // стейт загрузки обложки
 
   // Инициализация данных
   useEffect(() => {
@@ -163,32 +166,20 @@ const AddingCard = ({
       )
   }, [])
 
-  const fetchImageProxy = async (shikimoriUrl) => {
-    try {
-      const res = await fetch(
-        `/api/image-proxy?url=${encodeURIComponent(shikimoriUrl)}`,
-      )
-      if (!res.ok) throw new Error('Ошибка прокси')
-      const data = await res.json()
-      return data.imageUrl // Возвращаю data:image/...;base64,...
-    } catch (e) {
-      console.error('Не удалось загрузить обложку:', e)
-      return DEFAULT_COVER // Фолбэк на дефолтную картинку
-    }
-  }
-
   const handleSelectSearchResult = async (item) => {
     const title = item.russian || item.name
     const topic =
       item.contentType === 'manga' ? 'read' : 'watch'
-
     const imageUrl = `https://shikimori.io${item.image?.x96}`
 
     setFormData((prev) => ({ ...prev, title }))
     setSearchQuery(title)
-    setCoverImage(imageUrl)
     setTopic(topic)
     setSearchResults([])
+
+    // вкл индикатор загрузки
+    setIsLoadingCover(true)
+    setCoverImage(imageUrl)
   }
 
   const handleChange = (e) => {
@@ -442,10 +433,22 @@ const AddingCard = ({
               >
                 Название
               </label>
+
               {errors.title && (
                 <span className='modal__error-msg'>
                   {errors.title}
                 </span>
+              )}
+
+              {isSearching && (
+                <div className='search-loader-indicator'>
+                  <img
+                    src={spinner}
+                    alt='Поиск...'
+                    width='16'
+                    height='16'
+                  />
+                </div>
               )}
 
               {/* Выпадающий список результатов */}
@@ -459,13 +462,31 @@ const AddingCard = ({
                         handleSelectSearchResult(item)
                       }
                     >
-                      <img
-                        src={`https://shikimori.io${item.image?.x96}`}
-                        referrerPolicy='no-referrer'
-                        alt={item.russian || item.name}
-                        className='search-item__img'
-                        loading='lazy'
-                      />
+                      <div className='card-cover-placeholder'>
+                        {isLoadingCover && (
+                          <div className='cover-loader'>
+                            <img
+                              src={spinner}
+                              alt='Загрузка...'
+                              className='spinner-img'
+                            />
+                          </div>
+                        )}
+
+                        <img
+                          className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
+                          src={coverImage}
+                          alt='Обложка'
+                          referrerPolicy='no-referrer'
+                          onLoad={() =>
+                            setIsLoadingCover(false)
+                          }
+                          onError={(e) => {
+                            setIsLoadingCover(false)
+                            e.target.src = DEFAULT_COVER
+                          }}
+                        />
+                      </div>
                       <div className='search-item__info'>
                         <span className='search-item__title'>
                           {item.russian || item.name} |{' '}
