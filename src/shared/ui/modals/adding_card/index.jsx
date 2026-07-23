@@ -475,15 +475,16 @@ const AddingCard = ({
 
                         <img
                           className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
-                          src={coverImage}
+                          src='https://shikimori.io${item.image?.x96'
                           alt='Обложка'
                           referrerPolicy='no-referrer'
-                          // onLoad={() =>
-                          //   setIsLoadingCover(false)
-                          // }
-                          onError={(e) =>
-                            (e.target.src = DEFAULT_COVER)
+                          onLoad={() =>
+                            setIsLoadingCover(false)
                           }
+                          onError={(e) => {
+                            setIsLoadingCover(false)
+                            e.target.src = DEFAULT_COVER
+                          }}
                         />
                       </div>
                       <div className='search-item__info'>
