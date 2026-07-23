@@ -462,31 +462,15 @@ const AddingCard = ({
                         handleSelectSearchResult(item)
                       }
                     >
-                      <div className='card-cover-placeholder'>
-                        {isLoadingCover && (
-                          <div className='cover-loader'>
-                            <img
-                              src={spinner}
-                              alt='Загрузка...'
-                              className='spinner-img'
-                            />
-                          </div>
-                        )}
-
-                        <img
-                          className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
-                          src={`https://shikimori.io${item.image?.x96}`}
-                          alt='Обложка'
-                          referrerPolicy='no-referrer'
-                          onLoad={() =>
-                            setIsLoadingCover(false)
-                          }
-                          onError={(e) => {
-                            setIsLoadingCover(false)
-                            e.target.src = DEFAULT_COVER
-                          }}
-                        />
-                      </div>
+                      <img
+                        className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
+                        src={`https://shikimori.io${item.image?.x96}`}
+                        alt='Обложка'
+                        referrerPolicy='no-referrer'
+                        onError={(e) =>
+                          (e.target.src = DEFAULT_COVER)
+                        }
+                      />
                       <div className='search-item__info'>
                         <span className='search-item__title'>
                           {item.russian || item.name} |{' '}

@@ -13,6 +13,16 @@
     border-radius: 20px;
   }
 
+  /* Спиннер для поля поиска */
+  .search-loader-indicator {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(50%);
+    pointer-events: none;
+    z-index: 5;
+  }
+
   /* Выпадающий список результатов */
   .search-dropdown {
     height: clamp(310px, 30vw, 350px);
@@ -196,24 +206,4 @@
       }
     }
   }
-}
-
-/* Спиннер для главной обложки */
-.card-cover-placeholder {
-  position: relative;
-  overflow: hidden;
-}
-
-.cover-loader {
-  position: absolute;
-  z-index: 2;
-}
-
-/* Спиннер для поля поиска */
-.search-loader-indicator {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  pointer-events: none;
-  z-index: 5;
 }
