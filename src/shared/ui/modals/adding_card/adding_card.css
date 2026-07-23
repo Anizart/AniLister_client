@@ -38,8 +38,8 @@
     z-index: 1;
 
     .search-item__img {
-      height: clamp(125px, 17vw, 180px);
-      width: auto;
+      height: clamp(110px, 15vw, 164px);
+      width: clamp(78px, 11.5vw, 128px);
     }
 
     .search-item__sub {
