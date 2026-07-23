@@ -478,12 +478,12 @@ const AddingCard = ({
                           src={coverImage}
                           alt='Обложка'
                           referrerPolicy='no-referrer'
-                          onLoad={() =>
-                            setIsLoadingCover(false)
+                          // onLoad={() =>
+                          //   setIsLoadingCover(false)
+                          // }
+                          onError={(e) =>
+                            (e.target.src = DEFAULT_COVER)
                           }
-                          onError={() => {
-                            setIsLoadingCover(false)
-                          }}
                         />
                       </div>
                       <div className='search-item__info'>
