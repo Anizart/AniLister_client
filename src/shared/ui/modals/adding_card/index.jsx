@@ -475,7 +475,7 @@ const AddingCard = ({
 
                         <img
                           className={`adding-card__img ${isLoadingCover ? 'opacity-0' : ''}`}
-                          src='https://shikimori.io${item.image?.x96'
+                          src={`https://shikimori.io${item.image?.x96}`}
                           alt='Обложка'
                           referrerPolicy='no-referrer'
                           onLoad={() =>
