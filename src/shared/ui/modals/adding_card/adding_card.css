@@ -16,9 +16,9 @@
   /* Спиннер для поля поиска */
   .search-loader-indicator {
     position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(50%);
+    right: 0;
+    top: -50%;
+    transform: translateY(-50%);
     pointer-events: none;
     z-index: 5;
   }
