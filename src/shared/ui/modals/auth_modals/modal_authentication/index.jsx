@@ -113,8 +113,10 @@ const ModalAuthentication = ({
     const isValid = !emailError && !passwordError
     if (isValid) {
       try {
-        loginUser({ email, password })
-        onAuthSuccess() // Вызов showToast из App
+        const result = loginUser({ email, password })
+        onAuthSuccess(
+          `С возвращением, ${result.user.name}!`,
+        )
         onClose()
       } catch (error) {
         // ошибка через Toast

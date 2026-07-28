@@ -327,12 +327,10 @@ function App() {
   }, [])
 
   // Функция обновления пользователя после входа/регистрации
-  const handleAuthSuccess = (
-    message = 'Вы успешно вошли!',
-  ) => {
+  const handleAuthSuccess = (message) => {
     const user = getCurrentUser()
     setCurrentUser(user)
-    showToast(message)
+    showToast(message || 'Вы успешно вошли!')
   }
 
   // Функция выхода
@@ -443,9 +441,7 @@ function App() {
           onOpenAuthentication={() =>
             setIsAuthenticationOpen(true)
           }
-          onAuthSuccess={(msg) =>
-            handleAuthSuccess(msg || 'Вы зарегистрированны')
-          }
+          onAuthSuccess={handleAuthSuccess}
           showToast={showToast}
         />
         <ModalAuthentication
@@ -453,9 +449,7 @@ function App() {
           isOpen={isAuthenticationOpen}
           onClose={() => setIsAuthenticationOpen(false)}
           onOpenSignUp={() => setIsSignUpOpen(true)}
-          onAuthSuccess={(msg) =>
-            handleAuthSuccess(msg || 'С возращением!')
-          }
+          onAuthSuccess={handleAuthSuccess}
           showToast={showToast}
         />
         <ModalCreatingGroup

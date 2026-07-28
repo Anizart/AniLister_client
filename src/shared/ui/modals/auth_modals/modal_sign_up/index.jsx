@@ -142,7 +142,7 @@ const ModalSignUp = ({
     if (isValid) {
       try {
         registerUser({ name, email, password })
-        onAuthSuccess('Регистрация прошла успешно!')
+        onAuthSuccess(`Добро пожаловать, ${name}!`)
         onClose()
       } catch (error) {
         showToast(error.message, 5000)
