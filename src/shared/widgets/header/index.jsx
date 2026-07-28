@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import './header.css'
 
-import defaultImage from '/images/svg/default_image.svg'
 import Logo from '../../ui/logo'
 
 const Header = ({
