@@ -1,5 +1,5 @@
 .section-welcome {
-  margin-top: clamp(40px, 7vw, 80px);
+  margin-top: clamp(50px, 7vw, 80px);
 }
 
 .welcome-img {

@@ -21,6 +21,8 @@ import ModalCreatingGroup from './shared/ui/modals/creating_group'
 import ConfirmModal from './shared/ui/modals/confirm_modal'
 import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
 import AddingCard from './shared/ui/modals/adding_card'
+//+ Авторизация:
+import { getCurrentUser, logoutUser } from '/api/auth.js'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -273,15 +275,6 @@ function App() {
     })
   }
 
-  // Выход из аккаунта:
-  const handleLogout = () => {
-    openConfirm({
-      title: 'Выход',
-      message: 'Вы действительно хотите выйти с аккаунта?',
-      onConfirm: () => console.log('Логаут...'),
-    })
-  }
-
   // Удаление профиля:
   const handleDeleteProfile = () => {
     openConfirm({
@@ -322,8 +315,55 @@ function App() {
 
   //+ /Modals
 
-  //+ Toast:
+  //+ Авторизация
+  const [currentUser, setCurrentUser] = useState(null)
 
+  // Проверяем авторизацию при загрузке
+  useEffect(() => {
+    const user = getCurrentUser()
+    if (user) {
+      setCurrentUser(user)
+    }
+  }, [])
+
+  // Функция обновления пользователя после входа/регистрации
+  const handleAuthSuccess = (
+    message = 'Вы успешно вошли!',
+  ) => {
+    const user = getCurrentUser()
+    setCurrentUser(user)
+    showToast(message)
+  }
+
+  // Функция выхода
+  const handleLogout = () => {
+    openConfirm({
+      title: 'Выход',
+      message: 'Вы действительно хотите выйти с аккаунта?',
+      onConfirm: () => {
+        logoutUser()
+        setCurrentUser(null)
+        showToast('Возращайтесь скорее!')
+      },
+    })
+  }
+  //+ /Авторизация
+
+  //+ Toast:
+  const [toast, setToast] = useState({
+    isOpen: false,
+    message: '',
+    duration: 3000,
+  })
+
+  // Функция для показа уведомления
+  const showToast = (message, duration = 3000) => {
+    setToast({ isOpen: true, message, duration })
+  }
+
+  const closeToast = () => {
+    setToast((prev) => ({ ...prev, isOpen: false }))
+  }
   //+ /Toast
 
   return (
@@ -336,6 +376,8 @@ function App() {
           onOpenAuthentication={() =>
             setIsAuthenticationOpen(true)
           }
+          currentUser={currentUser}
+          onAuthSuccess={handleAuthSuccess}
         />
         <main className='main'>
           <Routes>
@@ -395,24 +437,26 @@ function App() {
           mode={mode}
         />
         <ModalSignUp
+          mode={mode}
           isOpen={isSignUpOpen}
           onClose={() => setIsSignUpOpen(false)}
           onOpenAuthentication={() =>
             setIsAuthenticationOpen(true)
           }
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
-          mode={mode}
+          onAuthSuccess={(msg) =>
+            handleAuthSuccess(msg || 'Вы зарегистрированны')
+          }
+          showToast={showToast}
         />
         <ModalAuthentication
+          mode={mode}
           isOpen={isAuthenticationOpen}
           onClose={() => setIsAuthenticationOpen(false)}
           onOpenSignUp={() => setIsSignUpOpen(true)}
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
-          mode={mode}
+          onAuthSuccess={(msg) =>
+            handleAuthSuccess(msg || 'С возращением!')
+          }
+          showToast={showToast}
         />
         <ModalCreatingGroup
           isOpen={isCreatingGroupOpen}
@@ -454,8 +498,13 @@ function App() {
           } //- ВРЕМЕННО
           cardData={editingCard} // Передаю null или объект карточки
         />
-        {/* Toast: */}
-        {/* <Toast mode={mode} /> */}
+        <Toast
+          mode={mode}
+          message={toast.message}
+          isOpen={toast.isOpen}
+          onClose={closeToast}
+          duration={toast.duration}
+        />
       </div>
     </BrowserRouter>
   )

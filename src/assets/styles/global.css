@@ -67,6 +67,9 @@ body {
     .header {
       background: rgba(18, 18, 18, 0.18);
     }
+    .user__img {
+      border-color: var(--dark-main-text) !important;
+    }
     .header__sign {
       color: var(--dark-main-text);
     }

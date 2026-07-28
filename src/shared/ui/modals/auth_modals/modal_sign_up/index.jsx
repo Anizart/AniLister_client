@@ -3,17 +3,19 @@ import { useState, useEffect } from 'react'
 
 import '../../modals.css'
 import '../auth_modals.css'
-import { useScrollLock } from '@/shared/lib/useScrollLock'
-import { Link } from 'react-router-dom'
 
+import { registerUser } from '/api/auth'
+import { Link } from 'react-router-dom'
+import { useScrollLock } from '@/shared/lib/useScrollLock'
 import PasswordInput from '@/shared/ui/modals/password_input'
 
 const ModalSignUp = ({
   mode,
   isOpen,
   onClose,
+  showToast,
+  onAuthSuccess,
   onOpenAuthentication,
-  onOpenUnderConstruction, //- ВРЕМЕННО
 }) => {
   useScrollLock(isOpen)
 
@@ -136,10 +138,20 @@ const ModalSignUp = ({
 
     const isValid =
       !nameError && !emailError && !passwordError
+
     if (isValid) {
-      // Валидация прошла — временно открываю under construction
-      onClose()
-      onOpenUnderConstruction()
+      try {
+        registerUser({ name, email, password })
+        onAuthSuccess('Регистрация прошла успешно!')
+        onClose()
+      } catch (error) {
+        showToast(error.message, 5000)
+        setErrors({
+          name: '',
+          email: error.message,
+          password: '',
+        })
+      }
     }
   }
 

@@ -18,6 +18,25 @@
     display: flex;
     align-items: center;
     column-gap: clamp(20px, 4vw, 48px);
+
+    .header__user {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      .user__img {
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+        border: 1px solid var(--light-main-text);
+        border-radius: 50%;
+      }
+    }
+    @media (max-width: 579px) {
+      .header__user {
+        gap: 10px;
+      }
+    }
   }
 
   /*+ Переключатель: */

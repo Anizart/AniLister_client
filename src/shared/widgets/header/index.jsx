@@ -1,65 +1,65 @@
-import { useState, useEffect } from "react"
-import { NavLink } from "react-router-dom"
-import "./header.css"
+import { NavLink } from 'react-router-dom'
+import './header.css'
 
-import Logo from "../../ui/logo"
-// import { userProfile } from "@/shared/api/user" //- !
+import defaultImage from '/images/svg/default_image.svg'
+import Logo from '../../ui/logo'
 
-const Header = ({ mode, onToggleMode, onOpenSignUp, onOpenAuthentication }) => {
-  const [user, setUser] = useState(null) // user
-
+const Header = ({
+  mode,
+  onToggleMode,
+  onOpenSignUp,
+  currentUser,
+  onOpenAuthentication,
+}) => {
   //+ Получение пользователя:
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await userProfile()
-        if (response?.name) {
-          setUser({ name: response.name, img: response.img })
-        }
-      } catch (error) {
-        console.error("Ошибка при получении профиля пользователя:", error)
+  const user = currentUser
+    ? {
+        name: currentUser.name,
+        img: currentUser.avatarUrl,
       }
-    }
-
-    fetchUserProfile()
-  }, [])
+    : null
 
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header__wrapper">
+    <header className='header'>
+      <div className='container'>
+        <div className='header__wrapper'>
           <Logo mode={mode} />
-          <nav className="header__wrapper-elem">
+          <nav className='header__wrapper-elem'>
             {/* Переключатель темы сайта */}
             <div
               className={`header__toggle-container ${
-                mode ? "toggle-container-bg" : ""
+                mode ? 'toggle-container-bg' : ''
               }`}
-              id="toggle-dark-mode"
+              id='toggle-dark-mode'
               onClick={() => onToggleMode(!mode)}
             >
               <div
-                className={`header__circle ${mode ? "circle-transform" : ""}`}
+                className={`header__circle ${mode ? 'circle-transform' : ''}`}
               ></div>
             </div>
             {/* /Переключатель темы сайта */}
-            <NavLink to="/" end className="link">
+            <NavLink
+              to='/'
+              end
+              className='link'
+            >
               Главная
             </NavLink>
             {/* Вход/Аккаунт */}
             {user ? (
-              <div className="header__user">
+              <div className='header__user'>
                 {user.img ? (
                   <img
-                    src={`НАЧАЛО_ССЫЛКИ_НА_СЕРВЕР/${user.img}`}
+                    // src={`НАЧАЛО_ССЫЛКИ_НА_СЕРВЕР/${user.img}`}
+                    src={user.img}
                     alt={user.name}
-                    className="user__img"
+                    className='user__img'
                   />
                 ) : (
                   <img
-                    src="/public/images/svg/default_image.svg"
+                    src={defaultImage}
                     alt={user.name}
-                    className="user__img" //- ЭТО ТЕСТИРОВАТЬ!
+                    className='user__img'
                   />
                 )}
                 {user.name}
@@ -67,15 +67,15 @@ const Header = ({ mode, onToggleMode, onOpenSignUp, onOpenAuthentication }) => {
             ) : (
               <>
                 <button
-                  type="button"
-                  className="header__sign"
+                  type='button'
+                  className='header__sign'
                   onClick={onOpenAuthentication}
                 >
                   Войти
                 </button>
                 <button
-                  type="button"
-                  className="header__sign"
+                  type='button'
+                  className='header__sign'
                   onClick={onOpenSignUp}
                 >
                   Регистрация

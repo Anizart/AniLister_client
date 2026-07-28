@@ -13,7 +13,8 @@
       flex-wrap: wrap;
       width: 100%;
       max-width: fit-content;
-      padding: clamp(25px, 3.5vw, 38px) clamp(15px, 2vw, 18px);
+      padding: clamp(25px, 3.5vw, 38px)
+        clamp(15px, 2vw, 18px);
       font-family: var(--distinguishing-font-family);
       transition: 0.3s;
       position: relative;
@@ -33,7 +34,7 @@
         text-align: left;
       }
       &::after {
-        content: "";
+        content: '';
         display: block;
         height: 100%;
         width: 1px;
@@ -61,7 +62,7 @@
           text-align: center;
         }
         &::after {
-          content: "";
+          content: '';
           display: block;
           height: 1px;
           width: 100%;
