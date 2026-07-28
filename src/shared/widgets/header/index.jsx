@@ -19,6 +19,10 @@ const Header = ({
       }
     : null
 
+  // Определение ссылку:
+  const homeLink = currentUser ? '/profile' : '/'
+  const linkText = currentUser ? 'Профиль' : 'Главная'
+
   return (
     <header className='header'>
       <div className='container'>
@@ -38,30 +42,23 @@ const Header = ({
               ></div>
             </div>
             {/* /Переключатель темы сайта */}
+
             <NavLink
-              to='/'
+              to={homeLink}
               end
               className='link'
             >
-              Главная
+              {linkText}
             </NavLink>
+
             {/* Вход/Аккаунт */}
             {user ? (
               <div className='header__user'>
-                {user.img ? (
-                  <img
-                    // src={`НАЧАЛО_ССЫЛКИ_НА_СЕРВЕР/${user.img}`}
-                    src={user.img}
-                    alt={user.name}
-                    className='user__img'
-                  />
-                ) : (
-                  <img
-                    src={defaultImage}
-                    alt={user.name}
-                    className='user__img'
-                  />
-                )}
+                <img
+                  src={user.img}
+                  alt={user.name}
+                  className='user__img'
+                />
                 {user.name}
               </div>
             ) : (

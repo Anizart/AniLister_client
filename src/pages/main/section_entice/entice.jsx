@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
-import "./entice.css"
+import './entice.css'
 
-import mascot from "/images/mascot_entice-section.png"
-import circle from "/images/circle_3.png"
+import mascot from '/images/mascot_entice-section.png'
+import circle from '/images/circle_3.png'
 
-const Entice = () => {
+const Entice = ({ onOpenAuthentication }) => {
   const descriptionWrap = useRef(null)
   const questionWrap = useRef(null)
 
@@ -19,14 +19,14 @@ const Entice = () => {
     const observe = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          descriptionElem.classList.add("visible")
-          questionElem.classList.add("visible")
+          descriptionElem.classList.add('visible')
+          questionElem.classList.add('visible')
         }
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      }
+        rootMargin: '0px 0px -100px 0px',
+      },
     )
 
     //+ Передаю .current (DOM-элементы)
@@ -41,16 +41,28 @@ const Entice = () => {
   }, [])
 
   return (
-    <section className="section">
-      <div className="container">
+    <section className='section'>
+      <div className='container'>
         <picture>
-          <source media="(max-width: 485px)" srcSet={circle} />
-          <img src={mascot} alt="mascot" className="img entice-img" />
+          <source
+            media='(max-width: 485px)'
+            srcSet={circle}
+          />
+          <img
+            src={mascot}
+            alt='mascot'
+            className='img entice-img'
+          />
         </picture>
-        <div className="entice__wrapper">
-          <div ref={descriptionWrap} className="entice__description">
-            <h2 className="title entice__title">Всё в одном месте.</h2>
-            <div className="text entice__text">
+        <div className='entice__wrapper'>
+          <div
+            ref={descriptionWrap}
+            className='entice__description'
+          >
+            <h2 className='title entice__title'>
+              Всё в одном месте.
+            </h2>
+            <div className='text entice__text'>
               Аниме. Манга. Книги. Прогресс.
               <br />
               Каждая серия — воспоминание.
@@ -60,12 +72,21 @@ const Entice = () => {
               Сохрани их с AniLister.
             </div>
           </div>
-          <div ref={questionWrap} className="entice__question">
-            <h2 className="title entice__title">Ну что?</h2>
-            <div className="text question__text">Начнём?</div>
-            <Link to="/profile" type="button" className="btn">
+          <div
+            ref={questionWrap}
+            className='entice__question'
+          >
+            <h2 className='title entice__title'>Ну что?</h2>
+            <div className='text question__text'>
+              Начнём?
+            </div>
+            <button
+              type='button'
+              className='btn'
+              onClick={onOpenAuthentication}
+            >
               Начать список
-            </Link>
+            </button>
           </div>
         </div>
       </div>

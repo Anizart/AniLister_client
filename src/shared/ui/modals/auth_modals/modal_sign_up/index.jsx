@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import '../../modals.css'
 import '../auth_modals.css'
@@ -18,6 +19,7 @@ const ModalSignUp = ({
   onOpenAuthentication,
 }) => {
   useScrollLock(isOpen)
+  const navigate = useNavigate()
 
   // Состояния полей
   const [name, setName] = useState('')
@@ -144,6 +146,7 @@ const ModalSignUp = ({
         registerUser({ name, email, password })
         onAuthSuccess(`Добро пожаловать, ${name}!`)
         onClose()
+        navigate('/profile')
       } catch (error) {
         showToast(error.message, 5000)
         setErrors({

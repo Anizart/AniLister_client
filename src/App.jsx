@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import Header from './shared/widgets/header'
-import MainPage from './pages/main'
 import Footer from './shared/widgets/footer'
 import NotfoundPage from './pages/notfound-page-404'
 import Profile from './pages/profile'
@@ -23,6 +22,10 @@ import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
 import AddingCard from './shared/ui/modals/adding_card'
 //+ Авторизация:
 import { getCurrentUser, logoutUser } from '/api/auth.js'
+//+ Компонент для перенаправления авторизованных пользователей с главной:
+import MainRedirect from './shared/lib/main_redirect'
+//+ Компонент-защитник (проверяет наличие пользователя)
+import ProtectedRoute from './shared/lib/protected_route'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -313,6 +316,11 @@ function App() {
   }
   //+ /editingCard
 
+  //+ Открытие входа при возращении не зареганого пользователя на гланую
+  const handleOpenAuthFromRedirect = useCallback(() => {
+    setIsAuthenticationOpen(true)
+  }, [])
+
   //+ /Modals
 
   //+ Авторизация
@@ -381,36 +389,48 @@ function App() {
           <Routes>
             <Route
               path='/'
-              element={<MainPage />}
+              element={
+                <MainRedirect
+                  currentUser={currentUser}
+                  onOpenAuthentication={() =>
+                    setIsAuthenticationOpen(true)
+                  }
+                  openAuthModal={handleOpenAuthFromRedirect}
+                />
+              }
             />
             <Route
               path='/profile'
               element={
-                <Profile
-                  mode={mode}
-                  onOpenEditProfile={openEditProfile} //- Временные данные для теста модалки: modal_edit_profile
-                  onOpenCreatingGroup={handleOpenCreate}
-                  onOpenEditingGroup={handleOpenEdit}
-                  onLogout={handleLogout}
-                  onDeleteGroup={handleDeleteGroup}
-                  onDeleteProfile={handleDeleteProfile}
-                />
+                <ProtectedRoute currentUser={currentUser}>
+                  <Profile
+                    mode={mode}
+                    onOpenEditProfile={openEditProfile} //- Временные данные для теста модалки: modal_edit_profile
+                    onOpenCreatingGroup={handleOpenCreate}
+                    onOpenEditingGroup={handleOpenEdit}
+                    onLogout={handleLogout}
+                    onDeleteGroup={handleDeleteGroup}
+                    onDeleteProfile={handleDeleteProfile}
+                  />
+                </ProtectedRoute>
               }
             />
             <Route
               path='list'
               //- list/:groupId - так когда появится бэк
               element={
-                <List
-                  mode={mode}
-                  onOpenUnderConstruction={() =>
-                    setIsUnderConstructionOpen(true)
-                  }
-                  cardsData={MOCK_CARDS}
-                  onDeleteCard={handleDeleteCard}
-                  onOpenAddCard={handleOpenAddCard}
-                  onOpenEditCard={handleOpenEditCard}
-                />
+                <ProtectedRoute currentUser={currentUser}>
+                  <List
+                    mode={mode}
+                    onOpenUnderConstruction={() =>
+                      setIsUnderConstructionOpen(true)
+                    }
+                    cardsData={MOCK_CARDS}
+                    onDeleteCard={handleDeleteCard}
+                    onOpenAddCard={handleOpenAddCard}
+                    onOpenEditCard={handleOpenEditCard}
+                  />
+                </ProtectedRoute>
               }
             />
             <Route
@@ -427,7 +447,10 @@ function App() {
             />
           </Routes>
         </main>
-        <Footer mode={mode} />
+        <Footer
+          mode={mode}
+          currentUser={currentUser}
+        />
         {/* Modals: */}
         <UnderConstructionModal
           isOpen={isUnderConstructionOpen}
