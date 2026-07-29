@@ -20,8 +20,12 @@ import ModalCreatingGroup from './shared/ui/modals/creating_group'
 import ConfirmModal from './shared/ui/modals/confirm_modal'
 import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
 import AddingCard from './shared/ui/modals/adding_card'
-//+ Авторизация:
-import { getCurrentUser, logoutUser } from '/api/auth.js'
+//+ Пользователь:
+import {
+  getCurrentUser,
+  logoutUser,
+  deleteUser,
+} from '/api/auth.js'
 //+ Компонент для перенаправления авторизованных пользователей с главной:
 import MainRedirect from './shared/lib/main_redirect'
 //+ Компонент-защитник (проверяет наличие пользователя)
@@ -274,15 +278,6 @@ function App() {
     })
   }
 
-  // Удаление профиля:
-  const handleDeleteProfile = () => {
-    openConfirm({
-      title: 'Удаление профиля',
-      message:
-        'Вы действительно хотите удалить свой аккаунт? После удаления аккаунт не подлежит восстановлению!',
-      onConfirm: () => console.log('Профиль удален'),
-    })
-  }
   //+ /confirmModal
 
   //+ modal_edit_profile
@@ -340,7 +335,7 @@ function App() {
     showToast(message || 'Вы успешно вошли!')
   }
 
-  // Функция выхода
+  // Функция выхода (confirmModal)
   const handleLogout = () => {
     openConfirm({
       title: 'Выход',
@@ -353,11 +348,29 @@ function App() {
     })
   }
 
-  // Функция обновления профиля
+  // Функция обновления профиля (confirmModal)
   const handleProfileUpdate = () => {
     const user = getCurrentUser()
     setCurrentUser(user)
     showToast('Профиль успешно обновлен!')
+  }
+
+  // Удаление профиля (confirmModal)
+  const handleDeleteProfile = () => {
+    openConfirm({
+      title: 'Удаление профиля',
+      warningText: 'Внимание! Это действие необратимо!',
+      message:
+        'Вы действительно хотите удалить свой аккаунт? Все ваши данные и списки будут безвозвратно утеряны!',
+      onConfirm: () => {
+        deleteUser() // Удаляю из LocalStorage
+        setCurrentUser(null) // Очищаю состояние в React
+        showToast(
+          'Аккаунт успешно удален. Жаль с Вами прощаться ಥ_ಥ',
+          5000,
+        )
+      },
+    })
   }
   //+ /Пользователь
 
@@ -500,9 +513,6 @@ function App() {
           warningText={confirmModal.warningText}
           dangerMode={confirmModal.dangerMode}
           onConfirm={confirmModal.onConfirm}
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
         />
         <ModalEditProfile
           mode={mode}

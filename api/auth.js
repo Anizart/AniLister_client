@@ -107,12 +107,29 @@ export const setCurrentUser = (user) => {
   }
 }
 
+// Проверить, авторизован ли пользователь
+export const isAuthenticated = () => {
+  return !!getCurrentUser()
+}
+
 // Выход из аккаунта
 export const logoutUser = () => {
   localStorage.removeItem(CURRENT_USER_KEY)
 }
 
-// Проверить, авторизован ли пользователь
-export const isAuthenticated = () => {
-  return !!getCurrentUser()
+//- Удаление аккаунта пользователя (ДОДЕЛАТЬ ЧТОБ И ВСЕ КАРТОЧКИ И Т.Д. УДАЛЯЛОСЬ)
+export const deleteUser = () => {
+  const currentUser = getCurrentUser()
+  if (!currentUser) return false
+
+  const users = getUsers()
+  // Фильтр списока: оставляя всех, кроме текущего пользователя
+  const updatedUsers = users.filter(
+    (u) => u.id !== currentUser.id,
+  )
+
+  saveUsers(updatedUsers)
+  logoutUser() // Удаляю запись о текущей сессии
+
+  return true
 }

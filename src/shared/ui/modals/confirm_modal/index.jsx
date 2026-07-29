@@ -12,7 +12,6 @@ const ConfirmModal = ({
   message,
   warningText,
   onConfirm,
-  onOpenUnderConstruction, //- ВРЕМЕННО
 }) => {
   useScrollLock(isOpen)
 
@@ -64,7 +63,6 @@ const ConfirmModal = ({
             onClick={() => {
               onConfirm()
               onClose()
-              onOpenUnderConstruction() //- ВРЕМЕННО
             }}
           >
             Да
