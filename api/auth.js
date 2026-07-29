@@ -64,6 +64,31 @@ export const loginUser = (credentials) => {
   return { success: true, user }
 }
 
+// Обновление профиля пользователя
+export const updateUserProfile = (updatedData) => {
+  const currentUser = getCurrentUser()
+  if (!currentUser) return null
+
+  // Обновление данных текущего пользователя
+  const updatedUser = { ...currentUser, ...updatedData }
+
+  // Сохраняю как текущего
+  setCurrentUser(updatedUser)
+
+  // Находим и обновляем пользователя в общем списке users
+  const users = getUsers()
+  const userIndex = users.findIndex(
+    (u) => u.id === currentUser.id,
+  )
+
+  if (userIndex !== -1) {
+    users[userIndex] = updatedUser
+    saveUsers(users)
+  }
+
+  return updatedUser
+}
+
 // Получить текущего пользователя
 export const getCurrentUser = () => {
   const user = localStorage.getItem(CURRENT_USER_KEY)

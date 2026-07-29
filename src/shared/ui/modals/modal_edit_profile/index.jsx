@@ -1,38 +1,37 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+
 import { useScrollLock } from '@/shared/lib/useScrollLock'
+import { updateUserProfile } from '/api/auth.js'
 
 import '../modals.css'
 import './modal_edit_profile.css'
-
-//- !!! ДЛЯ ДОБАВЛЕНИЯ ФОТО НАДО СДЕЛАТЬЗАЩИТУ И ЧТОБ ПЕРЕДАВАЛИСЬ ТОЛЬКО НУЖНЫЕ ФОРМАТЫ !!!
 
 const ModalEditProfile = ({
   mode,
   isOpen,
   onClose,
+  showToast,
   initialData,
-  onOpenUnderConstruction, //- ВРЕМЕННО
+  onProfileUpdated,
 }) => {
   useScrollLock(isOpen)
 
   const fileInputRef = useRef(null)
-  const currentBlobUrl = useRef(null)
-
-  // ! Хранию сам объект файла для отправки на сервер
-  const selectedFile = useRef(null)
 
   const [name, setName] = useState(initialData?.name || '')
   const [avatarPreview, setAvatarPreview] = useState(
     initialData?.avatarUrl ||
       '/images/svg/default_image.svg',
   )
+  const [newAvatarBase64, setNewAvatarBase64] =
+    useState(null)
 
   // Состояние ошибок
   const [errors, setErrors] = useState({ name: '' })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  // Инициализация формы
+  // Сброс и инициализация формы при открытии
   useEffect(() => {
     if (isOpen && initialData) {
       setName(initialData.name || '')
@@ -41,38 +40,89 @@ const ModalEditProfile = ({
           '/images/svg/default_image.svg',
       )
 
-      // Сбрасываю файл при открытии, чтоб не отправить старый
-      selectedFile.current = null
-      if (currentBlobUrl.current) {
-        URL.revokeObjectURL(currentBlobUrl.current)
-        currentBlobUrl.current = null
-      }
+      // Очистка состояния новой аватарки
+      setNewAvatarBase64(null)
+
+      // Сброс ошибки и флага отправки
       setErrors({ name: '' })
       setIsSubmitted(false)
-    }
 
-    return () => {
-      if (currentBlobUrl.current) {
-        URL.revokeObjectURL(currentBlobUrl.current)
-        currentBlobUrl.current = null
+      // Сброс input файла, чтобы можно было выбрать тот же файл повторно
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
       }
     }
   }, [isOpen, initialData])
 
+  // Функция обработки изображения (сжатие и центрированная обрезка)
+  const processImage = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = (event) => {
+        const img = new Image()
+        img.src = event.target.result
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+
+          // Целевой размер (квадрат для аватарки)
+          const size = 300
+          canvas.width = size
+          canvas.height = size
+
+          // Логика "cover": масштабирую так, чтобы заполнить весь квадрат
+          const scale = Math.max(
+            size / img.width,
+            size / img.height,
+          )
+
+          // Координаты для центрирования
+          const x = size / 2 - (img.width / 2) * scale
+          const y = size / 2 - (img.height / 2) * scale
+
+          // Рисую изображение на канвасе
+          ctx.drawImage(
+            img,
+            x,
+            y,
+            img.width * scale,
+            img.height * scale,
+          )
+
+          // Конвертирую в Base64 (JPEG, качество 80%)
+          resolve(canvas.toDataURL('image/jpeg', 0.8))
+        }
+        img.onerror = (error) => reject(error)
+      }
+      reader.onerror = (error) => reject(error)
+    })
+  }
+
   // Обработчик выбора файла
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
-      // Сохраняю файл для будущей отправки
-      selectedFile.current = file
-
-      if (currentBlobUrl.current) {
-        URL.revokeObjectURL(currentBlobUrl.current)
+      // Проверка размера до обработки (лимит 5МБ)
+      if (file.size > 5 * 1024 * 1024) {
+        showToast(
+          'Файл слишком большой! Выберите изображение меньше 5 МБ.',
+          4500,
+        )
+        return
       }
 
-      const objectUrl = URL.createObjectURL(file)
-      currentBlobUrl.current = objectUrl
-      setAvatarPreview(objectUrl)
+      try {
+        const base64String = await processImage(file)
+        setNewAvatarBase64(base64String)
+        setAvatarPreview(base64String)
+      } catch (error) {
+        console.error('Ошибка обработки фото:', error)
+        showToast(
+          'Не удалось обработать изображение. Попробуйте другой файл.',
+          4500,
+        )
+      }
     }
   }
 
@@ -85,6 +135,8 @@ const ModalEditProfile = ({
     if (!value.trim()) return 'Имя не может быть пустым'
     if (value.length > 15)
       return 'Имя не должно превышать 15 символов'
+    if (!/^[a-zA-Zа-яА-Я0-9_-]+$/.test(value))
+      return 'Разрешены только буквы, цифры, _ и -'
     return ''
   }
 
@@ -97,19 +149,19 @@ const ModalEditProfile = ({
     setErrors({ name: nameError })
 
     if (!nameError) {
-      // Формирую данные для сервера
-      const formData = {
-        name: name,
-        avatarFile: selectedFile.current, // Вот здесь лежит реальный файл
+      const updateData = { name: name }
+
+      // Если была выбрана новая аватарка, добавляю её в данные
+      if (newAvatarBase64) {
+        updateData.avatarUrl = newAvatarBase64
       }
 
-      //- ВРЕМЕННО
-      console.log('Данные готовы к отправке:', formData)
-      onClose()
-      onOpenUnderConstruction()
+      const updatedUser = updateUserProfile(updateData)
 
-      // В БУДУЩЕМ ЗДЕСЬ БУДЕТ:
-      // await updateProfile(formData)
+      if (updatedUser) {
+        onProfileUpdated()
+        onClose()
+      }
     }
   }
 
@@ -148,7 +200,8 @@ const ModalEditProfile = ({
 
         <h2 className='title'>
           Редактирование
-          <br /> профиля
+          <br />
+          профиля
         </h2>
 
         <div className='edit-profile__body'>
@@ -212,24 +265,10 @@ const ModalEditProfile = ({
                       }
                     />
                   </g>
-                  <defs>
-                    <clipPath id='clip0_538_175'>
-                      <rect
-                        width='50'
-                        height='41'
-                        fill={
-                          mode
-                            ? 'var(--dark-main-text)'
-                            : 'var(--light-main-text)'
-                        }
-                      />
-                    </clipPath>
-                  </defs>
                 </svg>
                 <span>Изменить изображение</span>
               </div>
             </div>
-
             <input
               ref={fileInputRef}
               type='file'
@@ -254,9 +293,7 @@ const ModalEditProfile = ({
                     name: validateName(e.target.value),
                   }))
               }}
-              className={`modal__input-title ${
-                errors.title ? 'modal__input--error' : ''
-              }`}
+              className={`modal__input-title ${errors.name ? 'modal__input--error' : ''}`}
             />
             <label
               htmlFor='user'

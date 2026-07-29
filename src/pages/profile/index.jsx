@@ -5,6 +5,7 @@ import Groups from './section_groups'
 
 const Profile = ({
   mode,
+  userData,
   onOpenCreatingGroup,
   onOpenEditingGroup,
   onOpenEditProfile, //- изменение данных пользователя
@@ -20,9 +21,10 @@ const Profile = ({
   return (
     <>
       <UserProfile
+        userData={userData}
+        onLogout={onLogout}
         onOpenEditProfile={onOpenEditProfile} //- изменение данных пользователя
         onDeleteProfile={onDeleteProfile}
-        onLogout={onLogout}
       />
       <Groups
         mode={mode}

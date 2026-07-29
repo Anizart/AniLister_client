@@ -9,6 +9,8 @@
     gap: 18px;
     .profile__img {
       height: clamp(79px, 11vw, 149px);
+      width: clamp(79px, 11vw, 149px);
+      object-fit: cover;
       border: 1px solid var(--light-main-text);
       border-radius: 50%;
       box-shadow: 0 0 150px 10px var(--accent-text);

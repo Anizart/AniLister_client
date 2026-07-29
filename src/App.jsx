@@ -121,15 +121,11 @@ function App() {
     dangerMode: true,
   })
   // Модалка изменения профиля
-  //- Временные данные для тестирования модалки: modal_edit_profile
-  const MOCK_USER_DATA = {
-    id: 'user-1',
-    name: 'test',
-    avatarUrl: '/images/svg/default_image.svg',
-  }
+  // Состояние для данных редактирования профиля
   const [editProfileData, setEditProfileData] =
     useState(null)
-  //- Временные данные для тестирования модалки: modal_edit_profile
+
+  //- Временные данные для тестирования модалки: modal_edit_cards
   const MOCK_CARDS = [
     {
       id: 'card-1',
@@ -290,8 +286,11 @@ function App() {
   //+ /confirmModal
 
   //+ modal_edit_profile
-  const openEditProfile = () =>
-    setEditProfileData(MOCK_USER_DATA)
+  const openEditProfile = () => {
+    if (currentUser) {
+      setEditProfileData(currentUser)
+    }
+  }
 
   const closeEditProfile = () => setEditProfileData(null)
   //+ /modal_edit_profile
@@ -323,7 +322,7 @@ function App() {
 
   //+ /Modals
 
-  //+ Авторизация
+  //+ Пользователь
   const [currentUser, setCurrentUser] = useState(null)
 
   // Проверяем авторизацию при загрузке
@@ -353,7 +352,14 @@ function App() {
       },
     })
   }
-  //+ /Авторизация
+
+  // Функция обновления профиля
+  const handleProfileUpdate = () => {
+    const user = getCurrentUser()
+    setCurrentUser(user)
+    showToast('Профиль успешно обновлен!')
+  }
+  //+ /Пользователь
 
   //+ Toast:
   const [toast, setToast] = useState({
@@ -405,6 +411,7 @@ function App() {
                 <ProtectedRoute currentUser={currentUser}>
                   <Profile
                     mode={mode}
+                    userData={currentUser}
                     onOpenEditProfile={openEditProfile} //- Временные данные для теста модалки: modal_edit_profile
                     onOpenCreatingGroup={handleOpenCreate}
                     onOpenEditingGroup={handleOpenEdit}
@@ -499,12 +506,11 @@ function App() {
         />
         <ModalEditProfile
           mode={mode}
+          showToast={showToast}
           isOpen={!!editProfileData}
           onClose={closeEditProfile}
           initialData={editProfileData}
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
+          onProfileUpdated={handleProfileUpdate}
         />
         <AddingCard
           mode={mode}

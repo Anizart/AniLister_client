@@ -3,23 +3,31 @@ import './profile.css'
 import default_image from '/images/svg/default_image.svg'
 
 const UserProfile = ({
+  userData,
+  onLogout,
   onOpenEditProfile,
   onDeleteProfile,
-  onLogout,
 }) => {
+  if (!userData) return null
+
+  // Аватарка из данных или заглушка
+  const avatarSrc = userData.avatarUrl || default_image
+
   return (
     <div className='container'>
       <section className='profile'>
         <div className='profile__info'>
           <img
             className='profile__img'
-            src={default_image}
-            alt='#'
+            src={avatarSrc}
+            alt={userData.name}
           />
           <div className='profile__details'>
-            <p className='profile__name'>Имя: test</p>
+            <p className='profile__name'>
+              Имя: {userData.name}
+            </p>
             <p className='profile__email'>
-              Почта: testtesttesttesttest@gmail.com
+              Почта: {userData.email}
             </p>
           </div>
         </div>
