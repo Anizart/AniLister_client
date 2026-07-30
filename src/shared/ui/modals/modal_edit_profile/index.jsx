@@ -149,10 +149,19 @@ const ModalEditProfile = ({
     setErrors({ name: nameError })
 
     if (!nameError) {
+      // Проверка, были ли реальные изменения
+      const isNameChanged = name !== initialData.name
+      const isAvatarChanged = newAvatarBase64 !== null
+
+      if (!isNameChanged && !isAvatarChanged) {
+        // Если ничего не поменялось, просто закрыть модалку
+        onClose()
+        return
+      }
+
       const updateData = { name: name }
 
-      // Если была выбрана новая аватарка, добавляю её в данные
-      if (newAvatarBase64) {
+      if (isAvatarChanged) {
         updateData.avatarUrl = newAvatarBase64
       }
 
