@@ -117,7 +117,7 @@ export const logoutUser = () => {
   localStorage.removeItem(CURRENT_USER_KEY)
 }
 
-//- Удаление аккаунта пользователя (ДОДЕЛАТЬ ЧТОБ И ВСЕ КАРТОЧКИ И Т.Д. УДАЛЯЛОСЬ)
+//- Удаление аккаунта пользователя (ДОДЕЛАТЬ ЧТОБ И ВСЕ КАРТОЧКИ И Т.Д. УДАЛЯЛОСЬ (КАСКАДОМ))
 export const deleteUser = () => {
   const currentUser = getCurrentUser()
   if (!currentUser) return false
@@ -132,4 +132,66 @@ export const deleteUser = () => {
   logoutUser() // Удаляю запись о текущей сессии
 
   return true
+}
+
+//+ Работа с группами:
+// Получить группы текущего пользователя
+export const getUserGroups = () => {
+  const user = getCurrentUser()
+  return user?.groups || []
+}
+
+// Сохранить группы текущему пользователю
+const saveUserGroups = (groups) => {
+  const user = getCurrentUser()
+  if (!user) return
+
+  const updatedUser = { ...user, groups }
+  setCurrentUser(updatedUser)
+
+  // Также обновляем в общем списке users
+  const users = getUsers()
+  const index = users.findIndex((u) => u.id === user.id)
+  if (index !== -1) {
+    users[index] = updatedUser
+    saveUsers(users)
+  }
+}
+
+// Создание или обновление группы
+export const saveGroup = (groupData) => {
+  const groups = getUserGroups()
+
+  if (groupData.id) {
+    // Редактирование
+    const index = groups.findIndex(
+      (g) => g.id === groupData.id,
+    )
+    if (index !== -1) {
+      groups[index] = {
+        ...groups[index],
+        title: groupData.title,
+      }
+    }
+  } else {
+    // Создание новой
+    const newGroup = {
+      id: Date.now().toString(),
+      title: groupData.title,
+      topic: groupData.topic, // 'watch' или 'read'
+      cards: [], // Массив для будущих карточек
+    }
+    groups.push(newGroup)
+  }
+
+  saveUserGroups(groups)
+  return groups
+}
+
+// Удаление группы
+export const deleteGroup = (groupId) => {
+  let groups = getUserGroups()
+  groups = groups.filter((g) => g.id !== groupId)
+  saveUserGroups(groups)
+  return groups
 }

@@ -1,14 +1,9 @@
 import { Link } from 'react-router-dom'
 import './section_groups.css'
 
-// Временные данные для теста (потом придут с бэкенда)
-const MOCK_GROUPS = [
-  { id: '1', title: 'Манга', topic: 'read', count: 18 },
-  { id: '2', title: 'Аниме', topic: 'watch', count: 1000 },
-]
-
 const Groups = ({
   mode,
+  groups,
   onOpenCreatingGroup,
   onOpenEditingGroup,
   onDeleteGroup,
@@ -57,21 +52,20 @@ const Groups = ({
           </button>
 
           {/* Список групп */}
-          {MOCK_GROUPS.map((group) => (
+          {groups.map((group) => (
             <div
               key={group.id}
               className='groups__item'
             >
               <Link
-                to='/list'
-                // to={`/list/${group.id}`} потом так
+                to={`/list/${group.id}`} // Ссылка с ID группы
                 className='groups__group'
               >
                 <h2 className='groups__name'>
                   {group.title}
                 </h2>
                 <div className='groups__counter'>
-                  [{group.count}]
+                  [{group.cards ? group.cards.length : 0}]
                 </div>
               </Link>
 

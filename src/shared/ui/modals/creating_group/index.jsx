@@ -7,9 +7,9 @@ import { useScrollLock } from '@/shared/lib/useScrollLock'
 
 const ModalCreatingGroup = ({
   mode,
+  onSave,
   isOpen,
   onClose,
-  onOpenUnderConstruction,
   groupData = null, // Новые данные для редактирования
 }) => {
   useScrollLock(isOpen)
@@ -86,20 +86,19 @@ const ModalCreatingGroup = ({
 
     const titleError = validateTitle(title)
     const topicError = validateTopic(topic)
-    setErrors({
-      title: titleError,
-      topic: topicError,
-    })
+
+    setErrors({ title: titleError, topic: topicError })
 
     if (!titleError && !topicError) {
-      //! Здесь будет логика: createGroup или updateGroup
-      console.log(
-        isEditing ? 'Редактирование:' : 'Создание:',
-        { title, topic },
-      )
+      // Формирую объект для сохранения
+      const groupPayload = {
+        id: groupData?.id, // Если есть ID, значит редактирую
+        title,
+        topic,
+      }
 
+      onSave(groupPayload) // Вызов сохранение в App
       onClose()
-      onOpenUnderConstruction()
     }
   }
 

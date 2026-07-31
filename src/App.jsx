@@ -15,7 +15,6 @@ import TermsOfService from './pages/legal/terms_of_service'
 import UnderConstructionModal from './shared/ui/modals/under_construction_modal'
 import ModalSignUp from './shared/ui/modals/auth_modals/modal_sign_up'
 import ModalAuthentication from './shared/ui/modals/auth_modals/modal_authentication'
-import List from './pages/list'
 import ModalCreatingGroup from './shared/ui/modals/creating_group'
 import ConfirmModal from './shared/ui/modals/confirm_modal'
 import ModalEditProfile from './shared/ui/modals/modal_edit_profile'
@@ -25,11 +24,16 @@ import {
   getCurrentUser,
   logoutUser,
   deleteUser,
+  getUserGroups,
+  saveGroup,
+  deleteGroup,
 } from '/api/auth.js'
 //+ Компонент для перенаправления авторизованных пользователей с главной:
 import MainRedirect from './shared/lib/main_redirect'
 //+ Компонент-защитник (проверяет наличие пользователя)
 import ProtectedRoute from './shared/lib/protected_route'
+//+ Компонент-обёртка для list:
+import ListWrapper from './shared/lib/list_wrapper_for_id'
 //+ Toast:
 import Toast from './shared/ui/toast'
 
@@ -128,6 +132,8 @@ function App() {
   // Состояние для данных редактирования профиля
   const [editProfileData, setEditProfileData] =
     useState(null)
+  // Groups State
+  const [groups, setGroups] = useState([])
 
   //- Временные данные для тестирования модалки: modal_edit_cards
   const MOCK_CARDS = [
@@ -255,18 +261,6 @@ function App() {
     setConfirmModal((prev) => ({ ...prev, isOpen: false }))
   }
 
-  // Сценарии использования:
-  // Удаление группы:
-  const handleDeleteGroup = (groupId) => {
-    openConfirm({
-      title: 'Удаление',
-      warningText: 'Внимание это действие не обратимо!',
-      message:
-        'Удаляя группу, Вы удаляете всё содержимое. Вы действительно хотите удалить?',
-      onConfirm: () =>
-        console.log('Группа удалена:', groupId),
-    })
-  }
   //! Удаление карточки:
   const handleDeleteCard = (cardId) => {
     openConfirm({
@@ -372,6 +366,40 @@ function App() {
       },
     })
   }
+
+  //+ Работа с группами:
+  // Загружаем группы при старте
+  useEffect(() => {
+    if (currentUser) {
+      setGroups(getUserGroups())
+    }
+  }, [currentUser])
+
+  // Обработчик сохранения группы из модалки
+  const handleSaveGroup = (groupData) => {
+    const updatedGroups = saveGroup(groupData)
+    setGroups(updatedGroups)
+    showToast(
+      groupData.id
+        ? 'Группа обновлена!'
+        : 'Группа создана!',
+    )
+  }
+
+  // Обработчик удаления группы
+  const handleDeleteGroup = (groupId) => {
+    openConfirm({
+      title: 'Удаление',
+      warningText: 'Внимание, это действие необратимо!',
+      message:
+        'Удаляя группу, Вы удаляете всё её содержимое. Вы действительно хотите удалить?',
+      onConfirm: () => {
+        const updatedGroups = deleteGroup(groupId)
+        setGroups(updatedGroups)
+        showToast('Группа удалена')
+      },
+    })
+  }
   //+ /Пользователь
 
   //+ Toast:
@@ -425,27 +453,27 @@ function App() {
                   <Profile
                     mode={mode}
                     userData={currentUser}
-                    onOpenEditProfile={openEditProfile} //- Временные данные для теста модалки: modal_edit_profile
+                    onLogout={handleLogout}
+                    onOpenEditProfile={openEditProfile}
+                    onDeleteProfile={handleDeleteProfile}
+                    groups={groups}
                     onOpenCreatingGroup={handleOpenCreate}
                     onOpenEditingGroup={handleOpenEdit}
-                    onLogout={handleLogout}
                     onDeleteGroup={handleDeleteGroup}
-                    onDeleteProfile={handleDeleteProfile}
                   />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='list'
-              //- list/:groupId - так когда появится бэк
+              path='/list/:groupId'
               element={
                 <ProtectedRoute currentUser={currentUser}>
-                  <List
+                  <ListWrapper
+                    groups={groups}
                     mode={mode}
                     onOpenUnderConstruction={() =>
                       setIsUnderConstructionOpen(true)
                     }
-                    cardsData={MOCK_CARDS}
                     onDeleteCard={handleDeleteCard}
                     onOpenAddCard={handleOpenAddCard}
                     onOpenEditCard={handleOpenEditCard}
@@ -496,13 +524,11 @@ function App() {
           showToast={showToast}
         />
         <ModalCreatingGroup
-          isOpen={isCreatingGroupOpen}
-          onClose={handleCloseGroupModal}
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
           mode={mode}
           groupData={editingGroup} // Передаю данные или null
+          onSave={handleSaveGroup}
+          isOpen={isCreatingGroupOpen}
+          onClose={handleCloseGroupModal}
         />
         <ConfirmModal
           mode={mode}

@@ -5,6 +5,7 @@ import Groups from './section_groups'
 
 const Profile = ({
   mode,
+  groups,
   userData,
   onOpenCreatingGroup,
   onOpenEditingGroup,
@@ -28,6 +29,7 @@ const Profile = ({
       />
       <Groups
         mode={mode}
+        groups={groups}
         onOpenCreatingGroup={onOpenCreatingGroup}
         onOpenEditingGroup={onOpenEditingGroup}
         onDeleteGroup={onDeleteGroup}

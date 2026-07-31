@@ -5,7 +5,7 @@ import SavedContent from './saved_content'
 
 const List = ({
   mode,
-  cardsData,
+  group,
   onDeleteCard,
   onOpenAddCard,
   onOpenEditCard,
@@ -24,7 +24,7 @@ const List = ({
       />
       <SavedContent
         mode={mode}
-        cardsData={cardsData}
+        group={group}
         onDeleteCard={onDeleteCard}
         onOpenAddCard={onOpenAddCard}
         onOpenEditCard={onOpenEditCard}
