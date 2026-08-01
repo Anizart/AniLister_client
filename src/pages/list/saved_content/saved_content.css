@@ -133,6 +133,7 @@
       .section-list-content__img {
         height: 164px;
         min-width: 128px;
+        object-fit: cover;
         border: 1px solid var(--light-main-text);
         border-radius: 20px;
         overflow: hidden;
