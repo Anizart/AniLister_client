@@ -27,6 +27,8 @@ import {
   getUserGroups,
   saveGroup,
   deleteGroup,
+  saveCardToGroup,
+  deleteCardFromGroup,
 } from '/api/auth.js'
 //+ Компонент для перенаправления авторизованных пользователей с главной:
 import MainRedirect from './shared/lib/main_redirect'
@@ -135,60 +137,6 @@ function App() {
   // Groups State
   const [groups, setGroups] = useState([])
 
-  //- Временные данные для тестирования модалки: modal_edit_cards
-  const MOCK_CARDS = [
-    {
-      id: 'card-1',
-      title:
-        'Я распродал свою жизнь. По десять тысяч иен за год.',
-      volume: '3',
-      chapter: '16.5',
-      page: '48',
-      startDate: '08.08.2024',
-      endDate: '28.08.2024',
-      image: '/images/delete.jpg',
-      tags: ['all', 'favorites', 'to-read'],
-      // Данные для маркировки
-      marks: {
-        hasNote: true, // Иконка заметки/свитка
-        hasLike: true, // Иконка сердца
-        hasEye: true, // Иконка глаза (просмотрено/внимание)
-      },
-    },
-    {
-      id: 'card-2',
-      title: 'Название второй карточки',
-      volume: '1',
-      chapter: '5',
-      page: '12',
-      startDate: '01.09.24',
-      endDate: '-',
-      image: '/images/default.jpg',
-      tags: ['all'],
-      marks: {
-        hasNote: true,
-        hasLike: false,
-        hasEye: false,
-      },
-    },
-    {
-      id: 'card-3',
-      title: 'Что-то',
-      volume: '3',
-      chapter: '16.5',
-      page: '48',
-      startDate: '08.08.24',
-      endDate: '28.08.24',
-      image: '/images/default.jpg',
-      tags: ['all', 'liked'],
-      marks: {
-        hasNote: true,
-        hasLike: true,
-        hasEye: false,
-      },
-    },
-  ]
-
   //+ Выход из модалки по нажатию на Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -261,17 +209,6 @@ function App() {
     setConfirmModal((prev) => ({ ...prev, isOpen: false }))
   }
 
-  //! Удаление карточки:
-  const handleDeleteCard = (cardId) => {
-    openConfirm({
-      title: 'Удаление',
-      warningText: 'Внимание это действие не обратимо!',
-      message: 'Вы действительно хотите удалить?',
-      onConfirm: () =>
-        console.log('Карточка удалена:', cardId),
-    })
-  }
-
   //+ /confirmModal
 
   //+ modal_edit_profile
@@ -283,26 +220,6 @@ function App() {
 
   const closeEditProfile = () => setEditProfileData(null)
   //+ /modal_edit_profile
-
-  //+ editingCard
-  // 2. Функция открытия на создание
-  const handleOpenAddCard = () => {
-    setEditingCard(null) // Сбрасываем данные редактирования
-    setIsAddingCardOpen(true) // Открываем модалку
-  }
-
-  // 3. Функция открытия на редактирование
-  const handleOpenEditCard = (card) => {
-    setEditingCard(card) // Заполняем данными
-    setIsAddingCardOpen(true) // Открываем модалку
-  }
-
-  // 4. Функция закрытия (универсальная)
-  const handleCloseAddingCard = () => {
-    setIsAddingCardOpen(false)
-    setEditingCard(null) // Очищаем данные при закрытии
-  }
-  //+ /editingCard
 
   //+ Открытие входа при возращении не зареганого пользователя на гланую
   const handleOpenAuthFromRedirect = useCallback(() => {
@@ -386,7 +303,7 @@ function App() {
     )
   }
 
-  // Обработчик удаления группы
+  // Обработчик удаления группы (confirmModal)
   const handleDeleteGroup = (groupId) => {
     openConfirm({
       title: 'Удаление',
@@ -400,6 +317,64 @@ function App() {
       },
     })
   }
+
+  //+ Работа с карточками:
+  const [
+    addingCardDefaultTopic,
+    setAddingCardDefaultTopic,
+  ] = useState('read')
+  const [currentGroupId, setCurrentGroupId] = useState(null)
+
+  // Функция открытия на создание
+  const handleOpenAddCard = (groupId, topic = 'read') => {
+    setCurrentGroupId(groupId) // Сохр. ID группы
+    setAddingCardDefaultTopic(topic) // Сохр. тему группы
+    setEditingCard(null)
+    setIsAddingCardOpen(true)
+  }
+
+  // Сохранение карточки из модалки
+  const handleSaveCard = (cardData, groupId) => {
+    const updatedGroups = saveCardToGroup(groupId, cardData)
+    setGroups(updatedGroups)
+    showToast(
+      cardData.id
+        ? 'Карточка обновлена!'
+        : 'Карточка добавлена!',
+    )
+  }
+
+  // Удаление карточки (confirmModal)
+  const handleDeleteCard = (cardId, groupId) => {
+    openConfirm({
+      title: 'Удаление',
+      warningText: 'Внимание это действие не обратимо!',
+      message: 'Вы действительно хотите удалить?',
+      onConfirm: () => {
+        const updatedGroups = deleteCardFromGroup(
+          groupId,
+          cardId,
+        )
+        setGroups(updatedGroups)
+        showToast('Карточка удалена')
+      },
+    })
+  }
+
+  //+ editingCard
+  // Функция открытия на редактирование
+  const handleOpenEditCard = (card, groupId) => {
+    setCurrentGroupId(groupId)
+    setEditingCard(card)
+    setIsAddingCardOpen(true)
+  }
+
+  // Функция закрытия (универсальная)
+  const handleCloseAddingCard = () => {
+    setIsAddingCardOpen(false)
+    setEditingCard(null) // Очищаем данные при закрытии
+  }
+  //+ /editingCard
   //+ /Пользователь
 
   //+ Toast:
@@ -469,11 +444,9 @@ function App() {
               element={
                 <ProtectedRoute currentUser={currentUser}>
                   <ListWrapper
-                    groups={groups}
                     mode={mode}
-                    onOpenUnderConstruction={() =>
-                      setIsUnderConstructionOpen(true)
-                    }
+                    groups={groups}
+                    onSaveCard={handleSaveCard}
                     onDeleteCard={handleDeleteCard}
                     onOpenAddCard={handleOpenAddCard}
                     onOpenEditCard={handleOpenEditCard}
@@ -552,9 +525,9 @@ function App() {
           mode={mode}
           isOpen={isAddingCardOpen}
           onClose={handleCloseAddingCard}
-          onOpenUnderConstruction={() =>
-            setIsUnderConstructionOpen(true)
-          } //- ВРЕМЕННО
+          onSave={handleSaveCard}
+          groupId={currentGroupId}
+          defaultTopic={addingCardDefaultTopic} // Тема группы для лейблов
           cardData={editingCard} // Передаю null или объект карточки
         />
         <Toast

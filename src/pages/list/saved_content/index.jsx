@@ -1,4 +1,4 @@
-// import { useState } from "react"
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import './saved_content.css'
@@ -9,13 +9,29 @@ const SavedContent = ({
   onDeleteCard,
   onOpenAddCard,
   onOpenEditCard,
-  onOpenUnderConstruction,
+  searchQuery = '', // Запрос поиска
 }) => {
-  // Получаю карточки из группы или пустой массив
-  const cards = group?.cards || []
-
+  const cards = group?.cards || [] // Получаю карточки из группы или пустой массив
+  const [activeFilter, setActiveFilter] = useState('all')
   // Определяю тип контента для правильных подписей
   const isWatching = group?.topic === 'watch'
+
+  // Логика фильтрации: учитываю и активный тег, и поисковый запрос
+  const filteredCards = cards.filter((card) => {
+    const matchesFilter =
+      activeFilter === 'all' ||
+      card.tags.includes(activeFilter)
+    const matchesSearch = card.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+    return matchesFilter && matchesSearch
+  })
+
+  // Функция для подсчета карточек по тегу
+  const getCount = (tag) => {
+    return cards.filter((card) => card.tags.includes(tag))
+      .length
+  }
 
   // Текстовые метки в зависимости от типа
   const labels = {
@@ -33,54 +49,42 @@ const SavedContent = ({
     statusDropped: 'Брошено',
   }
 
-  // Функция для подсчета карточек по тегу
-  const getCount = (tag) => {
-    return cards.filter((card) => card.tags.includes(tag))
-      .length
-  }
-
   return (
     <section className='section-list-content'>
       <div className='container'>
         <div className='filter'>
           <button
             type='button'
-            class='filter__tag'
-            data-filter='all'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            className={`filter__tag ${activeFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('all')}
           >
             {labels.statusTotal}: {getCount('all')}
           </button>
           <button
             type='button'
-            class='filter__tag'
-            data-filter='liked'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            className={`filter__tag ${activeFilter === 'favorite' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('favorite')}
           >
-            {labels.statusLiked}: {getCount('liked')}
+            {labels.statusLiked}: {getCount('favorite')}
           </button>
           <button
             type='button'
-            class='filter__tag'
-            data-filter='favorites'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            className={`filter__tag ${activeFilter === 'loved' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('loved')}
           >
-            {labels.statusFavorites}:{' '}
-            {getCount('favorites')}
+            {labels.statusFavorites}: {getCount('loved')}
           </button>
           <button
             type='button'
-            class='filter__tag'
-            data-filter='to-read'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            className={`filter__tag ${activeFilter === 'reread' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('reread')}
           >
-            {labels.statusToRead}: {getCount('to-read')}
+            {labels.statusToRead}: {getCount('reread')}
           </button>
           <button
             type='button'
-            class='filter__tag'
-            data-filter='to-read'
-            onClick={onOpenUnderConstruction} //- ВРЕМЕННО
+            className={`filter__tag ${activeFilter === 'dropped' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('dropped')}
           >
             {labels.statusDropped}: {getCount('dropped')}
           </button>
@@ -110,8 +114,8 @@ const SavedContent = ({
         </button>
 
         <div className='section-list-content__cards'>
-          {cards.length > 0 ? (
-            cards.map((card) => (
+          {filteredCards.length > 0 ? (
+            filteredCards.map((card) => (
               <div
                 key={card.id}
                 className='section-list-content__card'
@@ -144,7 +148,8 @@ const SavedContent = ({
 
                   <div className='section-list-content__marks'>
                     <div className='section-list-content__marks-wrap'>
-                      {card.marks.hasNote && (
+                      {/* Прочитано (соответствует finished) */}
+                      {card.marks.finished && (
                         <svg
                           width='32'
                           height='46'
@@ -162,27 +167,9 @@ const SavedContent = ({
                           />
                         </svg>
                       )}
-                      {card.marks.hasLike && (
-                        <svg
-                          width='39'
-                          height='39'
-                          viewBox='0 0 39 39'
-                          fill='none'
-                          stroke={
-                            mode
-                              ? 'var(--dark-main-text)'
-                              : 'var(--light-main-text)'
-                          }
-                        >
-                          <path d='M0.657715 38.0234H37.8658' />
-                          <path
-                            d='M34.9247 4.16799C34.0197 3.2626 32.9452 2.54438 31.7626 2.05436C30.58 1.56435 29.3124 1.31213 28.0323 1.31213C26.7522 1.31213 25.4846 1.56435 24.302 2.05436C23.1194 2.54438 22.0449 3.2626 21.14 4.16799L19.2619 6.04614L17.3837 4.16799C15.5558 2.34002 13.0765 1.31308 10.4914 1.31308C7.90626 1.31308 5.42701 2.34002 3.59904 4.16799C1.77108 5.99595 0.744141 8.47524 0.744141 11.0603C0.744141 13.6454 1.77108 16.1247 3.59904 17.9526L19.2619 33.6155L34.9247 17.9526C35.8301 17.0477 36.5483 15.9732 37.0383 14.7906C37.5283 13.608 37.7805 12.3404 37.7805 11.0603C37.7805 9.78024 37.5283 8.51264 37.0383 7.33004C36.5483 6.14744 35.8301 5.07295 34.9247 4.16799Z'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                          />
-                        </svg>
-                      )}
-                      {card.marks.hasEye && (
+
+                      {/* Глаз (соответствует reread) */}
+                      {card.marks.reread && (
                         <svg
                           width='39'
                           height='44'
@@ -204,6 +191,73 @@ const SavedContent = ({
                           />
                           <path d='M4.21582 24.3322C4.21582 24.3322 9.84052 14.7234 19.6837 14.7234C29.5269 14.7234 35.1516 24.3322 35.1516 24.3322C35.1516 24.3322 29.5269 33.941 19.6837 33.941C9.84052 33.941 4.21582 24.3322 4.21582 24.3322Z' />
                           <path d='M19.6838 27.9355C22.0136 27.9355 23.9023 26.3222 23.9023 24.3322C23.9023 22.3421 22.0136 20.7289 19.6838 20.7289C17.354 20.7289 15.4653 22.3421 15.4653 24.3322C15.4653 26.3222 17.354 27.9355 19.6838 27.9355Z' />
+                        </svg>
+                      )}
+
+                      {/* Подчеркнутое сердце (соответствует loved) */}
+                      {card.marks.loved && (
+                        <svg
+                          width='39'
+                          height='39'
+                          viewBox='0 0 39 39'
+                          fill='none'
+                          stroke={
+                            mode
+                              ? 'var(--dark-main-text)'
+                              : 'var(--light-main-text)'
+                          }
+                        >
+                          <path d='M0.657715 38.0234H37.8658' />
+                          <path
+                            d='M34.9247 4.16799C34.0197 3.2626 32.9452 2.54438 31.7626 2.05436C30.58 1.56435 29.3124 1.31213 28.0323 1.31213C26.7522 1.31213 25.4846 1.56435 24.302 2.05436C23.1194 2.54438 22.0449 3.2626 21.14 4.16799L19.2619 6.04614L17.3837 4.16799C15.5558 2.34002 13.0765 1.31308 10.4914 1.31308C7.90626 1.31308 5.42701 2.34002 3.59904 4.16799C1.77108 5.99595 0.744141 8.47524 0.744141 11.0603C0.744141 13.6454 1.77108 16.1247 3.59904 17.9526L19.2619 33.6155L34.9247 17.9526C35.8301 17.0477 36.5483 15.9732 37.0383 14.7906C37.5283 13.608 37.7805 12.3404 37.7805 11.0603C37.7805 9.78024 37.5283 8.51264 37.0383 7.33004C36.5483 6.14744 35.8301 5.07295 34.9247 4.16799Z'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      )}
+
+                      {/* Сердце (соответствует favorite) */}
+                      {card.marks.favorite && (
+                        <svg
+                          width='43'
+                          height='38'
+                          viewBox='0 0 43 38'
+                          fill='none'
+                          stroke={
+                            mode
+                              ? 'var(--dark-main-text)'
+                              : 'var(--light-main-text)'
+                          }
+                        >
+                          <path
+                            d='M39.0826 3.72365C38.0611 2.70166 36.8482 1.89094 35.5133 1.33782C34.1784 0.784694 32.7476 0.5 31.3026 0.5C29.8576 0.5 28.4268 0.784694 27.0919 1.33782C25.757 1.89094 24.5441 2.70166 23.5226 3.72365L21.4026 5.84365L19.2826 3.72365C17.2192 1.66027 14.4206 0.50107 11.5026 0.50107C8.58452 0.50107 5.78597 1.66027 3.72258 3.72365C1.6592 5.78704 0.5 8.58558 0.5 11.5037C0.5 14.4217 1.6592 17.2203 3.72258 19.2837L21.4026 36.9636L39.0826 19.2837C40.1046 18.2621 40.9153 17.0493 41.4684 15.7144C42.0215 14.3794 42.3062 12.9486 42.3062 11.5037C42.3062 10.0587 42.0215 8.62786 41.4684 7.29294C40.9153 5.95802 40.1046 4.74516 39.0826 3.72365Z'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      )}
+
+                      {/* Крестик (соответствует dropped) */}
+                      {card.marks.dropped && (
+                        <svg
+                          width='38'
+                          height='38'
+                          viewBox='0 0 38 38'
+                          fill='none'
+                          stroke={
+                            mode
+                              ? 'var(--dark-main-text)'
+                              : 'var(--light-main-text)'
+                          }
+                        >
+                          <path
+                            d='M2.67278 0L0 2.67278L17 19L0 35.3272L2.67278 38L19 21L35.3272 38L38 35.3272L21 19L38 2.67278L35.3272 0L19 17L2.67278 0Z'
+                            fill={
+                              mode
+                                ? 'var(--dark-main-text)'
+                                : 'var(--light-main-text)'
+                            }
+                          />
                         </svg>
                       )}
                     </div>
@@ -241,8 +295,9 @@ const SavedContent = ({
                 textAlign: 'center',
               }}
             >
-              В этой группе пока нет карточек. Нажмите
-              "Добавить", чтобы создать первую!
+              {cards.length === 0
+                ? 'В этой группе пока нет карточек. Нажмите "Добавить", чтобы создать первую!'
+                : 'По вашему запросу ничего не найдено.'}
             </div>
           )}
         </div>

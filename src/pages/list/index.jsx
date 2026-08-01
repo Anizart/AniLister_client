@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import BackSearchHeader from './back_searh_header'
 import SavedContent from './saved_content'
@@ -6,29 +6,37 @@ import SavedContent from './saved_content'
 const List = ({
   mode,
   group,
+  groupId,
   onDeleteCard,
   onOpenAddCard,
   onOpenEditCard,
-  onOpenUnderConstruction,
 }) => {
-  //+ скролл вверх при переходе на страницу
+  const [searchQuery, setSearchQuery] = useState('')
+
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0) // скролл вверх при переходе на страницу
+    setSearchQuery('')
+  }, [groupId])
 
   return (
     <>
       <BackSearchHeader
         mode={mode}
-        onOpenUnderConstruction={onOpenUnderConstruction}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        groupName={group?.title || 'Загрузка...'}
       />
       <SavedContent
         mode={mode}
         group={group}
+        searchQuery={searchQuery}
         onDeleteCard={onDeleteCard}
-        onOpenAddCard={onOpenAddCard}
-        onOpenEditCard={onOpenEditCard}
-        onOpenUnderConstruction={onOpenUnderConstruction}
+        onOpenAddCard={() =>
+          onOpenAddCard(groupId, group.topic)
+        }
+        onOpenEditCard={(card) =>
+          onOpenEditCard(card, groupId)
+        }
       />
     </>
   )

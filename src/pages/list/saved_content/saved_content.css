@@ -47,6 +47,10 @@
         display: none;
       }
     }
+    .active {
+      color: #fff;
+      background: var(--light-main-text);
+    }
   }
   @media (max-width: 791px) {
     .filter {

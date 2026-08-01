@@ -6,21 +6,22 @@ import './adding_card.css'
 import { useScrollLock } from '@/shared/lib/useScrollLock'
 
 const spinner = '/images/svg/Infinity.svg'
-// Дефолтная обложка
-const DEFAULT_COVER = '/images/default.jpg'
+const DEFAULT_COVER = '/images/default.jpg' // Дефолтная обложка
 
 const AddingCard = ({
   mode,
   isOpen,
   onClose,
-  onOpenUnderConstruction,
+  onSave,
+  groupId,
   cardData = null,
+  defaultTopic = 'read',
 }) => {
   useScrollLock(isOpen)
 
   const isEditing = !!cardData
   const [topic, setTopic] = useState(
-    cardData?.topic || 'read',
+    cardData?.topic || defaultTopic,
   )
   const searchRef = useRef(null)
 
@@ -219,21 +220,23 @@ const AddingCard = ({
 
     const payload = {
       id: cardData?.id,
-      ...formData,
-      topic,
-      image:
-        coverImage !== DEFAULT_COVER ? coverImage : null,
+      title: formData.title,
+      field1: formData.field1,
+      field2: formData.field2,
+      diaryPage: formData.diaryPage,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      topic: topic,
+      image: coverImage,
       marks: Object.entries(marks)
         .filter(([_, v]) => v)
         .map(([k]) => k),
     }
 
-    console.log(
-      isEditing ? 'Обновление:' : 'Создание:',
-      payload,
-    )
-    onClose()
-    onOpenUnderConstruction()
+    if (groupId && onSave) {
+      onSave(payload, groupId)
+      onClose()
+    }
   }
 
   const MarkIcon = ({ type }) => {
@@ -344,13 +347,6 @@ const AddingCard = ({
       default:
         return null
     }
-  }
-
-  const isReading = topic === 'read'
-  const labels = {
-    field1: isReading ? 'Том' : 'Сезон',
-    field2: isReading ? 'Глава' : 'Серия',
-    toggle: isReading ? 'Перечитываю' : 'Пересматриваю',
   }
 
   if (!isOpen) return null
@@ -487,111 +483,124 @@ const AddingCard = ({
           {/* Блок 2: Числовые поля и даты */}
           <div className='adding-card__wrap'>
             {[
-              { key: 'field1', label: labels.field1 },
-              { key: 'field2', label: labels.field2 },
-              {
-                key: 'diaryPage',
-                label: 'Стр. в Дневнике',
-              },
-              {
-                key: 'startDate',
-                label: 'Дата начала',
-                type: 'date',
-              },
-              {
-                key: 'endDate',
-                label: 'Дата окончания',
-                type: 'date',
-              },
-              { key: 'isRereading', label: labels.toggle },
-            ].map(({ key, label, type }) => (
-              <div
-                key={key}
-                className='adding-card__field-wrapper'
-              >
-                <label
-                  name={key}
-                  id={key}
-                  className='adding-card__label'
+              { key: 'field1' },
+              { key: 'field2' },
+              { key: 'diaryPage' },
+              { key: 'startDate', type: 'date' },
+              { key: 'endDate', type: 'date' },
+              { key: 'isRereading' },
+            ].map(({ key, type }) => {
+              // Определяю лейблы динамически для каждого поля
+              let label = ''
+              if (key === 'field1')
+                label = topic === 'read' ? 'Том' : 'Сезон'
+              if (key === 'field2')
+                label = topic === 'read' ? 'Глава' : 'Серия'
+              if (key === 'diaryPage')
+                label = 'Стр. в Дневнике'
+              if (key === 'startDate') label = 'Дата начала'
+              if (key === 'endDate')
+                label = 'Дата окончания'
+              if (key === 'isRereading')
+                label =
+                  topic === 'read'
+                    ? 'Перечитываю'
+                    : 'Пересматриваю'
+
+              return (
+                <div
+                  key={key}
+                  className='adding-card__field-wrapper'
                 >
-                  {label}
-                </label>
-                {type === 'date' ? (
-                  <input
-                    type='date'
-                    name={key}
-                    id={key}
-                    value={formData[key]}
-                    onChange={handleChange}
-                    className='adding-card__input adding-card__input-data'
-                    placeholder='ДД.ММ.ГГГГ'
-                    pattern='[0-9]*'
-                    maxLength={10}
-                  />
-                ) : (
-                  <div className='custom-number-input'>
+                  <label
+                    htmlFor={key}
+                    className='adding-card__label'
+                  >
+                    {label}
+                  </label>
+                  {type === 'date' ? (
                     <input
-                      type='text'
+                      type='date'
                       name={key}
                       id={key}
-                      value={formData[key]}
+                      value={
+                        formData[key] === '-'
+                          ? ''
+                          : formData[key]
+                      }
                       onChange={handleChange}
-                      className='adding-card__input'
-                      inputMode='numeric'
+                      className='adding-card__input adding-card__input-data'
+                      placeholder='ДД.ММ.ГГГГ'
                       pattern='[0-9]*'
-                      placeholder='0'
+                      maxLength={10}
                     />
-                    <div className='custom-number-input__spinners'>
-                      <button
-                        type='button'
-                        className='custom-number-input__btn'
-                        onClick={() => handleSpin(key, 1)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <svg
-                          width='5'
-                          height='5'
-                          viewBox='0 0 5 5'
-                          fill='none'
-                          className='custom-number-input__btn-svg'
+                  ) : (
+                    <div className='custom-number-input'>
+                      <input
+                        type='text'
+                        name={key}
+                        id={key}
+                        value={formData[key]}
+                        onChange={handleChange}
+                        className='adding-card__input'
+                        inputMode='numeric'
+                        pattern='[0-9]*'
+                        placeholder='0'
+                      />
+                      <div className='custom-number-input__spinners'>
+                        <button
+                          type='button'
+                          className='custom-number-input__btn'
+                          onClick={() => handleSpin(key, 1)}
+                          style={{ cursor: 'pointer' }}
                         >
-                          <path
-                            d='M0 5L2.50842 0L5 5H0Z'
-                            fill={
-                              mode
-                                ? 'var(--dark-main-text)'
-                                : 'var(--light-main-text)'
-                            }
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        type='button'
-                        className='custom-number-input__btn'
-                        onClick={() => handleSpin(key, -1)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <svg
-                          width='5'
-                          height='5'
-                          viewBox='0 0 5 5'
-                          fill='none'
+                          <svg
+                            width='5'
+                            height='5'
+                            viewBox='0 0 5 5'
+                            fill='none'
+                            className='custom-number-input__btn-svg'
+                          >
+                            <path
+                              d='M0 5L2.50842 0L5 5H0Z'
+                              fill={
+                                mode
+                                  ? 'var(--dark-main-text)'
+                                  : 'var(--light-main-text)'
+                              }
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          type='button'
+                          className='custom-number-input__btn'
+                          onClick={() =>
+                            handleSpin(key, -1)
+                          }
+                          style={{ cursor: 'pointer' }}
                         >
-                          <path
-                            d='M5 0L2.49158 5L4.37114e-07 -4.37114e-07L5 0Z'
-                            fill={
-                              mode
-                                ? 'var(--dark-main-text)'
-                                : 'var(--light-main-text)'
-                            }
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            width='5'
+                            height='5'
+                            viewBox='0 0 5 5'
+                            fill='none'
+                          >
+                            <path
+                              d='M5 0L2.49158 5L4.37114e-07 -4.37114e-07L5 0Z'
+                              fill={
+                                mode
+                                  ? 'var(--dark-main-text)'
+                                  : 'var(--light-main-text)'
+                              }
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              )
+            })}
           </div>
 
           {/* Блок 3: Отметки с тултипом */}

@@ -195,3 +195,125 @@ export const deleteGroup = (groupId) => {
   saveUserGroups(groups)
   return groups
 }
+
+//+ Работа с карточками:
+// Добавление или обновление карточки в группе
+export const saveCardToGroup = (groupId, cardData) => {
+  const user = getCurrentUser()
+  if (!user) return null
+
+  const groups = user.groups || []
+  const groupIndex = groups.findIndex(
+    (g) => g.id === groupId,
+  )
+
+  if (groupIndex === -1) return null
+
+  const group = groups[groupIndex]
+  let cards = group.cards || []
+
+  if (cardData.id) {
+    // Редактирование
+    const cardIndex = cards.findIndex(
+      (c) => c.id === cardData.id,
+    )
+    if (cardIndex !== -1) {
+      const oldCard = cards[cardIndex]
+      // Обновляем только те поля, которые пришли в cardData, остальные оставляем старыми
+      cards[cardIndex] = {
+        ...oldCard,
+        title: cardData.title ?? oldCard.title,
+        volume: cardData.field1 ?? oldCard.volume,
+        chapter: cardData.field2 ?? oldCard.chapter,
+        page: cardData.diaryPage ?? oldCard.page,
+        startDate: cardData.startDate ?? oldCard.startDate,
+        endDate: cardData.endDate ?? oldCard.endDate,
+        image: cardData.image ?? oldCard.image,
+        marks: cardData.marks
+          ? {
+              finished: cardData.marks.includes('finished'),
+              reread: cardData.marks.includes('reread'),
+              favorite: cardData.marks.includes('favorite'),
+              loved: cardData.marks.includes('loved'),
+              dropped: cardData.marks.includes('dropped'),
+            }
+          : oldCard.marks,
+        tags: [
+          'all',
+          ...(cardData.marks ||
+            oldCard.tags.filter((t) => t !== 'all')),
+        ],
+      }
+    }
+  } else {
+    // Создание новой
+    const newCard = {
+      id: Date.now().toString(),
+      title: cardData.title,
+      volume: cardData.field1 || '0',
+      chapter: cardData.field2 || '0',
+      page: cardData.diaryPage || '0',
+      startDate: cardData.startDate || '-',
+      endDate: cardData.endDate || '-',
+      image: cardData.image || '/images/default.jpg',
+      tags: ['all', ...cardData.marks], // marks это массив строк ['liked', 'favorite']
+      marks: {
+        finished: cardData.marks.includes('finished'),
+        reread: cardData.marks.includes('reread'),
+        favorite: cardData.marks.includes('favorite'),
+        loved: cardData.marks.includes('loved'),
+        dropped: cardData.marks.includes('dropped'),
+      },
+      topic: cardData.topic,
+    }
+    cards.push(newCard)
+  }
+
+  group.cards = cards
+  groups[groupIndex] = group
+
+  // Сохраняем обновленного пользователя
+  const updatedUser = { ...user, groups }
+  setCurrentUser(updatedUser)
+
+  // Обновляем в общем списке
+  const users = getUsers()
+  const uIndex = users.findIndex((u) => u.id === user.id)
+  if (uIndex !== -1) {
+    users[uIndex] = updatedUser
+    saveUsers(users)
+  }
+
+  return groups
+}
+
+// Удаление карточки
+export const deleteCardFromGroup = (groupId, cardId) => {
+  const user = getCurrentUser()
+  if (!user) return null
+
+  const groups = user.groups || []
+  const groupIndex = groups.findIndex(
+    (g) => g.id === groupId,
+  )
+
+  if (groupIndex === -1) return null
+
+  const group = groups[groupIndex]
+  group.cards = (group.cards || []).filter(
+    (c) => c.id !== cardId,
+  )
+  groups[groupIndex] = group
+
+  const updatedUser = { ...user, groups }
+  setCurrentUser(updatedUser)
+
+  const users = getUsers()
+  const uIndex = users.findIndex((u) => u.id === user.id)
+  if (uIndex !== -1) {
+    users[uIndex] = updatedUser
+    saveUsers(users)
+  }
+
+  return groups
+}
