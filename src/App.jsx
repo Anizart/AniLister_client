@@ -328,7 +328,11 @@ function App() {
   // Функция открытия на создание
   const handleOpenAddCard = (groupId, topic = 'read') => {
     setCurrentGroupId(groupId) // Сохр. ID группы
-    setAddingCardDefaultTopic(topic) // Сохр. тему группы
+
+    // Поиск группы по id и взятие topic (watch или read)
+    const targetGroup = groups.find((g) => g.id === groupId)
+    setAddingCardDefaultTopic(targetGroup?.topic || topic)
+
     setEditingCard(null)
     setIsAddingCardOpen(true)
   }
@@ -365,6 +369,12 @@ function App() {
   // Функция открытия на редактирование
   const handleOpenEditCard = (card, groupId) => {
     setCurrentGroupId(groupId)
+
+    const targetGroup = groups.find((g) => g.id === groupId)
+    setAddingCardDefaultTopic(
+      card?.topic || targetGroup?.topic || 'read',
+    )
+
     setEditingCard(card)
     setIsAddingCardOpen(true)
   }
@@ -527,6 +537,7 @@ function App() {
           onClose={handleCloseAddingCard}
           onSave={handleSaveCard}
           groupId={currentGroupId}
+          groups={groups}
           defaultTopic={addingCardDefaultTopic} // Тема группы для лейблов
           cardData={editingCard} // Передаю null или объект карточки
         />

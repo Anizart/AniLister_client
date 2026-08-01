@@ -91,7 +91,9 @@ const SavedContent = ({
         </div>
         <button
           className='btn section-list-content__btn-add'
-          onClick={onOpenAddCard}
+          onClick={() =>
+            onOpenAddCard(group?.id, group?.topic)
+          }
         >
           Добавить
           <svg
@@ -276,7 +278,9 @@ const SavedContent = ({
                 <div className='section-list-content__btns'>
                   <button
                     className='btn'
-                    onClick={() => onOpenEditCard(card)}
+                    onClick={() =>
+                      onOpenEditCard(card, group?.id)
+                    }
                   >
                     Изменить
                   </button>

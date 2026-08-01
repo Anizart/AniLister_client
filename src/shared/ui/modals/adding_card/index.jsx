@@ -14,6 +14,7 @@ const AddingCard = ({
   onClose,
   onSave,
   groupId,
+  groups = [],
   cardData = null,
   defaultTopic = 'read',
 }) => {
@@ -57,6 +58,16 @@ const AddingCard = ({
 
   // Инициализация данных
   useEffect(() => {
+    if (!isOpen) return
+
+    // Определяем тему на основе текущей группы или карточки
+    const currentGroup = groups.find(
+      (g) => g.id === groupId,
+    )
+    const activeTopic =
+      cardData?.topic || currentGroup?.topic || defaultTopic
+    setTopic(activeTopic)
+
     if (isEditing && cardData) {
       setFormData({
         title: cardData.title || '',
