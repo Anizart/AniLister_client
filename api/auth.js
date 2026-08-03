@@ -266,7 +266,7 @@ export const saveCardToGroup = (groupId, cardData) => {
       },
       topic: cardData.topic,
     }
-    cards.push(newCard)
+    cards.unshift(newCard)
   }
 
   group.cards = cards
